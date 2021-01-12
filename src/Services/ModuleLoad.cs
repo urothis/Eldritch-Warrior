@@ -1,14 +1,16 @@
 using System;
 using System.Globalization;
+using System.Linq;
 
 using NLog;
 
 using NWN.API;
+using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
+
 using NWNX.API;
-using NWN.API.Constants;
-using System.Linq;
+
 
 namespace Module
 {
@@ -33,34 +35,51 @@ namespace Module
 
         private static void SetAreaEnviroment()
         {
-            /* Iterate all areas in module */
             // Instantiate random number generator using system-supplied value as seed.
             Random random = new();
 
+            /* Iterate all areas in module */
             foreach (NwArea area in NwModule.Instance.Areas.Where(area => !area.IsInterior))
             {
-                var values = Enum.GetValues(typeof(FogColor));
-                FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length));
-
+                FogColor fogColor = AreaSetFogColor(random);
                 area.SetFogColor(FogType.All, fogColor);
                 area.SetFogAmount(FogType.All, random.Next(1, 12));
-
-                Skybox skybox = (Skybox)random.Next(Enum.GetNames(typeof(Skybox)).Length);
-                area.SkyBox = skybox;
-
-                WeatherType weather = (WeatherType)random.Next(Enum.GetNames(typeof(Skybox)).Length);
-                area.Weather = weather;
-
-                if (area.SkyBox == Skybox.GrassStorm)
-                {
-                    area.Weather = WeatherType.Rain;
-                }
-
-                if (area.SkyBox == Skybox.Icy)
-                {
-                    area.Weather = WeatherType.Snow;
-                }
+                AreaSetSkyBox(random, area);
+                AreaSetWeather(random, area);
+                AreaSkyBoxStormIcy(area);
             }
+        }
+
+        private static void AreaSkyBoxStormIcy(NwArea area)
+        {
+            if (area.SkyBox == Skybox.GrassStorm)
+            {
+                area.Weather = WeatherType.Rain;
+            }
+
+            if (area.SkyBox == Skybox.Icy)
+            {
+                area.Weather = WeatherType.Snow;
+            }
+        }
+
+        private static void AreaSetWeather(Random random, NwArea area)
+        {
+            WeatherType weather = (WeatherType)random.Next(Enum.GetNames(typeof(Skybox)).Length);
+            area.Weather = weather;
+        }
+
+        private static void AreaSetSkyBox(Random random, NwArea area)
+        {
+            Skybox skybox = (Skybox)random.Next(Enum.GetNames(typeof(Skybox)).Length);
+            area.SkyBox = skybox;
+        }
+
+        private static FogColor AreaSetFogColor(Random random)
+        {
+            var values = Enum.GetValues(typeof(FogColor));
+            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length));
+            return fogColor;
         }
     }
 }
