@@ -35,20 +35,31 @@ namespace Module
         {
             /* Iterate all areas in module */
             // Instantiate random number generator using system-supplied value as seed.
-            Random rand = new();
+            Random random = new();
+
             foreach (NwArea area in NwModule.Instance.Areas.Where(area => !area.IsInterior))
             {
-                Array values = Enum.GetValues(typeof(FogColor));
-                Random random = new();
+                var values = Enum.GetValues(typeof(FogColor));
                 FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length));
 
                 area.SetFogColor(FogType.All, fogColor);
-                area.SetFogAmount(FogType.All, rand.Next(1, 12));
+                area.SetFogAmount(FogType.All, random.Next(1, 12));
 
-                values = Enum.GetValues(typeof(Skybox));
-                Skybox skybox = (Skybox)values.GetValue(random.Next(values.Length));
-
+                Skybox skybox = (Skybox)random.Next(Enum.GetNames(typeof(Skybox)).Length);
                 area.SkyBox = skybox;
+
+                WeatherType weather = (WeatherType)random.Next(Enum.GetNames(typeof(Skybox)).Length);
+                area.Weather = weather;
+
+                if (area.SkyBox == Skybox.GrassStorm)
+                {
+                    area.Weather = WeatherType.Rain;
+                }
+
+                if (area.SkyBox == Skybox.Icy)
+                {
+                    area.Weather = WeatherType.Snow;
+                }
             }
         }
     }
