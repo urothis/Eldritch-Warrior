@@ -7,6 +7,8 @@ using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
 using NWNX.API;
+using NWN.API.Constants;
+using System.Linq;
 
 namespace Module
 {
@@ -26,9 +28,17 @@ namespace Module
             Administration.GameOptions.RestoreSpellUses = true;
 
             /* Iterate all areas in module */
-            foreach (NwArea area in NwModule.Instance.Areas)
+            // Instantiate random number generator using system-supplied value as seed.
+            Random rand = new();
+            foreach (NwArea area in NwModule.Instance.Areas.Where(area => !area.IsInterior))
             {
-                Console.WriteLine($"{area.Name}");
+                area.SetFogAmount(FogType.All, rand.Next(1, 12));
+
+                Array values = FogColor.GetValues(typeof(FogColor));
+                Random random = new();
+                FogColor randomBar = (FogColor)values.GetValue(random.Next(values.Length));
+
+                area.SetFogColor(FogType.All, randomBar);
             }
         }
     }
