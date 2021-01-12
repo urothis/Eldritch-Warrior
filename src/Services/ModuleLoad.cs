@@ -25,6 +25,11 @@ namespace Module
             /* NWNX */
             Administration.GameOptions.RestoreSpellUses = true;
 
+            /* Iterate all areas in module */
+            foreach (NwArea area in NwModule.Instance.Areas)
+            {
+                Console.WriteLine($"{area.Name}");
+            }
         }
     }
 }
