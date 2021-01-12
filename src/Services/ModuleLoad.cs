@@ -40,11 +40,15 @@ namespace Module
             {
                 Array values = Enum.GetValues(typeof(FogColor));
                 Random random = new();
-                FogColor randomBar = (FogColor)values.GetValue(random.Next(values.Length));
+                FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length));
 
-                area.SetFogColor(FogType.All, randomBar);
+                area.SetFogColor(FogType.All, fogColor);
                 area.SetFogAmount(FogType.All, rand.Next(1, 12));
 
+                values = Enum.GetValues(typeof(Skybox));
+                Skybox skybox = (Skybox)values.GetValue(random.Next(values.Length));
+
+                area.SkyBox = skybox;
             }
         }
     }
