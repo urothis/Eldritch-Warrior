@@ -24,17 +24,14 @@ namespace Module
         // This function must always return void, or a bool in the case of a conditional.
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
+            Log.Info($"Client enter event called by {enter.Player.Name}");
+
             await ClientPrintLogin(enter);
         }
 
-        private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
-        {
-            /*
-                https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
-            */
-            Log.Info($"Client enter event called by {enter.Player.Name}");
-
-            await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
-        }
+        /*
+            https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
+        */
+        private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter) => await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
     }
 }
