@@ -11,7 +11,6 @@ using NWN.Services;
 
 using NWNX.API;
 
-
 namespace Module
 {
     [ServiceBinding(typeof(ModuleLoad))]
