@@ -1,14 +1,10 @@
-using System;
-using System.Globalization;
-using System.Linq;
-
+using System.Threading.Tasks;
 using NLog;
 
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-
 using NWNX.API;
 
 namespace Module
@@ -28,11 +24,17 @@ namespace Module
         // This function must always return void, or a bool in the case of a conditional.
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
+            await ClientPrintLogin(enter);
+        }
+
+        private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
+        {
             /*
                 https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
             */
             Log.Info($"Client enter event called by {enter.Player.Name}");
-            await NwModule.Instance.SpeakString("Hello World!".ColorString(Color.GREEN), TalkVolume.Shout);
+
+            await NwModule.Instance.SpeakString($"{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
         }
     }
 }
