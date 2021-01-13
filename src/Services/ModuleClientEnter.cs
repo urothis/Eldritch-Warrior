@@ -1,10 +1,13 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using NLog;
 
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
+
 using NWNX.API;
 
 namespace Module
@@ -25,8 +28,28 @@ namespace Module
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
             Log.Info($"Client enter event called by {enter.Player.Name}");
-
             await ClientPrintLogin(enter);
+            ClientIsDM(enter);
+            ClientEnterJournal(enter);
+        }
+
+        private static readonly Dictionary<string, string> dmID = new()
+        {
+            { "QR4JFL9A", "milliorn"},
+            { "QRMXQ6GM", "milliorn"},
+        };
+
+        private static void ClientIsDM(ModuleEvents.OnClientEnter enter)
+        {
+            if (enter.Player.IsDM && dmID.ContainsKey(enter.Player.CDKey))
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
+            }
+        }
+
+        public static void ClientEnterJournal(ModuleEvents.OnClientEnter enter)
+        {
+            enter.Player.AddJournalQuestEntry("test", 1, false);
         }
 
         /*
