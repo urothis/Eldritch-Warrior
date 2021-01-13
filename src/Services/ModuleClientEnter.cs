@@ -34,7 +34,7 @@ namespace Module
             */
             Log.Info($"Client enter event called by {enter.Player.Name}");
 
-            await NwModule.Instance.SpeakString($"{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
+            await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
         }
     }
 }
