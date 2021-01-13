@@ -17,7 +17,7 @@ namespace Module
     public class ModuleClientEnter
     {
         // Gets the server log. By default, this reports to "nwm.log"
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         // As this class has the ServiceBinding attribute, the constructor of this class will be called during server startup.
         // The EventService is a core service from NWN.Managed. As it is defined as a constructor parameter, it will be injected during startup.
@@ -26,9 +26,13 @@ namespace Module
 
         // This function will be called as if the same script was called by a toolset event, or by another script.
         // This function must always return void, or a bool in the case of a conditional.
-        private void OnClientEnter(ModuleEvents.OnClientEnter enter)
+        private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
-            enter.Player.SendServerMessage($"Welcome to the server, {enter.Player.Name}!", Color.PINK);
+            /*
+                https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
+            */
+            Log.Info($"Client enter event called by {enter.Player.Name}");
+            await NwModule.Instance.SpeakString("Hello World!".ColorString(Color.GREEN), TalkVolume.Shout);
         }
     }
 }
