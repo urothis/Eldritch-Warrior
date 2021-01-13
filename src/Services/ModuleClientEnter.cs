@@ -32,12 +32,14 @@ namespace Module
             ClientEnterJournal(enter);
         }
 
+        /* List of DM Public Keys */
         private static readonly Dictionary<string, string> dmID = new()
         {
             { "QR4JFL9A", "milliorn" },
             { "QRMXQ6GM", "milliorn" },
         };
 
+        /* Add default journal entries */
         private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter)
         {
             enter.Player.AddJournalQuestEntry("test", 1, false);
@@ -45,12 +47,19 @@ namespace Module
 
         /*
             https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
+
+            Print to shout of client logging in if we are PC.
+            Print to dm channel if dm logs in.
         */
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
-            if (enter.Player.IsDM)
+            if (enter.Player.IsDM && dmID.ContainsKey(enter.Player.CDKey))
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
+            }
+            else if (enter.Player.IsDM)
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
             }
             else
             {
