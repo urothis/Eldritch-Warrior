@@ -29,25 +29,16 @@ namespace Module
         {
             Log.Info($"Client enter event called by {enter.Player.Name}");
             await ClientPrintLogin(enter);
-            ClientIsDM(enter);
             ClientEnterJournal(enter);
         }
 
         private static readonly Dictionary<string, string> dmID = new()
         {
-            { "QR4JFL9A", "milliorn"},
-            { "QRMXQ6GM", "milliorn"},
+            { "QR4JFL9A", "milliorn" },
+            { "QRMXQ6GM", "milliorn" },
         };
 
-        private static void ClientIsDM(ModuleEvents.OnClientEnter enter)
-        {
-            if (enter.Player.IsDM && dmID.ContainsKey(enter.Player.CDKey))
-            {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
-            }
-        }
-
-        public static void ClientEnterJournal(ModuleEvents.OnClientEnter enter)
+        private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter)
         {
             enter.Player.AddJournalQuestEntry("test", 1, false);
         }
@@ -55,6 +46,16 @@ namespace Module
         /*
             https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
         */
-        private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter) => await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
+        private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
+        {
+            if (enter.Player.IsDM)
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
+            }
+            else
+            {
+                await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
+            }
+        }
     }
 }
