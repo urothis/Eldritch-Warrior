@@ -70,21 +70,18 @@ namespace Module
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
                 Log.Info($"DM VERIFIED:{clientDM}.");
-                Console.WriteLine($"DM VERIFIED:{clientDM}.");
 
             }
             else if (enter.Player.IsDM)
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:{colorString}");
                 Log.Info($"DM DENIED:{clientDM}.");
-                Console.WriteLine($"DM DENIED:{clientDM}.");
                 enter.Player.BootPlayer("DENIED DM Access.");
             }
             else
             {
                 await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:{colorString}", TalkVolume.Shout);
                 Log.Info($"LOGIN:{client}.");
-                Console.WriteLine($"LOGIN:{client}.");
             }
         }
 
@@ -103,6 +100,7 @@ namespace Module
                 if (WordFilter.Contains(censoredWord.ToLower()))
                 {
                     enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
+                    Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
                     return;
                 }
             }
