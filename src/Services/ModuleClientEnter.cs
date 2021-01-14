@@ -28,9 +28,13 @@ namespace Module
         // This function must always return void, or a bool in the case of a conditional.
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
-            Log.Info($"Client enter event called by {enter.Player.Name}");
             await ClientPrintLogin(enter);
             ClientEnterJournal(enter);
+
+            if (enter.Player.IsDM)
+            {
+                return;
+            }
         }
 
         /* List of DM Public Keys */
