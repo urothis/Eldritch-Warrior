@@ -38,7 +38,6 @@ namespace Module
             {
                 return;
             }
-
         }
 
         /* List of DM Public Keys */
