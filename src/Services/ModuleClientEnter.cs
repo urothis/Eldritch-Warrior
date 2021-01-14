@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 using NLog;
@@ -28,8 +29,9 @@ namespace Module
         // This function must always return void, or a bool in the case of a conditional.
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
-            await ClientPrintLogin(enter);
+            ClientCheckName(enter.Player.Name, enter);
             ClientEnterJournal(enter);
+            await ClientPrintLogin(enter);
 
             /* This is to short circuit the rest of this code if we are DM */
             if (enter.Player.IsDM)
@@ -86,6 +88,27 @@ namespace Module
             }
         }
 
+        /* Check player name and boot if its inappropriate */
+        private static void ClientCheckName(string text, ModuleEvents.OnClientEnter enter)
+        {
+            if (text == null)
+            {
+                throw new ArgumentNullException(nameof(text));
+            }
+
+            string[] censoredText = text.Split(' ');
+
+            foreach (string censoredWord in censoredText)
+            {
+                if (WordFilter.Contains(censoredWord.ToLower()))
+                {
+                    enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
+                    return;
+                }
+            }
+        }
+
+        /* Google list of explicit words */
         private static IList<string> WordFilter => new List<string>
         {
             "ahole",
@@ -536,6 +559,5 @@ namespace Module
             "yed",
             "zabourah"
         };
-
     }
 }
