@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -49,9 +50,13 @@ namespace Module
 
         private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
         {
-            if (!enter.Player.FindItemWithTag("item_recall").IsValid)
+            if (!enter.Player.Items.Any(x => x.ResRef == "item_recall"))
             {
-
+                /* Iterate all items in inventory and destroy them. */
+                foreach (NwItem? item in enter.Player.Items)
+                {
+                    item.Destroy();
+                }
             }
         }
 
