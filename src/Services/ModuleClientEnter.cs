@@ -29,14 +29,29 @@ namespace Module
         // This function must always return void, or a bool in the case of a conditional.
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
+            /* Check player name and boot if its inappropriate */
             ClientCheckName(enter.Player.Name, enter);
+
+            /* Add default journal entries */
             ClientEnterJournal(enter);
+
             await ClientPrintLogin(enter);
 
             /* This is to short circuit the rest of this code if we are DM */
             if (enter.Player.IsDM)
             {
                 return;
+            }
+
+            /* Check if we are brand new player. */
+            ClientFirstLogin(enter);
+        }
+
+        private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
+        {
+            if (!enter.Player.FindItemWithTag("item_recall").IsValid)
+            {
+
             }
         }
 
@@ -47,7 +62,6 @@ namespace Module
             { "QRMXQ6GM", "milliorn" },
         };
 
-        /* Add default journal entries */
         private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter)
         {
             enter.Player.AddJournalQuestEntry("test", 1, false);
@@ -84,7 +98,6 @@ namespace Module
             }
         }
 
-        /* Check player name and boot if its inappropriate */
         private static void ClientCheckName(string text, ModuleEvents.OnClientEnter enter)
         {
             if (text == null)
