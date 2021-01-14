@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -53,17 +54,27 @@ namespace Module
         */
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";
+            string client = $"NAME:{enter.Player.Name} ID:{enter.Player.CDKey} BIC:{Player.GetBicFileName(enter.Player)}";
+
             if (enter.Player.IsDM && dmID.ContainsKey(enter.Player.CDKey))
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
+                Log.Info($"DM VERIFIED:{client}.");
+                Console.WriteLine($"DM VERIFIED:{client}.");
+
             }
             else if (enter.Player.IsDM)
             {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}");
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:{colorString}");
+                Log.Info($"DM DENIED:{client}.");
+                Console.WriteLine($"DM DENIED:{client}.");
             }
             else
             {
-                await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}", TalkVolume.Shout);
+                await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:{colorString}", TalkVolume.Shout);
+                Log.Info($"LOGIN:{client}.");
+                Console.WriteLine($"LOGIN:{client}.");
             }
         }
     }
