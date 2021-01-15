@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
+
 using NLog;
 
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
+
 using NWNX.API;
 
 namespace Module
@@ -26,6 +28,18 @@ namespace Module
             {
                 return;
             }
+            
+            ClientLeaveDeathLog(leave);
+        }
+
+        /* Auto-Kill if we logout while in combat state */
+        private static int ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave)
+        {
+            if (leave.Player.IsInCombat)
+            {
+                return leave.Player.HP = -1;
+            }
+            return 0;
         }
 
         private static async Task ClientPrintLogout(ModuleEvents.OnClientLeave leave)
