@@ -1,5 +1,3 @@
-using System.Threading.Tasks;
-
 using NLog;
 
 using NWN.API;
@@ -16,12 +14,12 @@ namespace Module
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public ModuleClientLeave(NativeEventService nativeEventService) =>
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnClientLeave>(NwModule.Instance, OnClientLeaveAsync);
+        public ModuleClientLeave(NativeEventService native) =>
+            native.Subscribe<NwModule, ModuleEvents.OnClientLeave>(NwModule.Instance, OnClientLeave);
 
-        private async void OnClientLeaveAsync(ModuleEvents.OnClientLeave leave)
+        private static void OnClientLeave(ModuleEvents.OnClientLeave leave)
         {
-            await ClientPrintLogout(leave);
+            ClientPrintLogout(leave);
 
             /* This is to short circuit the rest of this code if we are DM */
             if (leave.Player.IsDM)
@@ -33,9 +31,19 @@ namespace Module
         }
 
         /* Auto-Kill if we logout while in combat state */
-        private static int ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave) => leave.Player.IsInCombat ? (leave.Player.HP = -1) : 0;
+        private static async void ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave)
+        {
+            if (!leave.Player.IsInCombat)
+            {
+                return;
+            }
 
-        private static async Task ClientPrintLogout(ModuleEvents.OnClientLeave leave)
+            Log.Warn("deathlog");
+            await leave.Player.WaitForObjectContext();
+            leave.Player.ApplyEffect(EffectDuration.Instant, NWN.API.Effect.Death());
+        }
+
+        private static async void ClientPrintLogout(ModuleEvents.OnClientLeave leave)
         {
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(leave.Player).ColorString(Color.WHITE)}";
             string client = $"NAME:{leave.Player.Name} ID:{leave.Player.CDKey} BIC:{Player.GetBicFileName(leave.Player)}";
