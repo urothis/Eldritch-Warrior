@@ -15,4 +15,4 @@ namespace Module
     public class ModuleItemAcquire
     {
     }
-}
+} 

@@ -23,12 +23,10 @@ namespace Module
             ClientPrintLogout(leave);
 
             /* This is to short circuit the rest of this code if we are DM */
-            if (leave.Player.IsDM)
+            if (!leave.Player.IsDM)
             {
-                return;
+                ClientLeaveDeathLog(leave);
             }
-
-            ClientLeaveDeathLog(leave);
         }
 
         /* Auto-Kill if we logout while in combat state */
@@ -62,7 +60,7 @@ namespace Module
 
         private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave)
         {
-            
+
         }
     }
 }
