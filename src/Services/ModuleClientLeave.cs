@@ -6,6 +6,7 @@ using NWN.API.Events;
 using NWN.Services;
 
 using NWNX.API;
+using Effect = NWN.API.Effect;
 
 namespace Module
 {
@@ -31,16 +32,13 @@ namespace Module
         }
 
         /* Auto-Kill if we logout while in combat state */
-        private static async void ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave)
+        private static void ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave)
         {
-            if (!leave.Player.IsInCombat)
+            if (leave.Player.IsInCombat)
             {
-                return;
+                Log.Warn("deathlog");
+                leave.Player.HP = -11;
             }
-
-            Log.Warn("deathlog");
-            await leave.Player.WaitForObjectContext();
-            leave.Player.ApplyEffect(EffectDuration.Instant, NWN.API.Effect.Death());
         }
 
         private static async void ClientPrintLogout(ModuleEvents.OnClientLeave leave)
@@ -60,6 +58,11 @@ namespace Module
                 await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(Color.GREEN)}:{colorString}", TalkVolume.Shout);
                 Log.Info($"LOGOUT:{client}.");
             }
+        }
+
+        private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave)
+        {
+            
         }
     }
 }
