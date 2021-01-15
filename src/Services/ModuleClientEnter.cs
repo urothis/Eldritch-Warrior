@@ -52,11 +52,16 @@ namespace Module
         {
             if (!enter.Player.Items.Any(x => x.ResRef == "item_recall"))
             {
-                /* Iterate all items in inventory and destroy them. */
-                foreach (NwItem? item in enter.Player.Items)
-                {
-                    item.Destroy();
-                }
+                DestroyAllItems(enter);
+            }
+        }
+
+        private static void DestroyAllItems(ModuleEvents.OnClientEnter enter)
+        {
+            /* Iterate all items in inventory and destroy them. */
+            foreach (NwItem? item in enter.Player.Items)
+            {
+                item.Destroy();
             }
         }
 
@@ -118,6 +123,7 @@ namespace Module
                 {
                     enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
                     Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
+                    Administration.DeletePlayerCharacter(enter.Player, false);
                     return;
                 }
             }
