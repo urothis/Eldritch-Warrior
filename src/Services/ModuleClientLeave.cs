@@ -6,7 +6,6 @@ using NWN.API.Events;
 using NWN.Services;
 
 using NWNX.API;
-using Effect = NWN.API.Effect;
 
 namespace Module
 {
