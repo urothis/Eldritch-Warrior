@@ -1,11 +1,8 @@
-using System.Linq;
 using NLog;
 
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
-using NWN.API.Constants;
-using NWN.API.Effect;
 
 namespace Module
 {
