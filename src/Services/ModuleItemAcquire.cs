@@ -21,11 +21,22 @@ namespace Module
             RemoveAllItemProperties(acquireItem);
 
             /* This is to short circuit the rest of this code if we are DM */
-            if (acquireItem.AcquiredBy is NwPlayer { IsDM: false })
+            if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
             {
                 return;
             }
+
+            FixBarterExploit(acquireItem);
         }
+
+        private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
+        {
+            if (acquireItem.AcquiredBy is NwPlayer { IsDM: false } && acquireItem.AcquiredFrom is NwPlayer { IsDM: false })
+            {
+                logger.Warn("test good");
+            }
+        }
+
         private static void PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem)
         {
             if (!acquireItem.Item.PlotFlag)
