@@ -24,13 +24,9 @@ namespace Module
 
         private static void PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem)
         {
-            if (!acquireItem.AcquiredFrom.PlotFlag)
+            if (!acquireItem.Item.PlotFlag)
             {
-                StringBuilder stringBuilder = new();
-                stringBuilder.Append($"Gold Piece Value:{acquireItem.Item.GoldValue}");
-                stringBuilder.Append("\n\n");
-                stringBuilder.Append(acquireItem.Item.Description);
-                acquireItem.Item.Description = stringBuilder.ToString();
+                acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}";
             }
         }
     }
