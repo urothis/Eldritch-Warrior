@@ -19,8 +19,13 @@ namespace Module
         {
             PrintGPValueOnItem(acquireItem);
             RemoveAllItemProperties(acquireItem);
-        }
 
+            /* This is to short circuit the rest of this code if we are DM */
+            if (acquireItem.AcquiredBy is NwPlayer { IsDM: false })
+            {
+                return;
+            }
+        }
         private static void PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem)
         {
             if (!acquireItem.Item.PlotFlag)
