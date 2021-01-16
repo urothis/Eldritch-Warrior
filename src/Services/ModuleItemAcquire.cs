@@ -29,6 +29,7 @@ namespace Module
             FixBarterExploit(acquireItem);
         }
 
+        /* Fix Barter Exploit that clones items */
         private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
         {
             if (acquireItem.AcquiredBy is NwPlayer { IsDM: false } && acquireItem.AcquiredFrom is NwPlayer { IsDM: false })
