@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+
 using NLog;
 
 using NWN.API;
@@ -29,9 +32,13 @@ namespace Module
             FixBarterExploit(acquireItem);
         }
 
-        /* Fix Barter Exploit that clones items */
+        private static void SendMessageToAllPartyInArea(ModuleEvents.OnAcquireItem acquireItem)
+        {
+        }
+
         private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
         {
+            /* Fix Barter Exploit that clones items */
             if (acquireItem.AcquiredBy is NwPlayer { IsDM: false } && acquireItem.AcquiredFrom is NwPlayer { IsDM: false })
             {
                 logger.Warn("test good");
@@ -48,7 +55,15 @@ namespace Module
 
         private static void RemoveAllItemProperties(ModuleEvents.OnAcquireItem acquireItem)
         {
-
+            if (acquireItem.Item.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary))
+            {
+                IEnumerable<ItemProperty> tempIP = acquireItem.Item.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary);
+                
+                foreach (ItemProperty property in tempIP)
+                {
+                    acquireItem.Item.RemoveItemProperty(property);
+                }
+            }
         }
     }
 }
