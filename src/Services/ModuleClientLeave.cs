@@ -26,6 +26,8 @@ namespace Module
             {
                 ClientLeaveDeathLog(leave);
             }
+
+            ClientLeaveHitPoints();
         }
 
         /* Auto-Kill if we logout while in combat state */
@@ -57,7 +59,7 @@ namespace Module
             }
         }
 
-        private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave)
+        private static void ClientLeaveHitPoints()
         {
 
         }

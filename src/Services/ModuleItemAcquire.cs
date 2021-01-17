@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-using NLog;
+//using NLog;
 
 using NWN.API;
 using NWN.API.Events;
@@ -13,7 +13,7 @@ namespace Module
 
     public class ModuleItemAcquire
     {
-        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         public ModuleItemAcquire(NativeEventService native) =>
             native.Subscribe<NwModule, ModuleEvents.OnAcquireItem>(NwModule.Instance, OnAcquireItem);
@@ -30,20 +30,21 @@ namespace Module
             }
 
             FixBarterExploit(acquireItem);
+            SendMessageToAllPartyInArea();
         }
 
-        private static void SendMessageToAllPartyInArea(ModuleEvents.OnAcquireItem acquireItem)
+        private static void SendMessageToAllPartyInArea()
         {
         }
 
         private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
         {
-            if (acquireItem.AcquiredBy is NwPlayer playerA /*&& acquireItem.AcquiredFrom is NwPlayer playerB*/)
+            if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
             {
                 playerA.ExportCharacter();
-                //playerB.ExportCharacter();
+                playerB.ExportCharacter();
                 playerA.SendServerMessage("Server-vault character saved.");
-                //playerB.SendServerMessage("Server-vault character saved.");
+                playerB.SendServerMessage("Server-vault character saved.");
             }
         }
 
