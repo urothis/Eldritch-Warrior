@@ -20,7 +20,8 @@ namespace Module
         private static readonly int hours = 24;
         public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
-            schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromSeconds(1));
+            schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
+            schedulerService.Schedule(ServerMessage1410, TimeSpan.FromMinutes(1));
 
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
         }
@@ -37,6 +38,8 @@ namespace Module
             SetAreaEnviroment();
 
         }
+
+        private static async void ServerMessage1410() => await NwModule.Instance.SpeakString($"Server reset in {"30".ColorString(Color.WHITE)} minutes".ColorString(Color.ROSE), TalkVolume.Shout);
 
         private static async void ServerMessageEveryHour()
         {
