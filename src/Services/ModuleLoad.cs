@@ -77,7 +77,7 @@ namespace Module
         private static FogColor AreaSetFogColor(Random random)
         {
             var values = Enum.GetValues(typeof(FogColor));
-            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length));
+            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
             return fogColor;
         }
     }
