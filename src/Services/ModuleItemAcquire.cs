@@ -38,10 +38,12 @@ namespace Module
 
         private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
         {
-            /* Fix Barter Exploit that clones items */
-            if (acquireItem.AcquiredBy is NwPlayer { IsDM: false } && acquireItem.AcquiredFrom is NwPlayer { IsDM: false })
+            if (acquireItem.AcquiredBy is NwPlayer playerA /*&& acquireItem.AcquiredFrom is NwPlayer playerB*/)
             {
-                logger.Warn("test good");
+                playerA.ExportCharacter();
+                //playerB.ExportCharacter();
+                playerA.SendServerMessage("Server-vault character saved.");
+                //playerB.SendServerMessage("Server-vault character saved.");
             }
         }
 
@@ -58,7 +60,7 @@ namespace Module
             if (acquireItem.Item.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary))
             {
                 IEnumerable<ItemProperty> tempIP = acquireItem.Item.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary);
-                
+
                 foreach (ItemProperty property in tempIP)
                 {
                     acquireItem.Item.RemoveItemProperty(property);
