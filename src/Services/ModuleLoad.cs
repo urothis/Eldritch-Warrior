@@ -17,11 +17,21 @@ namespace Module
     [ServiceBinding(typeof(ModuleLoad))]
     public class ModuleLoad
     {
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        public ModuleLoad(NativeEventService nativeEventService) =>
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
+        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        //private readonly IDisposable schedule;
+        private readonly SchedulerService scheduler;
 
-        private async void OnModuleLoad(ModuleEvents.OnModuleLoad eventInfo)
+        public SchedulerService Scheduler => scheduler;
+
+        public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
+        {
+            this.scheduler = schedulerService;
+            IDisposable schedule = schedulerService.ScheduleRepeating(PrintEverySecondTest, TimeSpan.FromSeconds(1));
+
+            nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
+        }
+
+        private void OnModuleLoad(ModuleEvents.OnModuleLoad eventInfo)
         {
             /* Print to console when we boot*/
             Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
@@ -32,20 +42,9 @@ namespace Module
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
 
-            await ScheduleResetAsync();
         }
 
-        private static async Task ScheduleResetAsync()
-        {
-            int i = 0;
-            while (true)
-            {
-                await Task.Run(() => Thread.Sleep(1000));
-                Log.Warn($"{i}");
-                i++;
-                await NwTask.SwitchToMainThread();
-            }
-        }
+        private static void PrintEverySecondTest() => Console.WriteLine($"Current tick rate: {Util.ServerTicksPerSecond}");
 
         private static void SetAreaEnviroment()
         {
