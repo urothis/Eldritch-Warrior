@@ -1,8 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
+
 using NLog;
 
 using NWN.API;
@@ -18,15 +17,10 @@ namespace Module
     public class ModuleLoad
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        //private readonly IDisposable schedule;
-        private readonly SchedulerService scheduler;
-
-        public SchedulerService Scheduler => scheduler;
-
+        private static int hours = 24;
         public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
-            this.scheduler = schedulerService;
-            IDisposable schedule = schedulerService.ScheduleRepeating(PrintEverySecondTest, TimeSpan.FromSeconds(1));
+            schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromSeconds(1));
 
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
         }
@@ -44,7 +38,22 @@ namespace Module
 
         }
 
-        private static void PrintEverySecondTest() => Console.WriteLine($"Current tick rate: {Util.ServerTicksPerSecond}");
+        private static void ServerMessageEveryHour()
+        {
+            switch (hours)
+            {
+                case >= 2:
+                    Console.WriteLine($"Server reset in {hours--} hours.");
+                    break;
+                case 1:
+                    Console.WriteLine($"Server reset in {hours--} hour.");
+                    break;
+                default:
+                    Console.WriteLine($"Server reset.");
+                    Administration.ShutdownServer();
+                    break;
+            }
+        }
 
         private static void SetAreaEnviroment()
         {
