@@ -17,7 +17,7 @@ namespace Module
     public class ModuleLoad
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        private static int hours = 24;
+        private static readonly int hours = 24;
         public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
             schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromSeconds(1));
@@ -38,15 +38,15 @@ namespace Module
 
         }
 
-        private static void ServerMessageEveryHour()
+        private static async void ServerMessageEveryHour()
         {
             switch (hours)
             {
                 case >= 2:
-                    Console.WriteLine($"Server reset in {hours--} hours.");
+                    await NwModule.Instance.SpeakString($"Server reset in {"hours".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
                     break;
                 case 1:
-                    Console.WriteLine($"Server reset in {hours--} hour.");
+                    await NwModule.Instance.SpeakString($"Server reset in {"hour".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
                     break;
                 default:
                     Console.WriteLine($"Server reset.");
