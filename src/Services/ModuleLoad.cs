@@ -1,7 +1,8 @@
 using System;
 using System.Globalization;
 using System.Linq;
-
+using System.Threading;
+using System.Threading.Tasks;
 using NLog;
 
 using NWN.API;
@@ -16,11 +17,11 @@ namespace Module
     [ServiceBinding(typeof(ModuleLoad))]
     public class ModuleLoad
     {
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public ModuleLoad(NativeEventService nativeEventService) =>
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
 
-        private void OnModuleLoad(ModuleEvents.OnModuleLoad eventInfo)
+        private async void OnModuleLoad(ModuleEvents.OnModuleLoad eventInfo)
         {
             /* Print to console when we boot*/
             Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
@@ -30,6 +31,20 @@ namespace Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
+
+            await ScheduleResetAsync();
+        }
+
+        private static async Task ScheduleResetAsync()
+        {
+            int i = 0;
+            while (true)
+            {
+                await Task.Run(() => Thread.Sleep(1000));
+                Log.Warn($"{i}");
+                i++;
+                await NwTask.SwitchToMainThread();
+            }
         }
 
         private static void SetAreaEnviroment()
@@ -40,11 +55,10 @@ namespace Module
             /* Iterate all areas in module */
             foreach (NwArea area in NwModule.Instance.Areas.Where(area => !area.IsInterior))
             {
-                FogColor fogColor = AreaSetFogColor(random);
-                area.SetFogColor(FogType.All, fogColor);
+                area.SetFogColor(FogType.All, AreaSetFogColor(random));
                 area.SetFogAmount(FogType.All, random.Next(1, 12));
-                AreaSetSkyBox(random, area);
-                AreaSetWeather(random, area);
+                area.SkyBox = (Skybox)random.Next(Enum.GetNames(typeof(Skybox)).Length);
+                area.Weather = (WeatherType)random.Next(Enum.GetNames(typeof(Skybox)).Length);
                 AreaSkyBoxStormIcy(area);
             }
         }
@@ -60,18 +74,6 @@ namespace Module
             {
                 area.Weather = WeatherType.Snow;
             }
-        }
-
-        private static void AreaSetWeather(Random random, NwArea area)
-        {
-            WeatherType weather = (WeatherType)random.Next(Enum.GetNames(typeof(Skybox)).Length);
-            area.Weather = weather;
-        }
-
-        private static void AreaSetSkyBox(Random random, NwArea area)
-        {
-            Skybox skybox = (Skybox)random.Next(Enum.GetNames(typeof(Skybox)).Length);
-            area.SkyBox = skybox;
         }
 
         private static FogColor AreaSetFogColor(Random random)
