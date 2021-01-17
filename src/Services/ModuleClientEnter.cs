@@ -17,16 +17,11 @@ namespace Module
     [ServiceBinding(typeof(ModuleClientEnter))]
     public class ModuleClientEnter
     {
-        // Gets the server log. By default, this reports to "nwm.log"
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        // As this class has the ServiceBinding attribute, the constructor of this class will be called during server startup.
-        // The EventService is a core service from NWN.Managed. As it is defined as a constructor parameter, it will be injected during startup.
         public ModuleClientEnter(NativeEventService nativeEventService) =>
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnClientEnter>(NwModule.Instance, OnClientEnter);
 
-        // This function will be called as if the same script was called by a toolset event, or by another script.
-        // This function must always return void, or a bool in the case of a conditional.
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
             /* Check player name and boot if its inappropriate */
@@ -58,7 +53,7 @@ namespace Module
         private static void DestroyAllItems(ModuleEvents.OnClientEnter enter)
         {
             /* Iterate all items in inventory and destroy them. */
-            foreach (NwItem? item in enter.Player.Items)
+            foreach (NwItem item in enter.Player.Items)
             {
                 item.Destroy();
             }
@@ -71,10 +66,7 @@ namespace Module
             { "QRMXQ6GM", "milliorn" },
         };
 
-        private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter)
-        {
-            enter.Player.AddJournalQuestEntry("test", 1, false);
-        }
+        private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
         /*
             https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
