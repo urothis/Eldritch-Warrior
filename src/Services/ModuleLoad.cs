@@ -2,6 +2,8 @@ using System;
 using System.Globalization;
 using System.Linq;
 
+using JNogueira.Discord.Webhook.Client;
+
 using NLog;
 
 using NWN.API;
@@ -10,6 +12,7 @@ using NWN.API.Events;
 using NWN.Services;
 
 using NWNX.API;
+
 
 namespace Module
 {
@@ -21,6 +24,7 @@ namespace Module
         public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
             schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
+            schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
             schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
 
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
@@ -36,9 +40,7 @@ namespace Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
-
         }
-
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
 
         private static async void ServerMessageEveryHour()
