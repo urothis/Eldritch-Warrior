@@ -28,7 +28,7 @@ namespace Module
         {
             schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-            schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
+            schedulerService.Schedule(ModuleLoadDiscord, TimeSpan.FromSeconds(1));
 
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
         }
@@ -43,15 +43,16 @@ namespace Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
-
-            ModuleLoadDiscord();
         }
 
-        private static void ModuleLoadDiscord()
+        private static async void ModuleLoadDiscord()
         {
-            // Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
+            /*
+                https://github.com/jlnpinheiro/discord-webhook-client
+                Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
+            */
             Log.Info("START");
-            DiscordWebhookClient client = new("");
+            DiscordWebhookClient client = new("url_goes_here");
 
             // Create your DiscordMessage with all parameters of your message.
             DiscordMessage message = new(
@@ -78,11 +79,10 @@ namespace Module
                     )
                 }
             );
-
+            Log.Info("BEFORE");
             // Send the message!
-            client.SendToDiscord(message);
-            Log.Info("END");
-
+            await client.SendToDiscord(message);
+            //Log.Info("END");
         }
 
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
