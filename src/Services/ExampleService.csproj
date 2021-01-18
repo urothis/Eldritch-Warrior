@@ -23,6 +23,5 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="NWN.Managed" Version="8193.20.7" ExcludeAssets="runtime"/>
-    <PackageReference Include="discord-webhook-client" Version="2.0.0"/>
   </ItemGroup>
 </Project>

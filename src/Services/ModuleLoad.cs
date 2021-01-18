@@ -1,9 +1,7 @@
 using System;
 using System.Globalization;
-using System.IO;
 using System.Linq;
-
-using JNogueira.Discord.Webhook.Client;
+using System.Threading.Tasks;
 
 using NLog;
 
@@ -19,16 +17,14 @@ namespace Module
 {
     [ServiceBinding(typeof(ModuleLoad))]
     public class ModuleLoad
-
     {
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private static readonly int hours = 24;
 
         public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
             schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-            schedulerService.Schedule(ModuleLoadDiscord, TimeSpan.FromSeconds(1));
 
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
         }
@@ -43,46 +39,6 @@ namespace Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
-        }
-
-        private static async void ModuleLoadDiscord()
-        {
-            /*
-                https://github.com/jlnpinheiro/discord-webhook-client
-                Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
-            */
-            Log.Info("START");
-            DiscordWebhookClient client = new("url_goes_here");
-
-            // Create your DiscordMessage with all parameters of your message.
-            DiscordMessage message = new(
-                "Discord Webhook Client sent this message! " + DiscordEmoji.Grinning,
-                username: "Username",
-                avatarUrl: "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4",
-                tts: false,
-                embeds: new[]
-                {
-                    new DiscordMessageEmbed(
-                        "Embed title " + DiscordEmoji.Thumbsup,
-                        color: 0,
-                        author: new DiscordMessageEmbedAuthor("Embed 1 author name"),
-                        url: "https://github.com/jlnpinheiro/discord-webhook-client/",
-                        description: "This is a embed description.",
-                        fields: new[]
-                        {
-                            new DiscordMessageEmbedField("Field 1 name", "Field 1 value"),
-                            new DiscordMessageEmbedField("Field 2 name", "Field 2 value")
-                        },
-                        thumbnail: new DiscordMessageEmbedThumbnail("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
-                        image: new DiscordMessageEmbedImage("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
-                        footer: new DiscordMessageEmbedFooter("This is a embed footer text", "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4")
-                    )
-                }
-            );
-            Log.Info("BEFORE");
-            // Send the message!
-            await client.SendToDiscord(message);
-            //Log.Info("END");
         }
 
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
