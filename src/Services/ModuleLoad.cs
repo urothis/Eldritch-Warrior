@@ -42,7 +42,7 @@ namespace Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
-            Task.Run(() => ModuleLoadDiscord()).GetAwaiter().GetResult();
+            //ModuleLoadDiscord();
         }
 
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
@@ -100,11 +100,10 @@ namespace Module
             return fogColor;
         }
 
-        private static async Task ModuleLoadDiscord()
+/*        private static void ModuleLoadDiscord()
         {
             // Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
             var client = new DiscordWebhookClient("https://discord.com/api/webhooks/800544826633355295/CHSdo8brPx3EEHVPoGwnKaeHYVwzoIu9NbZBe3eM164gHGP_T6_nr0gk3vKyIj07a5vC");
-
             // Create your DiscordMessage with all parameters of your message.
             var message = new DiscordMessage(
                 "Discord Webhook Client sent this message! " + DiscordEmoji.Grinning,
@@ -130,9 +129,8 @@ namespace Module
                     )
                 }
             );
-
             // Send the message!
-            await client.SendToDiscord(message);
-        }
+            client.SendToDiscord(message);
+        }*/
     }
 }
