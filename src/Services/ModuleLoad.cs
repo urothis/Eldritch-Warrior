@@ -58,6 +58,7 @@ namespace Module
                     await NwModule.Instance.SpeakString($"Server reset in {"hour".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
                     break;
                 default:
+                    NwModule.Instance.ExportAllCharacters();
                     Console.WriteLine($"Server reset.");
                     Administration.ShutdownServer();
                     break;
