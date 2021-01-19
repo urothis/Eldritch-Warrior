@@ -9,6 +9,7 @@ namespace Module
     [ServiceBinding(typeof(ModulePlayerChat))]
     public class ModulePlayerChat
     {
+        private static readonly char wildcard = '!';
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         public ModulePlayerChat(NativeEventService native) =>
@@ -17,10 +18,14 @@ namespace Module
         // handle chat commands
         private void PlayerChat(ModuleEvents.OnPlayerChat playerChat)
         {
-            if (playerChat.Message.Equals("picture"))
+            ChatTools(playerChat);
+        }
+
+        private static void ChatTools(ModuleEvents.OnPlayerChat chat)
+        {
+            if (chat.Message.StartsWith(wildcard))
             {
-                Log.Warn("if (playerChat.Message.Equals(picture))");
-                playerChat.Sender.PortraitId = 100;
+
             }
         }
     }
