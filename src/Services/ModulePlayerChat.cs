@@ -1,12 +1,10 @@
-using System;
-using System.Diagnostics;
-
 using NLog;
 
 using NWN.API;
 using NWN.API.Events;
-
 using NWN.Services;
+
+using NWNX.API;
 
 
 namespace Module
@@ -15,13 +13,18 @@ namespace Module
     public class ModulePlayerChat
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        
-        public ModulePlayerChat(NativeEventService nativeEventService) =>
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerChat>(NwModule.Instance, OnChatMessage);
+
+        public ModulePlayerChat(NativeEventService native) =>
+            native.Subscribe<NwModule, ModuleEvents.OnPlayerChat>(NwModule.Instance, PlayerChat);
 
         // handle chat commands
-        private void OnChatMessage(ModuleEvents.OnPlayerChat eventInfo)
+        private void PlayerChat(ModuleEvents.OnPlayerChat playerChat)
         {
+            /* This is to short circuit the rest of this code */
+            if (playerChat.Sender.IsDM || !playerChat.Sender.IsDM)
+            {
+                return;
+            }
         }
     }
 }
