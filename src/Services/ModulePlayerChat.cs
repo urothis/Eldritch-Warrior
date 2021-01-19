@@ -9,7 +9,7 @@ namespace Module
     [ServiceBinding(typeof(ModulePlayerChat))]
     public class ModulePlayerChat
     {
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         public ModulePlayerChat(NativeEventService native) =>
             native.Subscribe<NwModule, ModuleEvents.OnPlayerChat>(NwModule.Instance, PlayerChat);
@@ -17,10 +17,10 @@ namespace Module
         // handle chat commands
         private void PlayerChat(ModuleEvents.OnPlayerChat playerChat)
         {
-            /* This is to short circuit the rest of this code */
-            if (playerChat.Sender.IsDM || !playerChat.Sender.IsDM)
+            if (playerChat.Message.Equals("picture"))
             {
-                return;
+                Log.Warn("if (playerChat.Message.Equals(picture))");
+                playerChat.Sender.PortraitId = 100;
             }
         }
     }
