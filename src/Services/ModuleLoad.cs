@@ -1,7 +1,10 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
+
+using JNogueira.Discord.Webhook.Client;
 
 using NLog;
 
@@ -39,6 +42,7 @@ namespace Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
+            Task.Run(() => ModuleLoadDiscord()).GetAwaiter().GetResult();
         }
 
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
@@ -94,6 +98,41 @@ namespace Module
             var values = Enum.GetValues(typeof(FogColor));
             FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
             return fogColor;
+        }
+
+        private static async Task ModuleLoadDiscord()
+        {
+            // Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
+            var client = new DiscordWebhookClient("https://discord.com/api/webhooks/800544826633355295/CHSdo8brPx3EEHVPoGwnKaeHYVwzoIu9NbZBe3eM164gHGP_T6_nr0gk3vKyIj07a5vC");
+
+            // Create your DiscordMessage with all parameters of your message.
+            var message = new DiscordMessage(
+                "Discord Webhook Client sent this message! " + DiscordEmoji.Grinning,
+                username: "Username",
+                avatarUrl: "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4",
+                tts: false,
+                embeds: new[]
+                {
+                    new DiscordMessageEmbed(
+                        "Embed title " + DiscordEmoji.Thumbsup,
+                        color: 0,
+                        author: new DiscordMessageEmbedAuthor("Embed 1 author name"),
+                        url: "https://github.com/jlnpinheiro/discord-webhook-client/",
+                        description: "This is a embed description.",
+                        fields: new[]
+                        {
+                            new DiscordMessageEmbedField("Field 1 name", "Field 1 value"),
+                            new DiscordMessageEmbedField("Field 2 name", "Field 2 value")
+                        },
+                        thumbnail: new DiscordMessageEmbedThumbnail("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
+                        image: new DiscordMessageEmbedImage("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
+                        footer: new DiscordMessageEmbedFooter("This is a embed footer text", "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4")
+                    )
+                }
+            );
+
+            // Send the message!
+            await client.SendToDiscord(message);
         }
     }
 }
