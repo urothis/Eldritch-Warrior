@@ -12,7 +12,7 @@ namespace Module
     [ServiceBinding(typeof(ModulePlayerChat))]
     public class ModulePlayerChat
     {
-        private static readonly char wildcard = '!';
+        private static readonly char playerWildcard = '!';
         private static readonly string notReady = "Feature not implemented.";
 
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
@@ -27,7 +27,7 @@ namespace Module
         {
             chat.Message = chat.Message.ToLower();
 
-            if (chat.Message.StartsWith(wildcard))
+            if (chat.Message.StartsWith(playerWildcard))
             {
                 chat.Message = chat.Message[1..];
                 string[] chatArray = chat.Message.Split(' ');
@@ -35,25 +35,26 @@ namespace Module
                 if (chatArray[0].Equals("portrait", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetPortrait(chat, chatArray);
-                    return;
                 }
 
                 if (chatArray[0].Equals("voice", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetVoice(chat, chatArray);
-                    return;
                 }
 
                 if (chatArray[0].Equals("skin", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetSkin(chat, chatArray);
-                    return;
                 }
 
                 if (chatArray[0].Equals("hair", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetHair(chat, chatArray);
-                    return;
+                }
+
+                if (chatArray[0].Equals("tattoocolor1", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetTattooColor1(chat, chatArray);
                 }
             }
         }
@@ -75,6 +76,14 @@ namespace Module
             if (int.TryParse(chatArray[1], out int n))
             {
                 chat.Sender.SetColor(ColorChannel.Hair, n);
+            }
+        }
+
+        private static void SetTattooColor1(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (int.TryParse(chatArray[1], out int n))
+            {
+                chat.Sender.SetColor(ColorChannel.Tattoo1, n);
             }
         }
     }
