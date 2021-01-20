@@ -36,35 +36,37 @@ namespace Module
                 {
                     SetPortrait(chat, chatArray);
                 }
-
-                if (chatArray[0].Equals("voice", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("voice", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetVoice(chat, chatArray);
                 }
-
-                if (chatArray[0].Equals("skin", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("skin", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetSkin(chat, chatArray);
                 }
-
-                if (chatArray[0].Equals("hair", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("hair", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetHair(chat, chatArray);
                 }
-
-                if (chatArray[0].Equals("tattoocolor2", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("tattoocolor2", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetTattooColor2(chat, chatArray);
                 }
-
-                if (chatArray[0].Equals("bonearm", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("armbone", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetArmBone(chat);
                 }
-
-                if (chatArray[0].Equals("skinarm", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("armskin", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetArmNormal(chat);
+                }
+                else if (chatArray[0].Equals("headprev", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetHead(chat);
+                }
+                else if (chatArray[0].Equals("headnext", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetHead(chat);
                 }
             }
         }
@@ -117,6 +119,11 @@ namespace Module
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
+        }
+
+        private static void SetHead(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Message = notReady;
         }
     }
 }
