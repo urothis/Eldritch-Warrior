@@ -1,4 +1,3 @@
-using System.Text;
 //using NLog;
 
 using NWN.API;
@@ -50,16 +49,16 @@ namespace Module
                     SetSkin(chat, chatArray);
                     return;
                 }
+
+                if (chatArray[0].Equals("hair", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetSkin(chat, chatArray);
+                    return;
+                }
             }
         }
 
-        private static void SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            if (int.TryParse(chatArray[1], out int n))
-            {
-                chat.Sender.PortraitId = n;
-            }
-        }
+        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
 
         private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
 
@@ -68,6 +67,14 @@ namespace Module
             if (int.TryParse(chatArray[1], out int n))
             {
                 chat.Sender.SetColor(ColorChannel.Skin, n);
+            }
+        }
+
+        private static void SetHair(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (int.TryParse(chatArray[1], out int n))
+            {
+                chat.Sender.SetColor(ColorChannel.Hair, n);
             }
         }
     }
