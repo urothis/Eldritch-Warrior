@@ -25,8 +25,6 @@ namespace Module
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {
-            chat.Message = chat.Message.ToLower();
-
             if (chat.Message.StartsWith(playerWildcard))
             {
                 chat.Message = chat.Message[1..];
@@ -60,13 +58,13 @@ namespace Module
                 {
                     SetArmNormal(chat);
                 }
-                else if (chatArray[0].Equals("headprev", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("head", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetHead(chat);
                 }
-                else if (chatArray[0].Equals("headnext", System.StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("tail", System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    SetHead(chat);
+                    SetTail(chat, chatArray);
                 }
             }
         }
@@ -124,6 +122,21 @@ namespace Module
         private static void SetHead(ModuleEvents.OnPlayerChat chat)
         {
             chat.Message = notReady;
+        }
+
+        private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chatArray[1].Equals("bone", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.TailType = CreatureTailType.Bone;
+            }
+            else if (chatArray[1].Equals("devil", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.TailType = CreatureTailType.Devil;
+            }
+            return chatArray[1].Equals("lizard", System.StringComparison.InvariantCultureIgnoreCase)
+                ? (chat.Sender.TailType = CreatureTailType.Lizard)
+                : (chat.Sender.TailType = CreatureTailType.None);
         }
     }
 }
