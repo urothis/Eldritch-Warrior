@@ -46,6 +46,10 @@ namespace Module
                 {
                     SetHair(chat, chatArray);
                 }
+                else if (chatArray[0].Equals("tattoocolor1", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetTattooColor1(chat, chatArray);
+                }
                 else if (chatArray[0].Equals("tattoocolor2", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetTattooColor2(chat, chatArray);
@@ -65,6 +69,10 @@ namespace Module
                 else if (chatArray[0].Equals("tail", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetTail(chat, chatArray);
+                }
+                else if (chatArray[0].Equals("wings", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetWings(chat, chatArray);
                 }
             }
         }
@@ -137,6 +145,36 @@ namespace Module
             return chatArray[1].Equals("lizard", System.StringComparison.InvariantCultureIgnoreCase)
                 ? (chat.Sender.TailType = CreatureTailType.Lizard)
                 : (chat.Sender.TailType = CreatureTailType.None);
+        }
+
+        private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chatArray[1].Equals("angel", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.WingType = CreatureWingType.Angel;
+            }
+            else if (chatArray[1].Equals("bat", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.WingType = CreatureWingType.Bat;
+            }
+            else if (chatArray[1].Equals("bird", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.WingType = CreatureWingType.Bird;
+            }
+            else if (chatArray[1].Equals("butterfly", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.WingType = CreatureWingType.Butterfly;
+            }
+            else if (chatArray[1].Equals("demon", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                return chat.Sender.WingType = CreatureWingType.Demon;
+            }
+            else
+            {
+                return chatArray[1].Equals("dragon", System.StringComparison.InvariantCultureIgnoreCase)
+                    ? (chat.Sender.WingType = CreatureWingType.Dragon)
+                    : (chat.Sender.WingType = CreatureWingType.None);
+            }
         }
     }
 }
