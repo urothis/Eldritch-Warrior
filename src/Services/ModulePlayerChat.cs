@@ -21,12 +21,19 @@ namespace Module
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {
+            chat.Message = chat.Message.ToLower();
+            
             if (chat.Message.StartsWith(wildcard))
             {
                 chat.Message = chat.Message[1..];
                 string[] chatArray = chat.Message.Split(' ');
 
                 if (chatArray[0].Equals("portrait"))
+                {
+                    SetPortrait(chat, chatArray);
+                    return;
+                }
+                if (chatArray[0].Equals("voice"))
                 {
                     SetPortrait(chat, chatArray);
                     return;
