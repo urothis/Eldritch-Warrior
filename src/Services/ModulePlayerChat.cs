@@ -37,6 +37,7 @@ namespace Module
                     SetPortrait(chat, chatArray);
                     return;
                 }
+                
                 if (chatArray[0].Equals("voice", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetVoice(chat, chatArray);
