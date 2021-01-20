@@ -64,7 +64,7 @@ namespace Module
                 }
                 else if (chatArray[0].Equals("head", System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    SetHead(chat);
+                    SetHead(chat, chatArray);
                 }
                 else if (chatArray[0].Equals("tail", System.StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -131,9 +131,12 @@ namespace Module
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
         }
 
-        private static void SetHead(ModuleEvents.OnPlayerChat chat)
+        private static void SetHead(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            chat.Message = notReady;
+            if (int.TryParse(chatArray[1], out int n))
+            {
+                chat.Sender.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
+            }
         }
 
         private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
