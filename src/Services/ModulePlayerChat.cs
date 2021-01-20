@@ -59,7 +59,12 @@ namespace Module
 
                 if (chatArray[0].Equals("bonearm", System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    SetArmBone(chat, chatArray);
+                    SetArmBone(chat);
+                }
+
+                if (chatArray[0].Equals("skinarm", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetArmNormal(chat);
                 }
             }
         }
@@ -105,6 +110,13 @@ namespace Module
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
             chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
+        }
+
+        private static void SetArmNormal(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
         }
     }
 }
