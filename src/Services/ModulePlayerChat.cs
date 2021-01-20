@@ -52,9 +52,9 @@ namespace Module
                     SetHair(chat, chatArray);
                 }
 
-                if (chatArray[0].Equals("tattoocolor1", System.StringComparison.InvariantCultureIgnoreCase))
+                if (chatArray[0].Equals("tattoocolor2", System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    SetTattooColor1(chat, chatArray);
+                    SetTattooColor2(chat, chatArray);
                 }
             }
         }
@@ -84,6 +84,14 @@ namespace Module
             if (int.TryParse(chatArray[1], out int n))
             {
                 chat.Sender.SetColor(ColorChannel.Tattoo1, n);
+            }
+        }
+
+        private static void SetTattooColor2(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (int.TryParse(chatArray[1], out int n))
+            {
+                chat.Sender.SetColor(ColorChannel.Tattoo2, n);
             }
         }
     }
