@@ -4,6 +4,7 @@ using System.Text;
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
+using NWN.API.Constants;
 
 using NWNX.API;
 
@@ -37,10 +38,16 @@ namespace Module
                     SetPortrait(chat, chatArray);
                     return;
                 }
-                
+
                 if (chatArray[0].Equals("voice", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetVoice(chat, chatArray);
+                    return;
+                }
+
+                if (chatArray[0].Equals("skin", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetSkin(chat, chatArray);
                     return;
                 }
             }
@@ -54,11 +61,13 @@ namespace Module
             }
         }
 
-        private static void SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
+
+        private static void SetSkin(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (int.TryParse(chatArray[1], out _))
+            if (int.TryParse(chatArray[1], out int n))
             {
-                chat.Message = notReady;
+                chat.Sender.SetColor(ColorChannel.Skin, n);
             }
         }
     }
