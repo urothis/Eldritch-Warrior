@@ -56,6 +56,11 @@ namespace Module
                 {
                     SetTattooColor2(chat, chatArray);
                 }
+
+                if (chatArray[0].Equals("bonearm", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetArmBone(chat, chatArray);
+                }
             }
         }
 
@@ -93,6 +98,13 @@ namespace Module
             {
                 chat.Sender.SetColor(ColorChannel.Tattoo2, n);
             }
+        }
+
+        private static void SetArmBone(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
         }
     }
 }
