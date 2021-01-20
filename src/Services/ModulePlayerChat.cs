@@ -52,7 +52,7 @@ namespace Module
 
                 if (chatArray[0].Equals("hair", System.StringComparison.InvariantCultureIgnoreCase))
                 {
-                    SetSkin(chat, chatArray);
+                    SetHair(chat, chatArray);
                     return;
                 }
             }
