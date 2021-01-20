@@ -74,6 +74,10 @@ namespace Module
                 {
                     SetWings(chat, chatArray);
                 }
+                else if (chatArray[0].Equals("alignment", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    SetAlignment(chat, chatArray);
+                }
             }
         }
 
@@ -174,6 +178,37 @@ namespace Module
                 return chatArray[1].Equals("dragon", System.StringComparison.InvariantCultureIgnoreCase)
                     ? (chat.Sender.WingType = CreatureWingType.Dragon)
                     : (chat.Sender.WingType = CreatureWingType.None);
+            }
+        }
+
+        private static void SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chatArray[1].Equals("chaotic", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                chat.Sender.LawChaosValue = 0;
+            }
+            else if (chatArray[1].Equals("evil", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                chat.Sender.GoodEvilValue = 0;
+            }
+            else if (chatArray[1].Equals("good", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                chat.Sender.GoodEvilValue = 100;
+            }
+            else if (chatArray[1].Equals("lawful", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                chat.Sender.LawChaosValue = 100;
+            }
+            else if (chatArray[1].Equals("neutral", System.StringComparison.InvariantCultureIgnoreCase))
+            {
+                if (chatArray[2].Equals("1", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    chat.Sender.LawChaosValue = 50;
+                }
+                else if (chatArray[2].Equals("2", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    chat.Sender.GoodEvilValue = 50;
+                }
             }
         }
     }
