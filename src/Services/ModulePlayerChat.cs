@@ -30,12 +30,10 @@ namespace Module
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {
-            string[] chatArray;
-
-            if (chat.Message.StartsWith(playerWildcard))
+            if (chat.Message.StartsWith(playerWildcard) || chat.Message.StartsWith(emoteWildcard))
             {
                 chat.Message = chat.Message[1..];
-                chatArray = chat.Message.Split(' ');
+                string[] chatArray = chat.Message.Split(' ');
 
                 if (chatArray[0].Equals("portrait", StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -93,13 +91,7 @@ namespace Module
                 {
                     Roster(chat);
                 }
-            }
-            else if (chat.Message.StartsWith(emoteWildcard))
-            {
-                chat.Message = chat.Message[1..];
-                chatArray = chat.Message.Split(' ');
-
-                if (chatArray[0].Equals("dice", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("dice", StringComparison.InvariantCultureIgnoreCase))
                 {
                     RollDice(chat, chatArray);
                 }
