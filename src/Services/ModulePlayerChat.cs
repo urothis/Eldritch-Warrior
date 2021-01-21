@@ -161,7 +161,7 @@ namespace Module
             }
 
             chat.Sender.Xp = xp;
-            chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} levels.".ColorString(Color.GREEN));
+            chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
             chat.Sender.ExportCharacter();
         }
 
