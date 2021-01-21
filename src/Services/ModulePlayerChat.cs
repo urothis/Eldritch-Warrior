@@ -83,6 +83,10 @@ namespace Module
                 {
                     SetAlignment(chat, chatArray);
                 }
+                else if (chatArray[0].Equals("resetlevel", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    ResetLevel(chat, chatArray);
+                }
             }
             else if (chat.Message.StartsWith(emoteWildcard))
             {
@@ -99,13 +103,34 @@ namespace Module
                 }
                 else if (chatArray[0].Equals("lfg", StringComparison.InvariantCultureIgnoreCase))
                 {
-                    NwModule.Instance.SpeakString("Hello world.", TalkVolume.Shout);
+                    NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
                 }
                 else if (chatArray[0].Equals("save", StringComparison.InvariantCultureIgnoreCase))
                 {
                     chat.Sender.ExportCharacter();
-                    chat.Sender.SendServerMessage("Character saved".ColorString(Color.GREEN));
+                    chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
                 }
+            }
+        }
+
+        private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chatArray[1].Equals("one", StringComparison.InvariantCultureIgnoreCase))
+            {
+                int xp = chat.Sender.Xp;
+                int hd = chat.Sender.Level;
+                chat.Sender.Xp = (hd * (hd - 1) / 2 * 1000) - 1;
+                chat.Sender.Xp = xp;
+                chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset one level.".ColorString(Color.GREEN));
+                chat.Sender.ExportCharacter();
+            }
+            else if (chatArray[1].Equals("all", StringComparison.InvariantCultureIgnoreCase))
+            {
+                int xp = chat.Sender.Xp;
+                chat.Sender.Xp = 0;
+                chat.Sender.Xp = xp;
+                chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset all levels.".ColorString(Color.GREEN));
+                chat.Sender.ExportCharacter();
             }
         }
 
