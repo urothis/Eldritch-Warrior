@@ -36,78 +36,63 @@ namespace Module
                 chat.Message = chat.Message.ToLower();
                 string[] chatArray = chat.Message.Split(' ');
 
-                if (chatArray[0].Equals("portrait"))
+                switch (chatArray[0])
                 {
-                    SetPortrait(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("voice"))
-                {
-                    SetVoice(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("skin"))
-                {
-                    SetSkin(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("hair"))
-                {
-                    SetHair(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("tattoocolor1"))
-                {
-                    SetTattooColor1(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("tattoocolor2"))
-                {
-                    SetTattooColor2(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("armbone"))
-                {
-                    SetArmBone(chat);
-                }
-                else if (chatArray[0].Equals("armskin"))
-                {
-                    SetArmNormal(chat);
-                }
-                else if (chatArray[0].Equals("head"))
-                {
-                    SetHead(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("tail"))
-                {
-                    SetTail(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("wings"))
-                {
-                    SetWings(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("alignment"))
-                {
-                    SetAlignment(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("resetlevel"))
-                {
-                    ResetLevel(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("roster"))
-                {
-                    Roster(chat);
-                }
-                else if (chatArray[0].Equals("dice"))
-                {
-                    RollDice(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("status"))
-                {
-                    SetStatus(chat, chatArray);
-                }
-                else if (chatArray[0].Equals("lfg"))
-                {
-                    NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
-                }
-                else if (chatArray[0].Equals("save"))
-                {
-                    chat.Sender.ExportCharacter();
-                    chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
+                    case "roster":
+                        Roster(chat);
+                        break;
+                    case "armbone":
+                        SetArmBone(chat);
+                        break;
+                    case "armskin":
+                        SetArmNormal(chat);
+                        break;
+                    case "head":
+                        SetHead(chat, chatArray);
+                        break;
+                    case "portrait":
+                        SetPortrait(chat, chatArray);
+                        break;
+                    case "voice":
+                        SetVoice(chat, chatArray);
+                        break;
+                    case "skin":
+                        SetSkin(chat, chatArray);
+                        break;
+                    case "hair":
+                        SetHair(chat, chatArray);
+                        break;
+                    case "tattoocolor1":
+                        SetTattooColor1(chat, chatArray);
+                        break;
+                    case "tattoocolor2":
+                        SetTattooColor2(chat, chatArray);
+                        break;
+                    case "tail":
+                        SetTail(chat, chatArray);
+                        break;
+                    case "wings":
+                        SetWings(chat, chatArray);
+                        break;
+                    case "alignment":
+                        SetAlignment(chat, chatArray);
+                        break;
+                    case "resetlevel":
+                        ResetLevel(chat, chatArray);
+                        break;
+                    case "dice":
+                        RollDice(chat, chatArray);
+                        break;
+                    case "status":
+                        SetStatus(chat, chatArray);
+                        break;
+                    case "lfg":
+                        NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
+                        break;
+                    case "save":
+                        chat.Sender.ExportCharacter();
+                        chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
+                        break;
                 }
             }
         }
