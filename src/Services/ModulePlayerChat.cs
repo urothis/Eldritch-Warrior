@@ -148,23 +148,21 @@ namespace Module
 
         private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
+            int xp = chat.Sender.Xp;
+
             if (chatArray[1].Equals("one", StringComparison.InvariantCultureIgnoreCase))
             {
-                int xp = chat.Sender.Xp;
                 int hd = chat.Sender.Level;
                 chat.Sender.Xp = (hd * (hd - 1) / 2 * 1000) - 1;
-                chat.Sender.Xp = xp;
-                chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset one level.".ColorString(Color.GREEN));
-                chat.Sender.ExportCharacter();
             }
             else if (chatArray[1].Equals("all", StringComparison.InvariantCultureIgnoreCase))
             {
-                int xp = chat.Sender.Xp;
                 chat.Sender.Xp = 0;
-                chat.Sender.Xp = xp;
-                chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset all levels.".ColorString(Color.GREEN));
-                chat.Sender.ExportCharacter();
             }
+
+            chat.Sender.Xp = xp;
+            chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} levels.".ColorString(Color.GREEN));
+            chat.Sender.ExportCharacter();
         }
 
         private static void SetStatus(ModuleEvents.OnPlayerChat chat, string[] chatArray)
