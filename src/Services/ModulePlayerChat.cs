@@ -33,77 +33,78 @@ namespace Module
             if (chat.Message.StartsWith(playerWildcard) || chat.Message.StartsWith(emoteWildcard))
             {
                 chat.Message = chat.Message[1..];
+                chat.Message = chat.Message.ToLower();
                 string[] chatArray = chat.Message.Split(' ');
 
-                if (chatArray[0].Equals("portrait", StringComparison.InvariantCultureIgnoreCase))
+                if (chatArray[0].Equals("portrait"))
                 {
                     SetPortrait(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("voice", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("voice"))
                 {
                     SetVoice(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("skin", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("skin"))
                 {
                     SetSkin(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("hair", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("hair"))
                 {
                     SetHair(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("tattoocolor1", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("tattoocolor1"))
                 {
                     SetTattooColor1(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("tattoocolor2", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("tattoocolor2"))
                 {
                     SetTattooColor2(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("armbone", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("armbone"))
                 {
                     SetArmBone(chat);
                 }
-                else if (chatArray[0].Equals("armskin", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("armskin"))
                 {
                     SetArmNormal(chat);
                 }
-                else if (chatArray[0].Equals("head", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("head"))
                 {
                     SetHead(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("tail", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("tail"))
                 {
                     SetTail(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("wings", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("wings"))
                 {
                     SetWings(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("alignment", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("alignment"))
                 {
                     SetAlignment(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("resetlevel", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("resetlevel"))
                 {
                     ResetLevel(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("roster", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("roster"))
                 {
                     Roster(chat);
                 }
-                else if (chatArray[0].Equals("dice", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("dice"))
                 {
                     RollDice(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("status", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("status"))
                 {
                     SetStatus(chat, chatArray);
                 }
-                else if (chatArray[0].Equals("lfg", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("lfg"))
                 {
                     NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
                 }
-                else if (chatArray[0].Equals("save", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[0].Equals("save"))
                 {
                     chat.Sender.ExportCharacter();
                     chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
@@ -142,12 +143,12 @@ namespace Module
         {
             int xp = chat.Sender.Xp;
 
-            if (chatArray[1].Equals("one", StringComparison.InvariantCultureIgnoreCase))
+            if (chatArray[1].Equals("one"))
             {
                 int hd = chat.Sender.Level;
                 chat.Sender.Xp = (hd * (hd - 1) / 2 * 1000) - 1;
             }
-            else if (chatArray[1].Equals("all", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("all"))
             {
                 chat.Sender.Xp = 0;
             }
@@ -161,7 +162,7 @@ namespace Module
         {
             System.Collections.Generic.IEnumerable<NwPlayer> server = NwModule.Instance.Players;
 
-            if (chatArray[1].Equals("like", StringComparison.InvariantCultureIgnoreCase))
+            if (chatArray[1].Equals("like"))
             {
                 foreach (NwPlayer player in server)
                 {
@@ -169,7 +170,7 @@ namespace Module
                 }
 
             }
-            else if (chatArray[1].Equals("dislike", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("dislike"))
             {
                 foreach (NwPlayer player in server)
                 {
@@ -248,44 +249,44 @@ namespace Module
 
         private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (chatArray[1].Equals("bone", StringComparison.InvariantCultureIgnoreCase))
+            if (chatArray[1].Equals("bone"))
             {
                 return chat.Sender.TailType = CreatureTailType.Bone;
             }
-            else if (chatArray[1].Equals("devil", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("devil"))
             {
                 return chat.Sender.TailType = CreatureTailType.Devil;
             }
-            return chatArray[1].Equals("lizard", StringComparison.InvariantCultureIgnoreCase)
+            return chatArray[1].Equals("lizard")
                 ? (chat.Sender.TailType = CreatureTailType.Lizard)
                 : (chat.Sender.TailType = CreatureTailType.None);
         }
 
         private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (chatArray[1].Equals("angel", StringComparison.InvariantCultureIgnoreCase))
+            if (chatArray[1].Equals("angel"))
             {
                 return chat.Sender.WingType = CreatureWingType.Angel;
             }
-            else if (chatArray[1].Equals("bat", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("bat"))
             {
                 return chat.Sender.WingType = CreatureWingType.Bat;
             }
-            else if (chatArray[1].Equals("bird", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("bird"))
             {
                 return chat.Sender.WingType = CreatureWingType.Bird;
             }
-            else if (chatArray[1].Equals("butterfly", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("butterfly"))
             {
                 return chat.Sender.WingType = CreatureWingType.Butterfly;
             }
-            else if (chatArray[1].Equals("demon", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("demon"))
             {
                 return chat.Sender.WingType = CreatureWingType.Demon;
             }
             else
             {
-                return chatArray[1].Equals("dragon", StringComparison.InvariantCultureIgnoreCase)
+                return chatArray[1].Equals("dragon")
                     ? (chat.Sender.WingType = CreatureWingType.Dragon)
                     : (chat.Sender.WingType = CreatureWingType.None);
             }
@@ -293,29 +294,29 @@ namespace Module
 
         private static void SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (chatArray[1].Equals("chaotic", StringComparison.InvariantCultureIgnoreCase))
+            if (chatArray[1].Equals("chaotic"))
             {
                 chat.Sender.LawChaosValue = 0;
             }
-            else if (chatArray[1].Equals("evil", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("evil"))
             {
                 chat.Sender.GoodEvilValue = 0;
             }
-            else if (chatArray[1].Equals("good", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("good"))
             {
                 chat.Sender.GoodEvilValue = 100;
             }
-            else if (chatArray[1].Equals("lawful", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("lawful"))
             {
                 chat.Sender.LawChaosValue = 100;
             }
-            else if (chatArray[1].Equals("neutral", StringComparison.InvariantCultureIgnoreCase))
+            else if (chatArray[1].Equals("neutral"))
             {
-                if (chatArray[2].Equals("1", StringComparison.InvariantCultureIgnoreCase))
+                if (chatArray[2].Equals("1"))
                 {
                     chat.Sender.LawChaosValue = 50;
                 }
-                else if (chatArray[2].Equals("2", StringComparison.InvariantCultureIgnoreCase))
+                else if (chatArray[2].Equals("2"))
                 {
                     chat.Sender.GoodEvilValue = 50;
                 }
