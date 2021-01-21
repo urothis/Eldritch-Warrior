@@ -101,6 +101,11 @@ namespace Module
                 {
                     NwModule.Instance.SpeakString("Hello world.", TalkVolume.Shout);
                 }
+                else if (chatArray[0].Equals("save", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    chat.Sender.ExportCharacter();
+                    chat.Sender.SendServerMessage("Character saved".ColorString(Color.GREEN));
+                }
             }
         }
 
