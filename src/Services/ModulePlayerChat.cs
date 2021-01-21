@@ -97,6 +97,9 @@ namespace Module
             }
         }
 
+        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
+        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
+
         private static StringBuilder Roster(ModuleEvents.OnPlayerChat chat)
         {
             int playerCount = 0;
@@ -122,6 +125,50 @@ namespace Module
 
             chat.Sender.SendServerMessage(stringBuilder.ToString());
             return stringBuilder;
+        }
+        private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chatArray[1].Equals("bone"))
+            {
+                return chat.Sender.TailType = CreatureTailType.Bone;
+            }
+            else if (chatArray[1].Equals("devil"))
+            {
+                return chat.Sender.TailType = CreatureTailType.Devil;
+            }
+            return chatArray[1].Equals("lizard")
+                ? (chat.Sender.TailType = CreatureTailType.Lizard)
+                : (chat.Sender.TailType = CreatureTailType.None);
+        }
+
+        private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chatArray[1].Equals("angel"))
+            {
+                return chat.Sender.WingType = CreatureWingType.Angel;
+            }
+            else if (chatArray[1].Equals("bat"))
+            {
+                return chat.Sender.WingType = CreatureWingType.Bat;
+            }
+            else if (chatArray[1].Equals("bird"))
+            {
+                return chat.Sender.WingType = CreatureWingType.Bird;
+            }
+            else if (chatArray[1].Equals("butterfly"))
+            {
+                return chat.Sender.WingType = CreatureWingType.Butterfly;
+            }
+            else if (chatArray[1].Equals("demon"))
+            {
+                return chat.Sender.WingType = CreatureWingType.Demon;
+            }
+            else
+            {
+                return chatArray[1].Equals("dragon")
+                    ? (chat.Sender.WingType = CreatureWingType.Dragon)
+                    : (chat.Sender.WingType = CreatureWingType.None);
+            }
         }
 
         private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
@@ -173,10 +220,6 @@ namespace Module
                 chat.Message = $" rolled a d{n} and got {dice}.";
             }
         }
-
-        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
-
-        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
 
         private static void SetSkin(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
@@ -231,52 +274,6 @@ namespace Module
                 chat.Sender.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
             }
         }
-
-        private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            if (chatArray[1].Equals("bone"))
-            {
-                return chat.Sender.TailType = CreatureTailType.Bone;
-            }
-            else if (chatArray[1].Equals("devil"))
-            {
-                return chat.Sender.TailType = CreatureTailType.Devil;
-            }
-            return chatArray[1].Equals("lizard")
-                ? (chat.Sender.TailType = CreatureTailType.Lizard)
-                : (chat.Sender.TailType = CreatureTailType.None);
-        }
-
-        private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            if (chatArray[1].Equals("angel"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Angel;
-            }
-            else if (chatArray[1].Equals("bat"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Bat;
-            }
-            else if (chatArray[1].Equals("bird"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Bird;
-            }
-            else if (chatArray[1].Equals("butterfly"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Butterfly;
-            }
-            else if (chatArray[1].Equals("demon"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Demon;
-            }
-            else
-            {
-                return chatArray[1].Equals("dragon")
-                    ? (chat.Sender.WingType = CreatureWingType.Dragon)
-                    : (chat.Sender.WingType = CreatureWingType.None);
-            }
-        }
-
         private static void SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             if (chatArray[1].Equals("chaotic"))
