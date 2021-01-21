@@ -1,12 +1,14 @@
+using System;
+using System.Text;
+
 using NLog;
 
 using NWN.API;
+using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-using NWN.API.Constants;
 
 using NWNX.API;
-using System;
 
 namespace Module
 {
@@ -87,6 +89,10 @@ namespace Module
                 {
                     ResetLevel(chat, chatArray);
                 }
+                else if (chatArray[0].Equals("roster", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    Roster(chat);
+                }
             }
             else if (chat.Message.StartsWith(emoteWildcard))
             {
@@ -111,6 +117,33 @@ namespace Module
                     chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
                 }
             }
+        }
+
+        private static StringBuilder Roster(ModuleEvents.OnPlayerChat chat)
+        {
+            int playerCount = 0;
+            int dmCount = 0;
+            StringBuilder stringBuilder = new("Players Online.\n".ColorString(Color.PINK));
+
+            foreach (NwPlayer player in NwModule.Instance.Players)
+            {
+                if (player.IsDM)
+                {
+                    dmCount++;
+                }
+                else
+                {
+                    playerCount++;
+                    stringBuilder.Append($"{chat.Sender.Name.ColorString(Color.PINK)} | {chat.Sender.Area.Name}\n".ColorString(Color.WHITE));
+                }
+            }
+
+            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+
+            chat.Sender.SendServerMessage(stringBuilder.ToString());
+            return stringBuilder;
         }
 
         private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
