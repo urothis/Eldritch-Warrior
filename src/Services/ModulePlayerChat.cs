@@ -6,6 +6,7 @@ using NWN.Services;
 using NWN.API.Constants;
 
 using NWNX.API;
+using System;
 
 namespace Module
 {
@@ -13,6 +14,8 @@ namespace Module
     public class ModulePlayerChat
     {
         private static readonly char playerWildcard = '!';
+        private static readonly char emoteWildcard = '$';
+
         private static readonly string notReady = "Feature not implemented.";
 
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
@@ -25,10 +28,12 @@ namespace Module
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {
+            string[] chatArray;
+
             if (chat.Message.StartsWith(playerWildcard))
             {
                 chat.Message = chat.Message[1..];
-                string[] chatArray = chat.Message.Split(' ');
+                chatArray = chat.Message.Split(' ');
 
                 if (chatArray[0].Equals("portrait", System.StringComparison.InvariantCultureIgnoreCase))
                 {
@@ -77,6 +82,77 @@ namespace Module
                 else if (chatArray[0].Equals("alignment", System.StringComparison.InvariantCultureIgnoreCase))
                 {
                     SetAlignment(chat, chatArray);
+                }
+            }
+            else if (chat.Message.StartsWith(emoteWildcard))
+            {
+                chat.Message = chat.Message[1..];
+                chatArray = chat.Message.Split(' ');
+
+                if (chatArray[0].Equals("dice", System.StringComparison.InvariantCultureIgnoreCase))
+                {
+                    RollDice(chat, chatArray);
+                }
+            }
+        }
+
+        private static void RollDice(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (int.TryParse(chatArray[1], out int n))
+            {
+                Random random = new();
+                int dice;
+                switch (n)
+                {
+                    case 2:
+                        {
+                            dice = random.Next(1, 2);
+                            chat.Message = $" rolled a d2 and got {dice}.";
+                        }
+                        break;
+                    case 4:
+                        {
+                            dice = random.Next(1, 4);
+                            chat.Message = $" rolled a d4 and got {dice}.";
+                        }
+                        break;
+                    case 6:
+                        {
+                            dice = random.Next(1, 6);
+                            chat.Message = $" rolled a d6 and got {dice}.";
+                        }
+                        break;
+                    case 8:
+                        {
+                            dice = random.Next(1, 8);
+                            chat.Message = $" rolled a d8 and got {dice}.";
+                        }
+                        break;
+                    case 10:
+                        {
+                            dice = random.Next(1, 10);
+                            chat.Message = $" rolled a d10 and got {dice}.";
+                        }
+                        break;
+                    case 12:
+                        {
+                            dice = random.Next(1, 12);
+                            chat.Message = $" rolled a d12 and got {dice}.";
+                        }
+                        break;
+                    case 20:
+                        {
+                            dice = random.Next(1, 20);
+                            chat.Message = $" rolled a d20 and got {dice}.";
+                        }
+                        break;
+                    case 100:
+                        {
+                            dice = random.Next(1, 100);
+                            chat.Message = $" rolled a d100 and got {dice}.";
+                        }
+                        break;
+                    default: break;
                 }
             }
         }
