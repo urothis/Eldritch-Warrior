@@ -97,6 +97,10 @@ namespace Module
                 {
                     SetStatus(chat, chatArray);
                 }
+                else if (chatArray[0].Equals("lfg", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    NwModule.Instance.SpeakString("Hello world.", TalkVolume.Shout);
+                }
             }
         }
 
