@@ -101,59 +101,8 @@ namespace Module
             if (int.TryParse(chatArray[1], out int n))
             {
                 Random random = new();
-                int dice;
-                switch (n)
-                {
-                    case 2:
-                        {
-                            dice = random.Next(1, 2);
-                            chat.Message = $" rolled a d2 and got {dice}.";
-                        }
-                        break;
-                    case 4:
-                        {
-                            dice = random.Next(1, 4);
-                            chat.Message = $" rolled a d4 and got {dice}.";
-                        }
-                        break;
-                    case 6:
-                        {
-                            dice = random.Next(1, 6);
-                            chat.Message = $" rolled a d6 and got {dice}.";
-                        }
-                        break;
-                    case 8:
-                        {
-                            dice = random.Next(1, 8);
-                            chat.Message = $" rolled a d8 and got {dice}.";
-                        }
-                        break;
-                    case 10:
-                        {
-                            dice = random.Next(1, 10);
-                            chat.Message = $" rolled a d10 and got {dice}.";
-                        }
-                        break;
-                    case 12:
-                        {
-                            dice = random.Next(1, 12);
-                            chat.Message = $" rolled a d12 and got {dice}.";
-                        }
-                        break;
-                    case 20:
-                        {
-                            dice = random.Next(1, 20);
-                            chat.Message = $" rolled a d20 and got {dice}.";
-                        }
-                        break;
-                    case 100:
-                        {
-                            dice = random.Next(1, 100);
-                            chat.Message = $" rolled a d100 and got {dice}.";
-                        }
-                        break;
-                    default: break;
-                }
+                int dice = random.Next(1, n);
+                chat.Message = $" rolled a d{n} and got {dice}.";
             }
         }
 
