@@ -16,10 +16,7 @@ namespace Module
     public class ModulePlayerChat
     {
         private static readonly char playerWildcard = '!';
-        private static readonly char emoteWildcard = '$';
-
         private static readonly string notReady = "Feature not implemented.";
-
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         public ModulePlayerChat(NativeEventService native) =>
@@ -30,7 +27,7 @@ namespace Module
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {
-            if (chat.Message.StartsWith(playerWildcard) || chat.Message.StartsWith(emoteWildcard))
+            if (chat.Message.StartsWith(playerWildcard))
             {
                 chat.Message = chat.Message[1..];
                 chat.Message = chat.Message.ToLower();
@@ -93,6 +90,27 @@ namespace Module
                         chat.Sender.ExportCharacter();
                         chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
                         break;
+                    case "visual":
+                        SetVisual(chat, chatArray);
+                        break;
+                }
+            }
+        }
+
+        private static void SetVisual(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid)
+            {
+                switch (chatArray[1])
+                {
+                    case "acid": NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid); break;
+                    case "cold": NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold); break;
+                    case "electric": NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical); break;
+                    case "evil": NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil); break;
+                    case "fire": NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire); break;
+                    case "holy": NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy); break;
+                    case "sonic": NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic); break;
+                    default: break;
                 }
             }
         }
