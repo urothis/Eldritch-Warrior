@@ -430,35 +430,40 @@ namespace Module
                 chat.Sender.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
             }
         }
-        private static void SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        private static NwPlayer SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (chatArray[1].Equals("chaotic"))
+            switch (chatArray[1])
             {
-                chat.Sender.LawChaosValue = 0;
+                case "chaotic":
+                    chat.Sender.LawChaosValue = 0;
+                    break;
+                case "evil":
+                    chat.Sender.GoodEvilValue = 0;
+                    break;
+                case "good":
+                    chat.Sender.GoodEvilValue = 100;
+                    break;
+                case "lawful":
+                    chat.Sender.LawChaosValue = 100;
+                    break;
+                case "neutral":
+                    if (chatArray[2].Equals("1"))
+                    {
+                        chat.Sender.LawChaosValue = 50; break;
+                    }
+                    else if (chatArray[2].Equals("2"))
+                    {
+                        chat.Sender.GoodEvilValue = 50; break;
+                    }
+                    else
+                    {
+
+                    }
+                    break;
+                default:
+                    break;
             }
-            else if (chatArray[1].Equals("evil"))
-            {
-                chat.Sender.GoodEvilValue = 0;
-            }
-            else if (chatArray[1].Equals("good"))
-            {
-                chat.Sender.GoodEvilValue = 100;
-            }
-            else if (chatArray[1].Equals("lawful"))
-            {
-                chat.Sender.LawChaosValue = 100;
-            }
-            else if (chatArray[1].Equals("neutral"))
-            {
-                if (chatArray[2].Equals("1"))
-                {
-                    chat.Sender.LawChaosValue = 50;
-                }
-                else if (chatArray[2].Equals("2"))
-                {
-                    chat.Sender.GoodEvilValue = 50;
-                }
-            }
+            return chat.Sender;
         }
     }
 }
