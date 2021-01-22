@@ -213,32 +213,16 @@ namespace Module
 
         private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (chatArray[1].Equals("angel"))
+            return (chatArray[1]) switch
             {
-                return chat.Sender.WingType = CreatureWingType.Angel;
-            }
-            else if (chatArray[1].Equals("bat"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Bat;
-            }
-            else if (chatArray[1].Equals("bird"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Bird;
-            }
-            else if (chatArray[1].Equals("butterfly"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Butterfly;
-            }
-            else if (chatArray[1].Equals("demon"))
-            {
-                return chat.Sender.WingType = CreatureWingType.Demon;
-            }
-            else
-            {
-                return chatArray[1].Equals("dragon")
-                    ? (chat.Sender.WingType = CreatureWingType.Dragon)
-                    : (chat.Sender.WingType = CreatureWingType.None);
-            }
+                "angel" => chat.Sender.WingType = CreatureWingType.Angel,
+                "bat" => chat.Sender.WingType = CreatureWingType.Bat,
+                "bird" => chat.Sender.WingType = CreatureWingType.Bird,
+                "butterfly" => chat.Sender.WingType = CreatureWingType.Butterfly,
+                "demon" => chat.Sender.WingType = CreatureWingType.Demon,
+                "dragon" => chat.Sender.WingType = CreatureWingType.Dragon,
+                _ => chat.Sender.WingType = CreatureWingType.None,
+            };
         }
 
         private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
