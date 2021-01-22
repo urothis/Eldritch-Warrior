@@ -198,17 +198,13 @@ namespace Module
         }
         private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            if (chatArray[1].Equals("bone"))
+            return (chatArray[1]) switch
             {
-                return chat.Sender.TailType = CreatureTailType.Bone;
-            }
-            else if (chatArray[1].Equals("devil"))
-            {
-                return chat.Sender.TailType = CreatureTailType.Devil;
-            }
-            return chatArray[1].Equals("lizard")
-                ? (chat.Sender.TailType = CreatureTailType.Lizard)
-                : (chat.Sender.TailType = CreatureTailType.None);
+                "bone" => chat.Sender.TailType = CreatureTailType.Bone,
+                "devil" => chat.Sender.TailType = CreatureTailType.Devil,
+                "lizard" => chat.Sender.TailType = CreatureTailType.Lizard,
+                _ => chat.Sender.TailType = CreatureTailType.None,
+            };
         }
 
         private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
