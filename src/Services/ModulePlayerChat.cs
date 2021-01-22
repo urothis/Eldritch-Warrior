@@ -103,13 +103,13 @@ namespace Module
             {
                 switch (chatArray[1])
                 {
-                    case "acid": NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid); break;
-                    case "cold": NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold); break;
-                    case "electric": NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical); break;
-                    case "evil": NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil); break;
-                    case "fire": NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire); break;
-                    case "holy": NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy); break;
-                    case "sonic": NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic); break;
+                    case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
+                    case "cold": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
+                    case "electric": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
+                    case "evil": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
+                    case "fire": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
+                    case "holy": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
+                    case "sonic": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
                     default: break;
                 }
             }
