@@ -35,6 +35,9 @@ namespace Module
 
                 switch (chatArray[0])
                 {
+                    case "!":
+                        Emote(chatArray);
+                        break;
                     case "roster":
                         Roster(chat);
                         break;
@@ -94,6 +97,51 @@ namespace Module
                         SetVisual(chat, chatArray);
                         break;
                 }
+            }
+        }
+
+        private static void Emote(/*ModuleEvents.OnPlayerChat chat, */string[] chatArray)
+        {
+            switch (chatArray[1])
+            {
+                case "bow": break;
+                case "duck": break;
+                case "dodge": break;
+                case "drink": break;
+                case "greet": break;
+                case "left": break;
+                case "right": break;
+                case "bored": break;
+                case "scratch": break;
+                case "read": break;
+                case "saulte": break;
+                case "spasm": break;
+                case "steal": break;
+                case "taunt": break;
+                case "v1": break;
+                case "v2": break;
+                case "v3": break;
+                case "c1": break;
+                case "c2": break;
+                case "back": break;
+                case "front": break;
+                case "low": break;
+                case "mid": break;
+                case "listen": break;
+                case "look": break;
+                case "meditate": break;
+                case "p1": break;
+                case "p2": break;
+                case "drunk": break;
+                case "tired": break;
+                case "squat": break;
+                case "sit": break;
+                case "spasming": break;
+                case "forceful": break;
+                case "lol": break;
+                case "normal": break;
+                case "beg": break;
+                case "worship": break;
             }
         }
 
