@@ -30,6 +30,7 @@ namespace Module
         {
             if (chat.Message.StartsWith(playerWildcard))
             {
+                //  Remove wildcard from string
                 chat.Message = chat.Message[1..];
                 chat.Message = chat.Message.ToLower();
                 string[] chatArray = chat.Message.Split(' ');
@@ -100,6 +101,129 @@ namespace Module
                     case "visual":
                         SetVisual(chat, chatArray);
                         break;
+                }
+            }
+        }
+
+        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
+        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
+
+        private static StringBuilder Roster(ModuleEvents.OnPlayerChat chat)
+        {
+            int playerCount = 0;
+            int dmCount = 0;
+            StringBuilder stringBuilder = new("Players Online.\n".ColorString(Color.PINK));
+
+            foreach (NwPlayer player in NwModule.Instance.Players)
+            {
+                if (player.IsDM)
+                {
+                    dmCount++;
+                }
+                else
+                {
+                    playerCount++;
+                    stringBuilder.Append($"{chat.Sender.Name.ColorString(Color.PINK)} | {chat.Sender.Area.Name}\n".ColorString(Color.WHITE));
+                }
+            }
+
+            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+
+            chat.Sender.SendServerMessage(stringBuilder.ToString());
+            return stringBuilder;
+        }
+
+        private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            return (chatArray[1]) switch
+            {
+                "bone" => chat.Sender.TailType = CreatureTailType.Bone,
+                "devil" => chat.Sender.TailType = CreatureTailType.Devil,
+                "lizard" => chat.Sender.TailType = CreatureTailType.Lizard,
+                _ => chat.Sender.TailType = CreatureTailType.None,
+            };
+        }
+
+        private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            return (chatArray[1]) switch
+            {
+                "angel" => chat.Sender.WingType = CreatureWingType.Angel,
+                "bat" => chat.Sender.WingType = CreatureWingType.Bat,
+                "bird" => chat.Sender.WingType = CreatureWingType.Bird,
+                "butterfly" => chat.Sender.WingType = CreatureWingType.Butterfly,
+                "demon" => chat.Sender.WingType = CreatureWingType.Demon,
+                "dragon" => chat.Sender.WingType = CreatureWingType.Dragon,
+                _ => chat.Sender.WingType = CreatureWingType.None,
+            };
+        }
+
+        private static NwPlayer SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            switch (chatArray[1])
+            {
+                case "chaotic":
+                    chat.Sender.LawChaosValue = 0;
+                    break;
+                case "evil":
+                    chat.Sender.GoodEvilValue = 0;
+                    break;
+                case "good":
+                    chat.Sender.GoodEvilValue = 100;
+                    break;
+                case "lawful":
+                    chat.Sender.LawChaosValue = 100;
+                    break;
+                case "neutral":
+                    if (chatArray[2].Equals("1"))
+                    {
+                        chat.Sender.LawChaosValue = 50; break;
+                    }
+                    else if (chatArray[2].Equals("2"))
+                    {
+                        chat.Sender.GoodEvilValue = 50; break;
+                    }
+                    else
+                    {
+
+                    }
+                    break;
+                default:
+                    break;
+            }
+            return chat.Sender;
+        }
+
+        private static void SetArmBone(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
+        }
+
+        private static void SetArmNormal(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
+        }
+
+        private static void SetVisual(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid)
+            {
+                switch (chatArray[1])
+                {
+                    case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
+                    case "cold": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
+                    case "electric": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
+                    case "evil": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
+                    case "fire": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
+                    case "holy": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
+                    case "sonic": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
+                    default: break;
                 }
             }
         }
@@ -255,78 +379,6 @@ namespace Module
             }
         }
 
-        private static void SetVisual(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid)
-            {
-                switch (chatArray[1])
-                {
-                    case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
-                    case "cold": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
-                    case "electric": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
-                    case "evil": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
-                    case "fire": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
-                    case "holy": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
-                    case "sonic": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
-                    default: break;
-                }
-            }
-        }
-
-        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
-        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
-
-        private static StringBuilder Roster(ModuleEvents.OnPlayerChat chat)
-        {
-            int playerCount = 0;
-            int dmCount = 0;
-            StringBuilder stringBuilder = new("Players Online.\n".ColorString(Color.PINK));
-
-            foreach (NwPlayer player in NwModule.Instance.Players)
-            {
-                if (player.IsDM)
-                {
-                    dmCount++;
-                }
-                else
-                {
-                    playerCount++;
-                    stringBuilder.Append($"{chat.Sender.Name.ColorString(Color.PINK)} | {chat.Sender.Area.Name}\n".ColorString(Color.WHITE));
-                }
-            }
-
-            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-
-            chat.Sender.SendServerMessage(stringBuilder.ToString());
-            return stringBuilder;
-        }
-        private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            return (chatArray[1]) switch
-            {
-                "bone" => chat.Sender.TailType = CreatureTailType.Bone,
-                "devil" => chat.Sender.TailType = CreatureTailType.Devil,
-                "lizard" => chat.Sender.TailType = CreatureTailType.Lizard,
-                _ => chat.Sender.TailType = CreatureTailType.None,
-            };
-        }
-
-        private static CreatureWingType SetWings(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            return (chatArray[1]) switch
-            {
-                "angel" => chat.Sender.WingType = CreatureWingType.Angel,
-                "bat" => chat.Sender.WingType = CreatureWingType.Bat,
-                "bird" => chat.Sender.WingType = CreatureWingType.Bird,
-                "butterfly" => chat.Sender.WingType = CreatureWingType.Butterfly,
-                "demon" => chat.Sender.WingType = CreatureWingType.Demon,
-                "dragon" => chat.Sender.WingType = CreatureWingType.Dragon,
-                _ => chat.Sender.WingType = CreatureWingType.None,
-            };
-        }
-
         private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             int xp = chat.Sender.Xp;
@@ -409,61 +461,12 @@ namespace Module
             }
         }
 
-        private static void SetArmBone(ModuleEvents.OnPlayerChat chat)
-        {
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
-        }
-
-        private static void SetArmNormal(ModuleEvents.OnPlayerChat chat)
-        {
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
-        }
-
         private static void SetHead(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             if (int.TryParse(chatArray[1], out int n))
             {
                 chat.Sender.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)n);
             }
-        }
-        private static NwPlayer SetAlignment(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            switch (chatArray[1])
-            {
-                case "chaotic":
-                    chat.Sender.LawChaosValue = 0;
-                    break;
-                case "evil":
-                    chat.Sender.GoodEvilValue = 0;
-                    break;
-                case "good":
-                    chat.Sender.GoodEvilValue = 100;
-                    break;
-                case "lawful":
-                    chat.Sender.LawChaosValue = 100;
-                    break;
-                case "neutral":
-                    if (chatArray[2].Equals("1"))
-                    {
-                        chat.Sender.LawChaosValue = 50; break;
-                    }
-                    else if (chatArray[2].Equals("2"))
-                    {
-                        chat.Sender.GoodEvilValue = 50; break;
-                    }
-                    else
-                    {
-
-                    }
-                    break;
-                default:
-                    break;
-            }
-            return chat.Sender;
         }
     }
 }
