@@ -1,4 +1,5 @@
 using System;
+using System.Globalization;
 using System.Text;
 
 using NLog;
@@ -36,7 +37,7 @@ namespace Module
                 switch (chatArray[0])
                 {
                     case "!":
-                        Emote(chatArray);
+                        Emote(chat, chatArray);
                         break;
                     case "roster":
                         Roster(chat);
@@ -100,48 +101,51 @@ namespace Module
             }
         }
 
-        private static void Emote(/*ModuleEvents.OnPlayerChat chat, */string[] chatArray)
+        private static void Emote(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            switch (chatArray[1])
+            if (float.TryParse(chatArray[2].ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out float animSpeed))
             {
-                case "bow": break;
-                case "duck": break;
-                case "dodge": break;
-                case "drink": break;
-                case "greet": break;
-                case "left": break;
-                case "right": break;
-                case "bored": break;
-                case "scratch": break;
-                case "read": break;
-                case "saulte": break;
-                case "spasm": break;
-                case "steal": break;
-                case "taunt": break;
-                case "v1": break;
-                case "v2": break;
-                case "v3": break;
-                case "c1": break;
-                case "c2": break;
-                case "back": break;
-                case "front": break;
-                case "low": break;
-                case "mid": break;
-                case "listen": break;
-                case "look": break;
-                case "meditate": break;
-                case "p1": break;
-                case "p2": break;
-                case "drunk": break;
-                case "tired": break;
-                case "squat": break;
-                case "sit": break;
-                case "spasming": break;
-                case "forceful": break;
-                case "lol": break;
-                case "normal": break;
-                case "beg": break;
-                case "worship": break;
+                switch (chatArray[1])
+                {
+                    case "bow": chat.Sender.PlayAnimation(Animation.FireForgetBow, animSpeed); break;
+                    case "duck": chat.Sender.PlayAnimation(Animation.FireForgetDodgeDuck, animSpeed); break;
+                    case "dodge": chat.Sender.PlayAnimation(Animation.FireForgetDodgeDuck, animSpeed); break;
+                    case "drink": chat.Sender.PlayAnimation(Animation.FireForgetDrink, animSpeed); break;
+                    case "greet": chat.Sender.PlayAnimation(Animation.FireForgetGreeting, animSpeed); break;
+                    case "left": chat.Sender.PlayAnimation(Animation.FireForgetHeadTurnLeft, animSpeed); break;
+                    case "right": chat.Sender.PlayAnimation(Animation.FireForgetHeadTurnRight, animSpeed); break;
+                    case "bored": chat.Sender.PlayAnimation(Animation.FireForgetPauseBored, animSpeed); break;
+                    case "scratch": chat.Sender.PlayAnimation(Animation.FireForgetPauseScratchHead, animSpeed); break;
+                    case "read": chat.Sender.PlayAnimation(Animation.FireForgetRead, animSpeed); break;
+                    case "saulte": chat.Sender.PlayAnimation(Animation.FireForgetSalute, animSpeed); break;
+                    case "spasm": chat.Sender.PlayAnimation(Animation.FireForgetSpasm, animSpeed); break;
+                    case "steal": chat.Sender.PlayAnimation(Animation.FireForgetSteal, animSpeed); break;
+                    case "taunt": chat.Sender.PlayAnimation(Animation.FireForgetTaunt, animSpeed); break;
+                    case "v1": chat.Sender.PlayAnimation(Animation.FireForgetVictory1, animSpeed); break;
+                    case "v2": chat.Sender.PlayAnimation(Animation.FireForgetVictory2, animSpeed); break;
+                    case "v3": chat.Sender.PlayAnimation(Animation.FireForgetVictory3, animSpeed); break;
+                    case "c1": chat.Sender.PlayAnimation(Animation.LoopingConjure1, animSpeed); break;
+                    case "c2": chat.Sender.PlayAnimation(Animation.LoopingConjure2, animSpeed); break;
+                    case "back": chat.Sender.PlayAnimation(Animation.LoopingDeadBack, animSpeed); break;
+                    case "front": chat.Sender.PlayAnimation(Animation.LoopingDeadFront, animSpeed); break;
+                    case "low": chat.Sender.PlayAnimation(Animation.LoopingGetLow, animSpeed); break;
+                    case "mid": chat.Sender.PlayAnimation(Animation.LoopingGetMid, animSpeed); break;
+                    case "listen": chat.Sender.PlayAnimation(Animation.LoopingListen, animSpeed); break;
+                    case "look": chat.Sender.PlayAnimation(Animation.LoopingLookFar, animSpeed); break;
+                    case "meditate": chat.Sender.PlayAnimation(Animation.LoopingMeditate, animSpeed); break;
+                    case "p1": chat.Sender.PlayAnimation(Animation.FireForgetPauseBored, animSpeed); break;
+                    case "p2": chat.Sender.PlayAnimation(Animation.FireForgetPauseScratchHead, animSpeed); break;
+                    case "drunk": chat.Sender.PlayAnimation(Animation.LoopingPauseDrunk, animSpeed); break;
+                    case "tired": chat.Sender.PlayAnimation(Animation.LoopingPauseTired, animSpeed); break;
+                    case "squat": chat.Sender.PlayAnimation(Animation.LoopingSitChair, animSpeed); break;
+                    case "sit": chat.Sender.PlayAnimation(Animation.LoopingSitCross, animSpeed); break;
+                    case "spasming": chat.Sender.PlayAnimation(Animation.LoopingSpasm, animSpeed); break;
+                    case "forceful": chat.Sender.PlayAnimation(Animation.LoopingTalkForceful, animSpeed); break;
+                    case "lol": chat.Sender.PlayAnimation(Animation.LoopingTalkLaughing, animSpeed); break;
+                    case "normal": chat.Sender.PlayAnimation(Animation.LoopingTalkNormal, animSpeed); break;
+                    case "beg": chat.Sender.PlayAnimation(Animation.LoopingTalkPleading, animSpeed); break;
+                    case "worship": chat.Sender.PlayAnimation(Animation.LoopingWorship, animSpeed); break;
+                }
             }
         }
 
