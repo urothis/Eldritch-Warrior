@@ -36,9 +36,6 @@ namespace Module
 
                 switch (chatArray[0])
                 {
-                    case "!":
-                        Emote(chat, chatArray);
-                        break;
                     case "roster":
                         Roster(chat);
                         break;
@@ -47,6 +44,9 @@ namespace Module
                         break;
                     case "armskin":
                         SetArmNormal(chat);
+                        break;
+                    case "!":
+                        Emote(chat, chatArray);
                         break;
                     case "head":
                         SetHead(chat, chatArray);
@@ -87,6 +87,9 @@ namespace Module
                     case "status":
                         SetStatus(chat, chatArray);
                         break;
+                    case "eyes":
+                        SetEyes(chat, chatArray);
+                        break;
                     case "lfg":
                         NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
                         break;
@@ -99,6 +102,108 @@ namespace Module
                         break;
                 }
             }
+        }
+
+        private static void SetEyes(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            VfxType eyes = VfxType.EyesCynTroglodyte;
+            string color = chatArray[1];
+
+            switch (chat.Sender.RacialType)
+            {
+                case RacialType.Dwarf:
+                    switch (color)
+                    {
+                        case "cyan": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesCynDwarfFemale : VfxType.EyesCynDwarfMale; break;
+                        case "green": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesGreenDwarfFemale : VfxType.EyesGreenDwarfMale; break;
+                        case "orange": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesOrgDwarfFemale : VfxType.EyesOrgDwarfMale; break;
+                        case "purple": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesPurDwarfFemale : VfxType.EyesPurDwarfMale; break;
+                        case "red": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesRedFlameDwarfFemale : VfxType.EyesRedFlameDwarfMale; break;
+                        case "white": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesWhtDwarfFemale : VfxType.EyesWhtDwarfMale; break;
+                        case "yellow": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesYelDwarfFemale : VfxType.EyesYelDwarfMale; break;
+                    }
+                    break;
+                case RacialType.Elf:
+                    switch (color)
+                    {
+                        case "cyan": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesCynElfFemale : VfxType.EyesCynElfMale; break;
+                        case "green": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesGreenElfFemale : VfxType.EyesGreenElfMale; break;
+                        case "orange": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesOrgElfFemale : VfxType.EyesOrgElfMale; break;
+                        case "purple": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesPurElfFemale : VfxType.EyesPurElfMale; break;
+                        case "red": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesRedFlameElfFemale : VfxType.EyesRedFlameElfMale; break;
+                        case "white": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesWhtElfFemale : VfxType.EyesWhtHalflingMale; break;
+                        case "yellow": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesYelElfFemale : VfxType.EyesYelElfMale; break;
+                        default: break;
+                    }
+                    break;
+                case RacialType.Gnome:
+                    switch (color)
+                    {
+                        case "cyan": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesCynGnomeFemale : VfxType.EyesCynGnomeMale; break;
+                        case "green": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesGreenGnomeFemale : VfxType.EyesGreenGnomeMale; break;
+                        case "orange": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesOrgGnomeFemale : VfxType.EyesOrgGnomeMale; break;
+                        case "purple": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesPurGnomeFemale : VfxType.EyesPurGnomeMale; break;
+                        case "red": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesRedFlameGnomeFemale : VfxType.EyesRedFlameGnomeMale; break;
+                        case "white": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesWhtGnomeFemale : VfxType.EyesWhtGnomeMale; break;
+                        case "yellow": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesYelGnomeFemale : VfxType.EyesYelGnomeMale; break;
+                        default: break;
+                    }
+                    break;
+                case RacialType.Halfling:
+                    switch (color)
+                    {
+                        case "cyan": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesCynHalflingFemale : VfxType.EyesCynHalflingMale; ; break;
+                        case "green": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesGreenHalflingFemale : VfxType.EyesGreenHalflingMale; break;
+                        case "orange": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesOrgHalflingFemale : VfxType.EyesOrgHalflingMale; break;
+                        case "purple": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesPurHalflingFemale : VfxType.EyesPurHalflingMale; break;
+                        case "red": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesRedFlameHalflingFemale : VfxType.EyesRedFlameHalflingMale; break;
+                        case "white": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesWhtHalflingFemale : VfxType.EyesWhtHalflingMale; break;
+                        case "yellow": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesYelHalflingFemale : VfxType.EyesYelHalflingMale; break;
+                        default: break;
+                    }
+                    break;
+                case RacialType.HalfOrc:
+                    switch (color)
+                    {
+                        case "cyan": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesCynHalforcFemale : VfxType.EyesCynHalforcMale; break;
+                        case "green": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesGreenHalforcFemale : VfxType.EyesGreenHalforcMale; break;
+                        case "orange": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesOrgHalforcFemale : VfxType.EyesOrgHalforcMale; break;
+                        case "purple": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesPurHalforcFemale : VfxType.EyesPurHalforcMale; break;
+                        case "red": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesRedFlameHalforcFemale : VfxType.EyesRedFlameHalforcMale; break;
+                        case "white": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesWhtHalforcFemale : VfxType.EyesWhtHalforcMale; break;
+                        case "yellow": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesYelHalforcFemale : VfxType.EyesYelHalforcMale; break;
+                        default: break;
+                    }
+                    break;
+                case RacialType.Human:
+                    switch (color)
+                    {
+                        case "cyan": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesCynHumanFemale : VfxType.EyesCynHumanMale; break;
+                        case "green": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesGreenHumanFemale : VfxType.EyesGreenHumanMale; break;
+                        case "orange": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesOrgHumanFemale : VfxType.EyesOrgHumanMale; break;
+                        case "purple": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesPurHumanFemale : VfxType.EyesPurHumanMale; break;
+                        case "red": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesRedFlameHumanFemale : VfxType.EyesRedFlameHumanMale; break;
+                        case "white": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesWhtHumanFemale : VfxType.EyesWhtHumanMale; break;
+                        case "yellow": eyes = chat.Sender.Gender == Gender.Female ? VfxType.EyesYelHumanFemale : VfxType.EyesYelHumanMale; break;
+                        default: break;
+                    }
+                    break;
+                default:
+                    switch (color)
+                    {
+                        case "cyan": eyes = VfxType.EyesCynTroglodyte; break;
+                        case "green": eyes = VfxType.EyesCynTroglodyte; break;
+                        case "orange": eyes = VfxType.EyesCynTroglodyte; break;
+                        case "purple": eyes = VfxType.EyesCynTroglodyte; break;
+                        case "red": eyes = VfxType.EyesCynTroglodyte; break;
+                        case "white": eyes = VfxType.EyesCynTroglodyte; break;
+                        case "yellow": eyes = VfxType.EyesCynTroglodyte; break;
+                        default: break;
+                    }
+                    break;
+            }
+
+            chat.Sender.ApplyEffect(EffectDuration.Permanent, NWN.API.Effect.VisualEffect(eyes));
         }
 
         private static void Emote(ModuleEvents.OnPlayerChat chat, string[] chatArray)
@@ -145,6 +250,7 @@ namespace Module
                     case "normal": chat.Sender.PlayAnimation(Animation.LoopingTalkNormal, animSpeed); break;
                     case "beg": chat.Sender.PlayAnimation(Animation.LoopingTalkPleading, animSpeed); break;
                     case "worship": chat.Sender.PlayAnimation(Animation.LoopingWorship, animSpeed); break;
+                    default: break;
                 }
             }
         }
