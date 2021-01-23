@@ -42,13 +42,6 @@ namespace Module
             ClientFirstLogin(enter);
         }
 
-        /* List of DM Public Keys */
-        private static readonly Dictionary<string, string> dmID = new()
-        {
-            { "QR4JFL9A", "milliorn" },
-            { "QRMXQ6GM", "milliorn" },
-        };
-
         private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
         {
             if (!enter.Player.Items.Any(x => x.ResRef == "item_recall"))
@@ -90,6 +83,14 @@ namespace Module
             Print to shout of client logging in if we are PC.
             Print to dm channel if dm logs in.
         */
+
+        /* List of DM Public Keys */
+        private static readonly Dictionary<string, string> dmID = new()
+        {
+            { "QR4JFL9A", "milliorn" },
+            { "QRMXQ6GM", "milliorn" },
+        };
+        
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";
