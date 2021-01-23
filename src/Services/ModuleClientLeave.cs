@@ -32,6 +32,9 @@ namespace Module
 
         /* Auto-Kill if we logout while in combat state */
         private static int ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave) => leave.Player.IsInCombat ? leave.Player.HP = -1 : leave.Player.HP;
+        
+        /* Restore hitpoints */
+        private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave) => leave.Player.GetCampaignVariable<int>("Hit_Points", leave.Player.Name).Value = leave.Player.HP;
 
         private static async void ClientPrintLogout(ModuleEvents.OnClientLeave leave)
         {
@@ -51,7 +54,5 @@ namespace Module
                 Log.Info($"LOGOUT:{client}.");
             }
         }
-
-        private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave) => leave.Player.GetCampaignVariable<int>("Hit_Points", leave.Player.Name).Value = leave.Player.HP;
     }
 }
