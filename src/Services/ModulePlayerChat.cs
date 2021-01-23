@@ -137,6 +137,20 @@ namespace Module
             return stringBuilder;
         }
 
+        private static void SetArmBone(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
+        }
+
+        private static void SetArmNormal(ModuleEvents.OnPlayerChat chat)
+        {
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
+            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
+        }
+
         private static CreatureTailType SetTail(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             return (chatArray[1]) switch
@@ -198,46 +212,31 @@ namespace Module
             return chat.Sender;
         }
 
-        private static void SetArmBone(ModuleEvents.OnPlayerChat chat)
+        private static NwItem SetVisual(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Undead);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Undead);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Undead);
-        }
-
-        private static void SetArmNormal(ModuleEvents.OnPlayerChat chat)
-        {
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftBicep, CreatureModelType.Skin);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftForearm, CreatureModelType.Skin);
-            chat.Sender.SetCreatureBodyPart(CreaturePart.LeftHand, CreatureModelType.Skin);
-        }
-
-        private static void SetVisual(ModuleEvents.OnPlayerChat chat, string[] chatArray)
-        {
-            if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid)
+            if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid && chat.Sender.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Any(x => x.PropertyType == ItemPropertyType.VisualEffect))
             {
-                if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Any(x => x.PropertyType == ItemPropertyType.VisualEffect))
-                {
-                    IEnumerable<NWN.API.ItemProperty> weaponVisualEffect = chat.Sender.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where(x => x.PropertyType == ItemPropertyType.VisualEffect);
+                IEnumerable<NWN.API.ItemProperty> weaponVisualEffect = chat.Sender.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where(x => x.PropertyType == ItemPropertyType.VisualEffect);
 
-                    foreach (NWN.API.ItemProperty property in weaponVisualEffect)
-                    {
-                        chat.Sender.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
-                    }
-                }
-                
-                switch (chatArray[1])
+                foreach (NWN.API.ItemProperty property in weaponVisualEffect)
                 {
-                    case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
-                    case "cold": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
-                    case "electric": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
-                    case "evil": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
-                    case "fire": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
-                    case "holy": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
-                    case "sonic": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
-                    default: break;
+                    chat.Sender.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
                 }
             }
+
+            switch (chatArray[1])
+            {
+                case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
+                case "cold": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Cold), EffectDuration.Permanent); break;
+                case "electric": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Electrical), EffectDuration.Permanent); break;
+                case "evil": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Evil), EffectDuration.Permanent); break;
+                case "fire": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Fire), EffectDuration.Permanent); break;
+                case "holy": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Holy), EffectDuration.Permanent); break;
+                case "sonic": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Sonic), EffectDuration.Permanent); break;
+                default: break;
+            }
+
+            return chat.Sender.GetItemInSlot(InventorySlot.RightHand);
         }
 
         private static void SetEyes(ModuleEvents.OnPlayerChat chat, string[] chatArray)
@@ -391,7 +390,7 @@ namespace Module
             }
         }
 
-        private static void ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        private static int ResetLevel(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             int xp = chat.Sender.Xp;
 
@@ -409,14 +408,14 @@ namespace Module
 
             }
 
-            chat.Sender.Xp = xp;
             chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
             chat.Sender.ExportCharacter();
+            return chat.Sender.Xp = xp;
         }
 
         private static void SetStatus(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
-            System.Collections.Generic.IEnumerable<NwPlayer> server = NwModule.Instance.Players;
+            IEnumerable<NwPlayer> server = NwModule.Instance.Players;
 
             if (chatArray[1].Equals("like"))
             {
