@@ -25,7 +25,7 @@ namespace Module
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
             /* Check player name and boot if its inappropriate */
-            ClientCheckName(enter.Player.Name, enter);
+            ClientCheckName(enter, enter.Player.Name);
 
             /* Add default journal entries */
             ClientEnterJournal(enter);
@@ -41,6 +41,13 @@ namespace Module
             /* Check if we are brand new player. */
             ClientFirstLogin(enter);
         }
+
+        /* List of DM Public Keys */
+        private static readonly Dictionary<string, string> dmID = new()
+        {
+            { "QR4JFL9A", "milliorn" },
+            { "QRMXQ6GM", "milliorn" },
+        };
 
         private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
         {
@@ -59,12 +66,21 @@ namespace Module
             }
         }
 
-        /* List of DM Public Keys */
-        private static readonly Dictionary<string, string> dmID = new()
+        private static void ClientCheckName(ModuleEvents.OnClientEnter enter, string text)
         {
-            { "QR4JFL9A", "milliorn" },
-            { "QRMXQ6GM", "milliorn" },
-        };
+            string[] censoredText = text.Split(' ');
+
+            foreach (string censoredWord in censoredText)
+            {
+                if (WordFilter.Contains(censoredWord.ToLower()))
+                {
+                    enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
+                    Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
+                    Administration.DeletePlayerCharacter(enter.Player, false);
+                    return;
+                }
+            }
+        }
 
         private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
@@ -77,7 +93,6 @@ namespace Module
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";
-            string client = $"NAME:{enter.Player.Name} ID:{enter.Player.CDKey} BIC:{Player.GetBicFileName(enter.Player)}";
             string clientDM = $"NAME:{enter.Player.Name} ID:{enter.Player.CDKey}";
 
             if (enter.Player.IsDM && dmID.ContainsKey(enter.Player.CDKey))
@@ -95,23 +110,7 @@ namespace Module
             else
             {
                 await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:{colorString}", TalkVolume.Shout);
-                Log.Info($"LOGIN:{client}.");
-            }
-        }
-
-        private static void ClientCheckName(string text, ModuleEvents.OnClientEnter enter)
-        {
-            string[] censoredText = text.Split(' ');
-
-            foreach (string censoredWord in censoredText)
-            {
-                if (WordFilter.Contains(censoredWord.ToLower()))
-                {
-                    enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
-                    Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
-                    Administration.DeletePlayerCharacter(enter.Player, false);
-                    return;
-                }
+                Log.Info($"LOGIN:{$"NAME:{enter.Player.Name} ID:{enter.Player.CDKey} BIC:{Player.GetBicFileName(enter.Player)}"}.");
             }
         }
 

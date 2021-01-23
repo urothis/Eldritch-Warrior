@@ -33,6 +33,10 @@ namespace Module
             SendMessageToAllPartyInArea();
         }
 
+        private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
+                ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
+                : acquireItem.Item.OriginalDescription;
+                
         private static void SendMessageToAllPartyInArea()
         {
         }
@@ -47,10 +51,6 @@ namespace Module
                 playerB.SendServerMessage("Server-vault character saved.");
             }
         }
-
-        private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
-                ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
-                : acquireItem.Item.OriginalDescription;
 
         private static void RemoveAllItemProperties(ModuleEvents.OnAcquireItem acquireItem)
         {
