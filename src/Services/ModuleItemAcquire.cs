@@ -36,15 +36,24 @@ namespace Module
 
             }
 
-            SendMessageToAllPartyInArea();
+            SendMessageToAllPartyInArea(acquireItem, acquireItem.Item.Name, 40);
         }
 
         private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
                 ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
                 : acquireItem.Item.OriginalDescription;
 
-        private static void SendMessageToAllPartyInArea()
+        private static void SendMessageToAllPartyInArea(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
         {
+            if (acquireItem.AcquiredBy is NwPlayer player)
+            {
+                player.SendServerMessage(message);
+                
+                foreach (NwPlayer member in player.PartyMembers.Where(member => member.Distance(player) == distance))
+                {
+                    member.SendServerMessage(message);
+                }
+            }
         }
 
         private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
