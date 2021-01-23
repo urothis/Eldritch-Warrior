@@ -225,7 +225,7 @@ namespace Module
                         chat.Sender.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
                     }
                 }
-                /*  Fix is needed to remove visual before adding another one on there.  Currently once its set you can't undo it. */
+                
                 switch (chatArray[1])
                 {
                     case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
