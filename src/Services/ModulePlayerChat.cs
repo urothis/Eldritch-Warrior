@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 
 using NLog;
@@ -214,6 +216,15 @@ namespace Module
         {
             if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid)
             {
+                if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Any(x => x.PropertyType == ItemPropertyType.VisualEffect))
+                {
+                    IEnumerable<NWN.API.ItemProperty> weaponVisualEffect = chat.Sender.GetItemInSlot(InventorySlot.RightHand).ItemProperties.Where(x => x.PropertyType == ItemPropertyType.VisualEffect);
+
+                    foreach (NWN.API.ItemProperty property in weaponVisualEffect)
+                    {
+                        chat.Sender.GetItemInSlot(InventorySlot.RightHand).RemoveItemProperty(property);
+                    }
+                }
                 /*  Fix is needed to remove visual before adding another one on there.  Currently once its set you can't undo it. */
                 switch (chatArray[1])
                 {
