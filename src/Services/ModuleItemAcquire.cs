@@ -4,6 +4,7 @@ using System.Linq;
 //using NLog;
 
 using NWN.API;
+using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 
@@ -33,22 +34,27 @@ namespace Module
             {
                 FixBarterExploit(acquireItem);
                 return;
-
             }
 
-            SendMessageToAllPartyInArea(acquireItem, acquireItem.Item.Name, 40);
+            NotifyLoot(acquireItem);
+        }
+
+        private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem)
+        {
+            string message = $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.";
+            SendMessageToAllPartyWithinDistance(acquireItem, message, 40);
         }
 
         private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
                 ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
                 : acquireItem.Item.OriginalDescription;
 
-        private static void SendMessageToAllPartyInArea(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
+        private static void SendMessageToAllPartyWithinDistance(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
         {
             if (acquireItem.AcquiredBy is NwPlayer player)
             {
                 player.SendServerMessage(message);
-                
+
                 foreach (NwPlayer member in player.PartyMembers.Where(member => member.Distance(player) == distance))
                 {
                     member.SendServerMessage(message);
