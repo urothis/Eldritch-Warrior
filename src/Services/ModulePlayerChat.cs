@@ -214,6 +214,7 @@ namespace Module
         {
             if (chat.Sender.GetItemInSlot(InventorySlot.RightHand).IsValid)
             {
+                /*  Fix is needed to remove visual before adding another one on there.  Currently once its set you can't undo it. */
                 switch (chatArray[1])
                 {
                     case "acid": chat.Sender.GetItemInSlot(InventorySlot.RightHand).AddItemProperty(NWN.API.ItemProperty.VisualEffect(ItemVisual.Acid), EffectDuration.Permanent); break;
@@ -392,6 +393,10 @@ namespace Module
             {
                 chat.Sender.Xp = 0;
             }
+            else
+            {
+
+            }
 
             chat.Sender.Xp = xp;
             chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
@@ -416,6 +421,10 @@ namespace Module
                 {
                     player.SetPCReputation(false, chat.Sender);
                 }
+            }
+            else
+            {
+
             }
         }
 
