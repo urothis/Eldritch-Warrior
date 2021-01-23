@@ -40,7 +40,12 @@ namespace Module
 
             /* Check if we are brand new player. */
             ClientFirstLogin(enter);
+
+            /* Restore hitpoints */
+            ClientEnterHitPoints(enter);
         }
+
+        private static void ClientEnterHitPoints(ModuleEvents.OnClientEnter enter) => enter.Player.HP = enter.Player.GetCampaignVariable<int>("Hit_Points", enter.Player.Name).Value;
 
         private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
         {
@@ -90,7 +95,7 @@ namespace Module
             { "QR4JFL9A", "milliorn" },
             { "QRMXQ6GM", "milliorn" },
         };
-        
+
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";

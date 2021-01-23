@@ -27,7 +27,7 @@ namespace Module
                 ClientLeaveDeathLog(leave);
             }
 
-            ClientLeaveHitPoints();
+            ClientLeaveHitPoints(leave);
         }
 
         /* Auto-Kill if we logout while in combat state */
@@ -52,9 +52,6 @@ namespace Module
             }
         }
 
-        private static void ClientLeaveHitPoints()
-        {
-
-        }
+        private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave) => leave.Player.GetCampaignVariable<int>("Hit_Points", leave.Player.Name).Value = leave.Player.HP;
     }
 }
