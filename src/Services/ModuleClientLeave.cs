@@ -31,14 +31,7 @@ namespace Module
         }
 
         /* Auto-Kill if we logout while in combat state */
-        private static void ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave)
-        {
-            if (leave.Player.IsInCombat)
-            {
-                Log.Warn("deathlog");
-                leave.Player.HP = -11;
-            }
-        }
+        private static int ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave) => leave.Player.IsInCombat ? leave.Player.HP = -11 : leave.Player.HP;
 
         private static async void ClientPrintLogout(ModuleEvents.OnClientLeave leave)
         {
