@@ -101,11 +101,6 @@ namespace Module
 
         private static void ClientCheckName(string text, ModuleEvents.OnClientEnter enter)
         {
-            if (text == null)
-            {
-                throw new ArgumentNullException(nameof(text));
-            }
-
             string[] censoredText = text.Split(' ');
 
             foreach (string censoredWord in censoredText)
