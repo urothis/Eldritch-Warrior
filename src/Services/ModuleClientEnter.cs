@@ -82,13 +82,6 @@ namespace Module
 
         private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
-        /*
-            https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
-
-            Print to shout of client logging in if we are PC.
-            Print to dm channel if dm logs in.
-        */
-
         /* List of DM Public Keys */
         private static readonly Dictionary<string, string> dmID = new()
         {
@@ -96,6 +89,12 @@ namespace Module
             { "QRMXQ6GM", "milliorn" },
         };
 
+        /*
+            https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
+
+            Print to shout of client logging in if we are PC.
+            Print to dm channel if dm logs in.
+        */
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";
