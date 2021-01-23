@@ -84,7 +84,7 @@ namespace Module
                     case "resetlevel":
                         ResetLevel(chat, chatArray);
                         break;
-                    case "dice":
+                    case "roll":
                         RollDice(chat, chatArray);
                         break;
                     case "status":
@@ -438,13 +438,18 @@ namespace Module
             }
         }
 
-        private static void RollDice(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        private static string RollDice(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             if (int.TryParse(chatArray[1], out int n))
             {
                 Random random = new();
                 int dice = random.Next(1, n);
-                chat.Message = $" rolled a d{n} and got {dice}.";
+                return chat.Message = $" rolled a d{n} and got {dice}.";
+            }
+            else
+            {
+                Log.Info(nameof(RollDice));
+                return $"ERROR | RollDice{chat}{chatArray[1]}";
             }
         }
 
