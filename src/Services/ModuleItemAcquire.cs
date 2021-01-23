@@ -48,13 +48,9 @@ namespace Module
             }
         }
 
-        private static void PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem)
-        {
-            if (!acquireItem.Item.PlotFlag)
-            {
-                acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}";
-            }
-        }
+        private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
+                ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
+                : acquireItem.Item.OriginalDescription;
 
         private static void RemoveAllItemProperties(ModuleEvents.OnAcquireItem acquireItem)
         {
