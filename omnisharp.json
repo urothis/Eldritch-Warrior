@@ -11,6 +11,9 @@
     "NewLinesForBracesInAccessors": true,
     "NewLineForElse": true,
     "NewLineForCatch": true,
-    "NewLineForFinally": true
+    "NewLineForFinally": true,
+    "NewLineForClausesInQuery": true,
+    "NewLineForMembersInAnonymousTypes": true,
+    "NewLineForMembersInObjectInit": true
   }
 }
