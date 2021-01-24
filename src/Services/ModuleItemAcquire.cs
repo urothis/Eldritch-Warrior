@@ -1,10 +1,8 @@
-using System.Collections.Generic;
 using System.Linq;
 
 //using NLog;
 
 using NWN.API;
-using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 
@@ -22,7 +20,7 @@ namespace Module
         private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)
         {
             PrintGPValueOnItem(acquireItem);
-            RemoveAllItemProperties(acquireItem);
+            CheckAllItemProperties(acquireItem);
 
             /* This is to short circuit the rest of this code if we are DM */
             if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
@@ -39,15 +37,13 @@ namespace Module
             NotifyLoot(acquireItem);
         }
 
-        private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem)
-        {
-            string message = $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.";
-            SendMessageToAllPartyWithinDistance(acquireItem, message, 40);
-        }
+        private static bool HasTemporaryItemProperty(ModuleEvents.OnAcquireItem acquireItem) => acquireItem.Item.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
 
         private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
                 ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
                 : acquireItem.Item.OriginalDescription;
+
+        private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendMessageToAllPartyWithinDistance(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
 
         private static void SendMessageToAllPartyWithinDistance(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
         {
@@ -73,16 +69,19 @@ namespace Module
             }
         }
 
-        private static void RemoveAllItemProperties(ModuleEvents.OnAcquireItem acquireItem)
+        private static void CheckAllItemProperties(ModuleEvents.OnAcquireItem acquireItem)
         {
-            if (acquireItem.Item.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary))
+            if (HasTemporaryItemProperty(acquireItem))
             {
-                IEnumerable<ItemProperty> tempIP = acquireItem.Item.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary);
+                RemoveAllTemporaryItemProperties(acquireItem);
+            }
+        }
 
-                foreach (ItemProperty property in tempIP)
-                {
-                    acquireItem.Item.RemoveItemProperty(property);
-                }
+        private static void RemoveAllTemporaryItemProperties(ModuleEvents.OnAcquireItem acquireItem)
+        {
+            foreach (ItemProperty property in acquireItem.Item.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
+            {
+                acquireItem.Item.RemoveItemProperty(property);
             }
         }
     }
