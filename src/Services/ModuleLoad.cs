@@ -1,10 +1,8 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 
-using JNogueira.Discord.Webhook.Client;
+//using JNogueira.Discord.Webhook.Client;
 
 using NLog;
 
@@ -35,13 +33,23 @@ namespace Module
         {
             /* Print to console when we boot*/
             Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
-
             /* NWNX */
             Administration.GameOptions.RestoreSpellUses = true;
-
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
+            SetModuleSwitches();
+
             //ModuleLoadDiscord();
+        }
+
+        private static void SetModuleSwitches()
+        {
+            /* Module Switches */
+            _ = NwModule.Instance.GetLocalVariable<string>("MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("MODULE_VAR_AI_STOP_EXPERTISE_ABUSE").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("MODULE_SWITCH_NO_RANDOM_MONSTER_LOOT").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_EXTERNAL_ONLY").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_NO_UNDERGROUND").Value;
         }
 
         private static FogColor AreaSetFogColor(Random random)
