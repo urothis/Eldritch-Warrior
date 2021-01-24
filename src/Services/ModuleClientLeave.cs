@@ -32,7 +32,7 @@ namespace Module
 
         /* Auto-Kill if we logout while in combat state */
         private static int ClientLeaveDeathLog(ModuleEvents.OnClientLeave leave) => leave.Player.IsInCombat ? leave.Player.HP = -1 : leave.Player.HP;
-        
+
         /* Restore hitpoints */
         private static void ClientLeaveHitPoints(ModuleEvents.OnClientLeave leave) => leave.Player.GetCampaignVariable<int>("Hit_Points", leave.Player.Name).Value = leave.Player.HP;
 
@@ -46,7 +46,6 @@ namespace Module
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(Color.GREEN)}:{colorString}");
                 Log.Info($"DM Exiting:{clientDM}.");
-
             }
             else
             {
