@@ -30,17 +30,47 @@ namespace Module
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {
-            if (chat.Message.StartsWith(playerWildcard))
+            if (TriggerChatTools(chat))
             {
-                //  Remove wildcard from string
                 chat.Message = chat.Message[1..];
                 chat.Message = chat.Message.ToLower();
                 string[] chatArray = chat.Message.Split(' ');
-                TriggerChatTools(chat, chatArray);
+                ChatToolsRouter(chat, chatArray);
             }
         }
 
-        private static void TriggerChatTools(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
+        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
+        private static bool TriggerChatTools(ModuleEvents.OnPlayerChat chat) => chat.Message.StartsWith(playerWildcard);
+
+        private static StringBuilder Roster(ModuleEvents.OnPlayerChat chat)
+        {
+            int playerCount = 0;
+            int dmCount = 0;
+            StringBuilder stringBuilder = new("Players Online.\n".ColorString(Color.PINK));
+
+            foreach (NwPlayer player in NwModule.Instance.Players)
+            {
+                if (player.IsDM)
+                {
+                    dmCount++;
+                }
+                else
+                {
+                    playerCount++;
+                    stringBuilder.Append($"{chat.Sender.Name.ColorString(Color.PINK)} | {chat.Sender.Area.Name}\n".ColorString(Color.WHITE));
+                }
+            }
+
+            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
+
+            chat.Sender.SendServerMessage(stringBuilder.ToString());
+            return stringBuilder;
+        }
+
+        private static void ChatToolsRouter(ModuleEvents.OnPlayerChat chat, string[] chatArray)
         {
             switch (chatArray[0])
             {
@@ -111,36 +141,6 @@ namespace Module
                 default:
                     break;
             }
-        }
-
-        private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
-        private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
-
-        private static StringBuilder Roster(ModuleEvents.OnPlayerChat chat)
-        {
-            int playerCount = 0;
-            int dmCount = 0;
-            StringBuilder stringBuilder = new("Players Online.\n".ColorString(Color.PINK));
-
-            foreach (NwPlayer player in NwModule.Instance.Players)
-            {
-                if (player.IsDM)
-                {
-                    dmCount++;
-                }
-                else
-                {
-                    playerCount++;
-                    stringBuilder.Append($"{chat.Sender.Name.ColorString(Color.PINK)} | {chat.Sender.Area.Name}\n".ColorString(Color.WHITE));
-                }
-            }
-
-            stringBuilder.Append($"Player Online | {playerCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-            stringBuilder.Append($"DM Online | {dmCount.ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-            stringBuilder.Append($"Total Online | {(playerCount + dmCount).ToString().ColorString(Color.WHITE)}\n".ColorString(Color.PINK));
-
-            chat.Sender.SendServerMessage(stringBuilder.ToString());
-            return stringBuilder;
         }
 
         private static void SetArmBone(ModuleEvents.OnPlayerChat chat)
