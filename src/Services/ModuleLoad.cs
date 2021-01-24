@@ -44,25 +44,14 @@ namespace Module
             //ModuleLoadDiscord();
         }
 
-        private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
-
-        private static async void ServerMessageEveryHour()
+        private static FogColor AreaSetFogColor(Random random)
         {
-            switch (hours)
-            {
-                case >= 2:
-                    await NwModule.Instance.SpeakString($"Server reset in {"hours".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
-                    break;
-                case 1:
-                    await NwModule.Instance.SpeakString($"Server reset in {"hour".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
-                    break;
-                default:
-                    NwModule.Instance.ExportAllCharacters();
-                    Console.WriteLine($"Server reset.");
-                    Administration.ShutdownServer();
-                    break;
-            }
+            var values = Enum.GetValues(typeof(FogColor));
+            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
+            return fogColor;
         }
+
+        private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
 
         private static void SetAreaEnviroment()
         {
@@ -93,44 +82,54 @@ namespace Module
             }
         }
 
-        private static FogColor AreaSetFogColor(Random random)
-        {
-            var values = Enum.GetValues(typeof(FogColor));
-            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
-            return fogColor;
-        }
-
-/*        private static void ModuleLoadDiscord()
-        {
-            // Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
-            var client = new DiscordWebhookClient("https://discord.com/api/webhooks/800544826633355295/CHSdo8brPx3EEHVPoGwnKaeHYVwzoIu9NbZBe3eM164gHGP_T6_nr0gk3vKyIj07a5vC");
-            // Create your DiscordMessage with all parameters of your message.
-            var message = new DiscordMessage(
-                "Discord Webhook Client sent this message! " + DiscordEmoji.Grinning,
-                username: "Username",
-                avatarUrl: "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4",
-                tts: false,
-                embeds: new[]
+        /*        private static void ModuleLoadDiscord()
                 {
-                    new DiscordMessageEmbed(
-                        "Embed title " + DiscordEmoji.Thumbsup,
-                        color: 0,
-                        author: new DiscordMessageEmbedAuthor("Embed 1 author name"),
-                        url: "https://github.com/jlnpinheiro/discord-webhook-client/",
-                        description: "This is a embed description.",
-                        fields: new[]
+                    // Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
+                    var client = new DiscordWebhookClient("https://discord.com/api/webhooks/800544826633355295/CHSdo8brPx3EEHVPoGwnKaeHYVwzoIu9NbZBe3eM164gHGP_T6_nr0gk3vKyIj07a5vC");
+                    // Create your DiscordMessage with all parameters of your message.
+                    var message = new DiscordMessage(
+                        "Discord Webhook Client sent this message! " + DiscordEmoji.Grinning,
+                        username: "Username",
+                        avatarUrl: "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4",
+                        tts: false,
+                        embeds: new[]
                         {
-                            new DiscordMessageEmbedField("Field 1 name", "Field 1 value"),
-                            new DiscordMessageEmbedField("Field 2 name", "Field 2 value")
-                        },
-                        thumbnail: new DiscordMessageEmbedThumbnail("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
-                        image: new DiscordMessageEmbedImage("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
-                        footer: new DiscordMessageEmbedFooter("This is a embed footer text", "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4")
-                    )
-                }
-            );
-            // Send the message!
-            client.SendToDiscord(message);
-        }*/
+                            new DiscordMessageEmbed(
+                                "Embed title " + DiscordEmoji.Thumbsup,
+                                color: 0,
+                                author: new DiscordMessageEmbedAuthor("Embed 1 author name"),
+                                url: "https://github.com/jlnpinheiro/discord-webhook-client/",
+                                description: "This is a embed description.",
+                                fields: new[]
+                                {
+                                    new DiscordMessageEmbedField("Field 1 name", "Field 1 value"),
+                                    new DiscordMessageEmbedField("Field 2 name", "Field 2 value")
+                                },
+                                thumbnail: new DiscordMessageEmbedThumbnail("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
+                                image: new DiscordMessageEmbedImage("https://avatars3.githubusercontent.com/u/24236993?s=460&v=4"),
+                                footer: new DiscordMessageEmbedFooter("This is a embed footer text", "https://avatars3.githubusercontent.com/u/24236993?s=460&v=4")
+                            )
+                        }
+                    );
+                    // Send the message!
+                    client.SendToDiscord(message);
+                }*/
+        private static async void ServerMessageEveryHour()
+        {
+            switch (hours)
+            {
+                case >= 2:
+                    await NwModule.Instance.SpeakString($"Server reset in {"hours".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
+                    break;
+                case 1:
+                    await NwModule.Instance.SpeakString($"Server reset in {"hour".ColorString(Color.WHITE)}".ColorString(Color.ROSE), TalkVolume.Shout);
+                    break;
+                default:
+                    NwModule.Instance.ExportAllCharacters();
+                    Console.WriteLine($"Server reset.");
+                    Administration.ShutdownServer();
+                    break;
+            }
+        }
     }
 }
