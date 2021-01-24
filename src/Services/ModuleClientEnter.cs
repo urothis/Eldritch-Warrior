@@ -25,12 +25,16 @@ namespace Module
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
         {
             /* Check player name and boot if its inappropriate */
-            ClientCheckName(enter, enter.Player.Name);
+            if (ClientCheckName(enter, enter.Player.Name))
+            {
+                Administration.DeletePlayerCharacter(enter.Player, false);
+                return;
+            }
+
+            await ClientPrintLogin(enter);
 
             /* Add default journal entries */
             ClientEnterJournal(enter);
-
-            await ClientPrintLogin(enter);
 
             /* This is to short circuit the rest of this code if we are DM */
             if (enter.Player.IsDM)
@@ -44,6 +48,8 @@ namespace Module
             /* Restore hitpoints */
             ClientEnterHitPoints(enter);
         }
+
+        private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
         private static void ClientEnterHitPoints(ModuleEvents.OnClientEnter enter) => enter.Player.HP = enter.Player.GetCampaignVariable<int>("Hit_Points", enter.Player.Name).Value;
 
@@ -64,7 +70,7 @@ namespace Module
             }
         }
 
-        private static void ClientCheckName(ModuleEvents.OnClientEnter enter, string text)
+        private static bool ClientCheckName(ModuleEvents.OnClientEnter enter, string text)
         {
             string[] censoredText = text.Split(' ');
 
@@ -74,13 +80,11 @@ namespace Module
                 {
                     enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
                     Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
-                    Administration.DeletePlayerCharacter(enter.Player, false);
-                    return;
+                    return true;
                 }
             }
+            return false;
         }
-
-        private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
         /* List of DM Public Keys */
         private static readonly Dictionary<string, string> dmID = new()
