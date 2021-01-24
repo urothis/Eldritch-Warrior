@@ -36,74 +36,80 @@ namespace Module
                 chat.Message = chat.Message[1..];
                 chat.Message = chat.Message.ToLower();
                 string[] chatArray = chat.Message.Split(' ');
+                TriggerChatTools(chat, chatArray);
+            }
+        }
 
-                switch (chatArray[0])
-                {
-                    case "roster":
-                        Roster(chat);
-                        break;
-                    case "armbone":
-                        SetArmBone(chat);
-                        break;
-                    case "armskin":
-                        SetArmNormal(chat);
-                        break;
-                    case "!":
-                        Emote(chat, chatArray);
-                        break;
-                    case "head":
-                        SetHead(chat, chatArray);
-                        break;
-                    case "portrait":
-                        SetPortrait(chat, chatArray);
-                        break;
-                    case "voice":
-                        SetVoice(chat, chatArray);
-                        break;
-                    case "skin":
-                        SetSkin(chat, chatArray);
-                        break;
-                    case "hair":
-                        SetHair(chat, chatArray);
-                        break;
-                    case "tattoocolor1":
-                        SetTattooColor1(chat, chatArray);
-                        break;
-                    case "tattoocolor2":
-                        SetTattooColor2(chat, chatArray);
-                        break;
-                    case "tail":
-                        SetTail(chat, chatArray);
-                        break;
-                    case "wings":
-                        SetWings(chat, chatArray);
-                        break;
-                    case "alignment":
-                        SetAlignment(chat, chatArray);
-                        break;
-                    case "resetlevel":
-                        ResetLevel(chat, chatArray);
-                        break;
-                    case "roll":
-                        RollDice(chat, chatArray);
-                        break;
-                    case "status":
-                        SetStatus(chat, chatArray);
-                        break;
-                    case "eyes":
-                        SetEyes(chat, chatArray);
-                        break;
-                    case "lfg":
-                        NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
-                        break;
-                    case "save":
-                        chat.Sender.ExportCharacter();
-                        chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
-                        break;
-                    case "visual":
-                        SetVisual(chat, chatArray);
-                        break;
-                }
+        private static void TriggerChatTools(ModuleEvents.OnPlayerChat chat, string[] chatArray)
+        {
+            switch (chatArray[0])
+            {
+                case "roster":
+                    Roster(chat);
+                    break;
+                case "armbone":
+                    SetArmBone(chat);
+                    break;
+                case "armskin":
+                    SetArmNormal(chat);
+                    break;
+                case "!":
+                    Emote(chat, chatArray);
+                    break;
+                case "head":
+                    SetHead(chat, chatArray);
+                    break;
+                case "portrait":
+                    SetPortrait(chat, chatArray);
+                    break;
+                case "voice":
+                    SetVoice(chat, chatArray);
+                    break;
+                case "skin":
+                    SetSkin(chat, chatArray);
+                    break;
+                case "hair":
+                    SetHair(chat, chatArray);
+                    break;
+                case "tattoocolor1":
+                    SetTattooColor1(chat, chatArray);
+                    break;
+                case "tattoocolor2":
+                    SetTattooColor2(chat, chatArray);
+                    break;
+                case "tail":
+                    SetTail(chat, chatArray);
+                    break;
+                case "wings":
+                    SetWings(chat, chatArray);
+                    break;
+                case "alignment":
+                    SetAlignment(chat, chatArray);
+                    break;
+                case "resetlevel":
+                    ResetLevel(chat, chatArray);
+                    break;
+                case "roll":
+                    RollDice(chat, chatArray);
+                    break;
+                case "status":
+                    SetStatus(chat, chatArray);
+                    break;
+                case "eyes":
+                    SetEyes(chat, chatArray);
+                    break;
+                case "lfg":
+                    NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
+                    break;
+                case "save":
+                    chat.Sender.ExportCharacter();
+                    chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
+                    break;
+                case "visual":
+                    SetVisual(chat, chatArray);
+                    break;
+                default:
+                    break;
             }
         }
 
