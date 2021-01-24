@@ -21,7 +21,6 @@ namespace Module
         {
             ClientPrintLogout(leave);
 
-            /* This is to short circuit the rest of this code if we are DM */
             if (!leave.Player.IsDM)
             {
                 ClientLeaveDeathLog(leave);
