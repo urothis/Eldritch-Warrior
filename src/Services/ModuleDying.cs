@@ -21,12 +21,27 @@ namespace Module
 
         private static void BleedOut(ModuleEvents.OnPlayerDying dying, int bleedAmount)
         {
-            dying.Player.HP = bleedAmount > 0 ? dying.Player.HP-- : dying.Player.HP++;
-
-            if (PlayerIsDead(dying))
+            if (dying.Player.HP <= 0)
             {
-                PlayerHasDied(dying);
-                return;
+                if (bleedAmount > 0)
+                {
+                    dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Damage(bleedAmount));
+                }
+                else
+                {
+                    dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Heal(-bleedAmount));
+                }
+
+                if (PlayerIsDead(dying))
+                {
+                    PlayerHasDied(dying);
+                    return;
+                }
+
+                if (bleedAmount > 0)
+                {
+
+                }
             }
         }
 
