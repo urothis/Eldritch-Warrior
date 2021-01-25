@@ -33,7 +33,7 @@ namespace Module
         private void OnModuleLoad(ModuleEvents.OnModuleLoad eventInfo)
         {
             /* Print to console when we boot*/
-            Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
+            PrintBootTime();
             /* NWNX */
             Administration.GameOptions.RestoreSpellUses = true;
             /* Set Fog Color an Amount in all outdoor areas */
@@ -42,6 +42,8 @@ namespace Module
 
             //ModuleLoadDiscord();
         }
+
+        private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
 
         private static void SetModuleSwitches()
         {
