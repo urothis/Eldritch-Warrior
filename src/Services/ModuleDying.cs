@@ -26,9 +26,9 @@ namespace Module
 
         }
 
-        private static void Bleed()
+        private async static void Bleed()
         {
-            NwModule.Instance.SpeakString(DateTime.Now.ToString(), TalkVolume.Shout);
+            await NwModule.Instance.SpeakString(DateTime.Now.ToString(), TalkVolume.Shout);
         }
 
         private static bool PlayerIsDead(NwPlayer player) => player.HP <= -10;
