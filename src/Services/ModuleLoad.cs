@@ -24,6 +24,7 @@ namespace Module
 
         public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
+            schedulerService.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
             schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
