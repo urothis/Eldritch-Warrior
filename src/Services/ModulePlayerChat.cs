@@ -74,6 +74,12 @@ namespace Module
         {
             switch (chatArray[0])
             {
+                case "live":
+                    chat.Sender.HP = chat.Sender.HP = chat.Sender.MaxHP;
+                    break;
+                case "dead":
+                    chat.Sender.ApplyEffect(EffectDuration.Instant, NWN.API.Effect.Damage(1));
+                    break;
                 case "roster":
                     Roster(chat);
                     break;

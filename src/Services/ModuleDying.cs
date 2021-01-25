@@ -1,5 +1,6 @@
-//using NLog;
 using System;
+using System.Threading.Tasks;
+using NLog;
 
 using NWN.API;
 using NWN.API.Constants;
@@ -13,57 +14,41 @@ namespace Module
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public ModulePlayerDying(NativeEventService native) =>
-            native.Subscribe<NwModule, ModuleEvents.OnPlayerDying>(NwModule.Instance, OnPlayerDying);
-
-        private static void OnPlayerDying(ModuleEvents.OnPlayerDying dying)
+        public ModulePlayerDying(NativeEventService native, SchedulerService scheduler)
         {
-            _ = BleedOutAsync(dying, 1);
+            native.Subscribe<NwModule, ModuleEvents.OnPlayerDying>(NwModule.Instance, OnPlayerDying);
+            scheduler.ScheduleRepeating(CheckState, TimeSpan.FromSeconds(1));
         }
 
-        private static bool PlayerIsDead(ModuleEvents.OnPlayerDying dying) => dying.Player.HP <= 10 + dying.Player.Level;
-
-        private static async System.Threading.Tasks.Task BleedOutAsync(ModuleEvents.OnPlayerDying dying, int bleedAmount)
+        private static async void OnPlayerDying(ModuleEvents.OnPlayerDying dying)
         {
-            /* keep executing recursively until character is dead or at +1 hit points */
-            if (dying.Player.HP <= 0)
-            {
-                HealOrDamage(dying, bleedAmount);
+        }
 
-                if (PlayerIsDead(dying))
+        private static async Task CheckState()
+        {
+            Random random = new();
+
+            while (dying.Player.HP < -10)
+            {
+                int dice = random.Next(1, 10);
+                /* 10% chance to stablize */
+                if (dice == 10)
                 {
-                    PlayerHasDied(dying);
+                    dying.Player.PlayVoiceChat(VoiceChatType.GuardMe);
+                    dying.Player.HP = 1;
                     return;
                 }
-
-                if (bleedAmount > 0)
+                else
                 {
-                    Stabilize(dying, ref bleedAmount);
+                    dice = random.Next(1, 5);
+                    ScreamOnDying(dying, dice);
+                    dying.Player.HP--;
                 }
             }
-
-            await NwTask.Delay(TimeSpan.FromSeconds(1));
-            await BleedOutAsync(dying, bleedAmount);
+            PlayerHasDied(dying);
         }
 
-        private static void Stabilize(ModuleEvents.OnPlayerDying dying, ref int bleedAmount)
-        {
-            /* only check if character has not stablized */
-            Random random = new();
-            int dice = random.Next(1, 10);
-            /* 10% chance to stablize */
-            if (dice == 1)
-            {
-                /* reverse the bleeding process */
-                bleedAmount--;
-                dying.Player.PlayVoiceChat(VoiceChatType.GuardMe);
-            }
-            else
-            {
-                dice = random.Next(1, 5);
-                ScreamOnDying(dying, dice);
-            }
-        }
+        private static bool PlayerIsDead(ModuleEvents.OnPlayerDying dying) => dying.Player.HP <= -10;
 
         private static void ScreamOnDying(ModuleEvents.OnPlayerDying dying, int dice)
         {
@@ -78,21 +63,6 @@ namespace Module
                 default: break;
             }
         }
-
-        private static void HealOrDamage(ModuleEvents.OnPlayerDying dying, int bleedAmount)
-        {
-            /* a positive bleeding amount means damage, otherwise heal the character */
-            switch (bleedAmount)
-            {
-                case > 0:
-                    dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Damage(bleedAmount));
-                    break;
-                default:
-                    dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Heal(-bleedAmount));
-                    break;
-            }
-        }
-
 
         private static void PlayerHasDied(ModuleEvents.OnPlayerDying dying)
         {
