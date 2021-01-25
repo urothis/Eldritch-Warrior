@@ -44,6 +44,7 @@ namespace Module
         }
 
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
+        private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
 
         private static void SetModuleSwitches()
         {
@@ -61,8 +62,6 @@ namespace Module
             FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
             return fogColor;
         }
-
-        private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
 
         private static void SetAreaEnviroment()
         {
