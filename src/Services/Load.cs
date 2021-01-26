@@ -49,9 +49,9 @@ namespace Module
         private static void SetModuleSwitches()
         {
             /* Module Switches */
-            _ = NwModule.Instance.GetLocalVariable<string>("MODULE_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value;
-            _ = NwModule.Instance.GetLocalVariable<string>("MODULE_VAR_AI_STOP_EXPERTISE_ABUSE").Value;
-            _ = NwModule.Instance.GetLocalVariable<string>("MODULE_SWITCH_NO_RANDOM_MONSTER_LOOT").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("X2_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("X2_L_STOP_EXPERTISE_ABUSE").Value;
+            _ = NwModule.Instance.GetLocalVariable<string>("X2_L_NOTREASURE").Value;
             _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_EXTERNAL_ONLY").Value;
             _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_NO_UNDERGROUND").Value;
         }
