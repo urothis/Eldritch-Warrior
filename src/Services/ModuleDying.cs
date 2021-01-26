@@ -22,15 +22,14 @@ namespace Module
 
         private async static void Bleed(ModuleEvents.OnPlayerDying dying)
         {
-            var task1 = NwTask.Run(async () =>
+            await NwTask.WhenAny(NwTask.Run(async () =>
             {
                 await NwTask.Delay(TimeSpan.FromSeconds(1));
-                ScreamOnDying(dying);
-            });
+            }));
 
-            await NwTask.WhenAny(task1);
+            ScreamOnDying(dying);
 
-            if (dying.Player.HP <= -11)
+            if (dying.Player.HP < -10)
             {
                 PlayerHasDied(dying);
                 return;
