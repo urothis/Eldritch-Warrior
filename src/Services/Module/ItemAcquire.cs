@@ -19,7 +19,7 @@ namespace Services.Module
 
         private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)
         {
-            PrintGPValueOnItem(acquireItem);
+            acquireItem.Item.PrintGPValueOnItem();
             CheckAllItemProperties(acquireItem);
 
             /* This is to short circuit the rest of this code if we are DM */
@@ -38,10 +38,6 @@ namespace Services.Module
         }
 
         private static bool HasTemporaryItemProperty(ModuleEvents.OnAcquireItem acquireItem) => acquireItem.Item.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
-
-        private static string PrintGPValueOnItem(ModuleEvents.OnAcquireItem acquireItem) => !acquireItem.Item.PlotFlag
-                ? (acquireItem.Item.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{acquireItem.Item.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{acquireItem.Item.OriginalDescription}")
-                : acquireItem.Item.OriginalDescription;
 
         private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendMessageToAllPartyWithinDistance(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
 
