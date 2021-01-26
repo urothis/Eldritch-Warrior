@@ -12,7 +12,7 @@ using NWN.Services;
 
 using NWNX.API;
 
-namespace Module
+namespace Services.Module
 {
     [ServiceBinding(typeof(ClientEnter))]
     public class ClientEnter

@@ -6,7 +6,7 @@ using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
 
-namespace Module
+namespace Services.Module
 {
     [ServiceBinding(typeof(ItemAcquire))]
 

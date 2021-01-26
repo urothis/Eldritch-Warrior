@@ -7,7 +7,7 @@ using NWN.Services;
 
 using NWNX.API;
 
-namespace Module
+namespace Services.Module
 {
     [ServiceBinding(typeof(ClientLeave))]
     public class ClientLeave

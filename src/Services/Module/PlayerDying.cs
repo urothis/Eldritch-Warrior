@@ -8,7 +8,7 @@ using NWN.API.Events;
 
 using NWN.Services;
 
-namespace Module
+namespace Services.Module
 {
     [ServiceBinding(typeof(PlayerDying))]
     public class PlayerDying

@@ -14,7 +14,7 @@ using NWN.Services;
 using NWNX.API;
 
 
-namespace Module
+namespace Services.Module
 {
     [ServiceBinding(typeof(Load))]
     public class Load
