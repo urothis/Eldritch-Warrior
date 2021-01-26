@@ -46,12 +46,11 @@ namespace Services.Module
             ClientFirstLogin(enter);
 
             /* Restore hitpoints */
-            ClientRestoreHitPoints(enter);
+            enter.Player.ClientRestoreHitPoints();
         }
 
         private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
-        private static void ClientRestoreHitPoints(ModuleEvents.OnClientEnter enter) => enter.Player.HP = enter.Player.GetCampaignVariable<int>("Hit_Points", enter.Player.Name).Value;
 
         private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
         {
