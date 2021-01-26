@@ -16,6 +16,7 @@ namespace Services.Module
         };
 
         public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Items.Any(x => x.ResRef == nwItem);
+        public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
 
         public static string PrintGPValueOnItem(this NwItem nwItem) => !nwItem.PlotFlag
             ? (nwItem.Description = $"{"Gold Piece Value:".ColorString(new Color(255, 255, 0))}{nwItem.GoldValue.ToString().ColorString(new Color(255, 165, 0))}\n\n{nwItem.OriginalDescription}")
@@ -32,6 +33,22 @@ namespace Services.Module
             }
         }
 
+        public static void RemoveAllTemporaryItemProperties(this NwItem nwItem)
+        {
+            foreach (ItemProperty property in nwItem.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
+            {
+                nwItem.RemoveItemProperty(property);
+            }
+        }
+
+        public static void CheckAndRemoveTemporaryItemProperties(this NwItem nwItem)
+        {
+            if (nwItem.HasTemporaryItemProperty())
+            {
+                nwItem.RemoveAllTemporaryItemProperties();
+            }
+        }
+        
         /* Google list of explicit words */
         public static IList<string> WordFilter => new List<string>
         {

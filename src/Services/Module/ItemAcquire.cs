@@ -20,7 +20,7 @@ namespace Services.Module
         private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)
         {
             acquireItem.Item.PrintGPValueOnItem();
-            CheckAllItemProperties(acquireItem);
+            CheckAndRemoveTemporaryItemProperties(acquireItem);
 
             /* This is to short circuit the rest of this code if we are DM */
             if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
@@ -36,8 +36,6 @@ namespace Services.Module
 
             NotifyLoot(acquireItem);
         }
-
-        private static bool HasTemporaryItemProperty(ModuleEvents.OnAcquireItem acquireItem) => acquireItem.Item.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
 
         private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendMessageToAllPartyWithinDistance(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
 
@@ -62,22 +60,6 @@ namespace Services.Module
                 playerB.ExportCharacter();
                 playerA.SendServerMessage("Server-vault character saved.");
                 playerB.SendServerMessage("Server-vault character saved.");
-            }
-        }
-
-        private static void CheckAllItemProperties(ModuleEvents.OnAcquireItem acquireItem)
-        {
-            if (HasTemporaryItemProperty(acquireItem))
-            {
-                RemoveAllTemporaryItemProperties(acquireItem);
-            }
-        }
-
-        private static void RemoveAllTemporaryItemProperties(ModuleEvents.OnAcquireItem acquireItem)
-        {
-            foreach (ItemProperty property in acquireItem.Item.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
-            {
-                acquireItem.Item.RemoveItemProperty(property);
             }
         }
     }
