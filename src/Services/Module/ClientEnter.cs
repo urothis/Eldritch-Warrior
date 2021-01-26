@@ -55,17 +55,7 @@ namespace Services.Module
         {
             if (!enter.Player.HasItemByResRef("itm_recall"))
             {
-                DestroyAllItems(enter);
-            }
-        }
-
-
-        private static void DestroyAllItems(ModuleEvents.OnClientEnter enter)
-        {
-            /* Iterate all items in inventory and destroy them. */
-            foreach (NwItem item in enter.Player.Items)
-            {
-                item.Destroy();
+                enter.Player.DestroyAllItems();
             }
         }
 
