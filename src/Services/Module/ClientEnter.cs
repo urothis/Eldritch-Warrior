@@ -51,14 +51,14 @@ namespace Services.Module
 
         private static void ClientEnterJournal(ModuleEvents.OnClientEnter enter) => enter.Player.AddJournalQuestEntry("test", 1, false);
 
-
         private static void ClientFirstLogin(ModuleEvents.OnClientEnter enter)
         {
-            if (!enter.Player.Items.Any(x => x.ResRef == "item_recall"))
+            if (!enter.Player.HasItemByResRef("itm_recall"))
             {
                 DestroyAllItems(enter);
             }
         }
+
 
         private static void DestroyAllItems(ModuleEvents.OnClientEnter enter)
         {

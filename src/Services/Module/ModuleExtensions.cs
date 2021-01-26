@@ -1,3 +1,5 @@
+using System.Linq;
+
 using NWN.API;
 using NWN.API.Events;
 
@@ -12,5 +14,6 @@ namespace Services.Module
         /* Store hitpoints */
         public static void ClientStoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", player.Name).Value = player.HP;
         public static void ClientRestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", player.Name).Value;
+        public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Items.Any(x => x.ResRef == nwItem);
     }
 }
