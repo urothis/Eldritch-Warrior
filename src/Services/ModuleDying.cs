@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using NLog;
 using NWN.API;
@@ -17,18 +18,24 @@ namespace Module
         public PlayerDying(NativeEventService nativeEventService, SchedulerService scheduler)
         {
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerDying>(NwModule.Instance, OnPlayerDying);
-            scheduler.ScheduleRepeating(Bleed, TimeSpan.FromSeconds(1));
-
         }
 
         private static void OnPlayerDying(ModuleEvents.OnPlayerDying dying)
         {
-
+            Bleed();
         }
 
         private async static void Bleed()
         {
-            await NwModule.Instance.SpeakString(DateTime.Now.ToString(), TalkVolume.Shout);
+            var task1 = NwTask.Run(async () =>
+            {
+                await NwTask.Delay(TimeSpan.FromSeconds(1));
+                await NwModule.Instance.SpeakString(DateTime.Now.ToString(), TalkVolume.Shout);
+
+            });
+
+            await NwTask.WhenAny(task1);
+            Bleed();
         }
 
         private static bool PlayerIsDead(NwPlayer player) => player.HP <= -10;
