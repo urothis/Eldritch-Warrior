@@ -1,6 +1,6 @@
 using System;
 
-using NLog;
+//using NLog;
 
 using NWN.API;
 using NWN.API.Constants;
@@ -13,51 +13,52 @@ namespace Module
     [ServiceBinding(typeof(PlayerDying))]
     public class PlayerDying
     {
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         // constructor
-        public PlayerDying(NativeEventService nativeEventService, SchedulerService scheduler)
-        {
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerDying>(NwModule.Instance, OnPlayerDying);
-        }
+        public PlayerDying(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerDying>(NwModule.Instance, OnPlayerDying);
 
-        private static void OnPlayerDying(ModuleEvents.OnPlayerDying dying)
-        {
-            Bleed();
-        }
+        private static void OnPlayerDying(ModuleEvents.OnPlayerDying dying) => Bleed(dying);
 
-        private async static void Bleed()
+        private async static void Bleed(ModuleEvents.OnPlayerDying dying)
         {
             var task1 = NwTask.Run(async () =>
             {
                 await NwTask.Delay(TimeSpan.FromSeconds(1));
-
+                ScreamOnDying(dying);
             });
 
             await NwTask.WhenAny(task1);
-            Bleed();
+
+            if (dying.Player.HP <= -11)
+            {
+                PlayerHasDied(dying);
+                return;
+            }
+
+            Bleed(dying);
         }
 
-        private static bool PlayerIsDead(NwPlayer player) => player.HP <= -10;
-        private static bool PlayerIsAlive(NwPlayer player) => player.HP > 0;
-        private static void ScreamOnDying(NwPlayer player, int dice)
+        private static void ScreamOnDying(ModuleEvents.OnPlayerDying dying)
         {
-            switch (dice)
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Damage(1));
+            Random random = new();
+            switch (random.Next(1, 6))
             {
-                case 1: player.PlayVoiceChat(VoiceChatType.Cuss); break;
-                case 2: player.PlayVoiceChat(VoiceChatType.HealMe); break;
-                case 3: player.PlayVoiceChat(VoiceChatType.NearDeath); break;
-                case 4: player.PlayVoiceChat(VoiceChatType.Pain1); break;
-                case 5: player.PlayVoiceChat(VoiceChatType.Pain2); break;
-                case 6: player.PlayVoiceChat(VoiceChatType.Pain3); break;
+                case 1: dying.Player.PlayVoiceChat(VoiceChatType.Cuss); break;
+                case 2: dying.Player.PlayVoiceChat(VoiceChatType.HealMe); break;
+                case 3: dying.Player.PlayVoiceChat(VoiceChatType.NearDeath); break;
+                case 4: dying.Player.PlayVoiceChat(VoiceChatType.Pain1); break;
+                case 5: dying.Player.PlayVoiceChat(VoiceChatType.Pain2); break;
+                case 6: dying.Player.PlayVoiceChat(VoiceChatType.Pain3); break;
             }
         }
 
-        private static void PlayerHasDied(NwPlayer player)
+        private static void PlayerHasDied(ModuleEvents.OnPlayerDying dying)
         {
-            player.PlayVoiceChat(VoiceChatType.Death);
-            player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpDeath));
-            player.ApplyEffect(EffectDuration.Instant, Effect.Death());
+            dying.Player.PlayVoiceChat(VoiceChatType.Death);
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpDeath));
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Death());
         }
     }
 }
