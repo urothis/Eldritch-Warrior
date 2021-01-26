@@ -1,10 +1,11 @@
 using System;
-using System.Threading;
-using System.Threading.Tasks;
+
 using NLog;
+
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
+
 using NWN.Services;
 
 namespace Module
@@ -30,7 +31,6 @@ namespace Module
             var task1 = NwTask.Run(async () =>
             {
                 await NwTask.Delay(TimeSpan.FromSeconds(1));
-                await NwModule.Instance.SpeakString(DateTime.Now.ToString(), TalkVolume.Shout);
 
             });
 
@@ -39,7 +39,7 @@ namespace Module
         }
 
         private static bool PlayerIsDead(NwPlayer player) => player.HP <= -10;
-
+        private static bool PlayerIsAlive(NwPlayer player) => player.HP > 0;
         private static void ScreamOnDying(NwPlayer player, int dice)
         {
             switch (dice)
