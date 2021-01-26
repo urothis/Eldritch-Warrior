@@ -16,21 +16,21 @@ using NWNX.API;
 
 namespace Module
 {
-    [ServiceBinding(typeof(ModuleLoad))]
-    public class ModuleLoad
+    [ServiceBinding(typeof(Load))]
+    public class Load
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private static readonly int hours = 24;
 
-        public ModuleLoad(NativeEventService nativeEventService, SchedulerService schedulerService)
+        public Load(NativeEventService nativeEventService, SchedulerService schedulerService)
         {
             schedulerService.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
             schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnModuleLoad);
+            nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnLoad);
         }
 
-        private void OnModuleLoad(ModuleEvents.OnModuleLoad eventInfo)
+        private void OnLoad(ModuleEvents.OnModuleLoad eventInfo)
         {
             /* Print to console when we boot*/
             PrintBootTime();
@@ -40,7 +40,7 @@ namespace Module
             SetAreaEnviroment();
             SetModuleSwitches();
 
-            //ModuleLoadDiscord();
+            //LoadDiscord();
         }
 
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
@@ -92,7 +92,7 @@ namespace Module
             }
         }
 
-        /*        private static void ModuleLoadDiscord()
+        /*        private static void LoadDiscord()
                 {
                     // Create an instance of the class DiscordWebhookClient with your Discord webhook URL.
                     var client = new DiscordWebhookClient("https://discord.com/api/webhooks/800544826633355295/CHSdo8brPx3EEHVPoGwnKaeHYVwzoIu9NbZBe3eM164gHGP_T6_nr0gk3vKyIj07a5vC");

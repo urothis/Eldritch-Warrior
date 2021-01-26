@@ -9,12 +9,12 @@ using NWNX.API;
 
 namespace Module
 {
-    [ServiceBinding(typeof(ModuleClientLeave))]
-    public class ModuleClientLeave
+    [ServiceBinding(typeof(ClientLeave))]
+    public class ClientLeave
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public ModuleClientLeave(NativeEventService native) =>
+        public ClientLeave(NativeEventService native) =>
             native.Subscribe<NwModule, ModuleEvents.OnClientLeave>(NwModule.Instance, OnClientLeave);
 
         private static void OnClientLeave(ModuleEvents.OnClientLeave leave)

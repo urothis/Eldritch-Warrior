@@ -15,18 +15,18 @@ using NWNX.API;
 
 namespace Module
 {
-    [ServiceBinding(typeof(ModulePlayerChat))]
-    public class ModulePlayerChat
+    [ServiceBinding(typeof(PlayerChat))]
+    public class PlayerChat
     {
         private static readonly char playerWildcard = '!';
         private static readonly string notReady = "Feature not implemented.";
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public ModulePlayerChat(NativeEventService native) =>
-            native.Subscribe<NwModule, ModuleEvents.OnPlayerChat>(NwModule.Instance, PlayerChat);
+        public PlayerChat(NativeEventService native) =>
+            native.Subscribe<NwModule, ModuleEvents.OnPlayerChat>(NwModule.Instance, OnPlayerChat);
 
         // handle chat commands
-        private void PlayerChat(ModuleEvents.OnPlayerChat playerChat) => ChatTools(playerChat);
+        private void OnPlayerChat(ModuleEvents.OnPlayerChat playerChat) => ChatTools(playerChat);
 
         private static void ChatTools(ModuleEvents.OnPlayerChat chat)
         {

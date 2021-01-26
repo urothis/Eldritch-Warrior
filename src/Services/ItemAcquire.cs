@@ -8,13 +8,13 @@ using NWN.Services;
 
 namespace Module
 {
-    [ServiceBinding(typeof(ModuleItemAcquire))]
+    [ServiceBinding(typeof(ItemAcquire))]
 
-    public class ModuleItemAcquire
+    public class ItemAcquire
     {
         //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public ModuleItemAcquire(NativeEventService native) =>
+        public ItemAcquire(NativeEventService native) =>
             native.Subscribe<NwModule, ModuleEvents.OnAcquireItem>(NwModule.Instance, OnAcquireItem);
 
         private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)

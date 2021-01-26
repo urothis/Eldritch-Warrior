@@ -14,12 +14,12 @@ using NWNX.API;
 
 namespace Module
 {
-    [ServiceBinding(typeof(ModuleClientEnter))]
-    public class ModuleClientEnter
+    [ServiceBinding(typeof(ClientEnter))]
+    public class ClientEnter
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public ModuleClientEnter(NativeEventService nativeEventService) =>
+        public ClientEnter(NativeEventService nativeEventService) =>
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnClientEnter>(NwModule.Instance, OnClientEnter);
 
         private async void OnClientEnter(ModuleEvents.OnClientEnter enter)
