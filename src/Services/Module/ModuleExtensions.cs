@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 
 using NWN.API;
@@ -7,6 +8,13 @@ namespace Services.Module
 {
     public static class ModuleExtensions
     {
+        /* List of DM Public Keys */
+        public static readonly Dictionary<string, string> DMList = new()
+        {
+            { "QR4JFL9A", "milliorn" },
+            { "QRMXQ6GM", "milliorn" },
+        };
+
         public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Items.Any(x => x.ResRef == nwItem);
 
         public static string PrintGPValueOnItem(this NwItem nwItem) => !nwItem.PlotFlag

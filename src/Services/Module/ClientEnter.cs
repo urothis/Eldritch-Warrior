@@ -1,6 +1,4 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using NLog;
@@ -75,13 +73,6 @@ namespace Services.Module
             return false;
         }
 
-        /* List of DM Public Keys */
-        private static readonly Dictionary<string, string> dmID = new()
-        {
-            { "QR4JFL9A", "milliorn" },
-            { "QRMXQ6GM", "milliorn" },
-        };
-
         /*
             https://gist.github.com/Jorteck/f7049ca1995ccea4dd5d4886f8c4254e
 
@@ -93,7 +84,7 @@ namespace Services.Module
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";
             string clientDM = $"NAME:{enter.Player.Name} ID:{enter.Player.CDKey}";
 
-            if (enter.Player.IsDM && dmID.ContainsKey(enter.Player.CDKey))
+            if (enter.Player.IsDM && ModuleExtensions.DMList.ContainsKey(enter.Player.CDKey))
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
                 Log.Info($"DM VERIFIED:{clientDM}.");
