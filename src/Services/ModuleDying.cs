@@ -29,13 +29,39 @@ namespace Module
 
             ScreamOnDying(dying);
 
-            if (dying.Player.HP < -10)
+            Random random = new();
+            int stabilize = random.Next(1, 10);
+            dying.Player.SendServerMessage($"Stabilize roll:{stabilize.ToString().ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+
+            if (dying.Player.HP <= -127)
             {
                 PlayerHasDied(dying);
                 return;
             }
+            else if (stabilize == 1)
+            {
+                PlayerHasStabilized(dying);
+                return;
+            }
+            else
+            {
+                Bleed(dying);
+            }
+        }
 
-            Bleed(dying);
+        private static void PlayerHasStabilized(ModuleEvents.OnPlayerDying dying)
+        {
+            dying.Player.PlayVoiceChat(VoiceChatType.GuardMe);
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpHealingS));
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Resurrection());
+            dying.Player.SendServerMessage($"{dying.Player.Name} has stabilized.");
+        }
+
+        private static void PlayerHasDied(ModuleEvents.OnPlayerDying dying)
+        {
+            dying.Player.PlayVoiceChat(VoiceChatType.Death);
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpDeath));
+            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Death());
         }
 
         private static void ScreamOnDying(ModuleEvents.OnPlayerDying dying)
@@ -45,19 +71,11 @@ namespace Module
             switch (random.Next(1, 6))
             {
                 case 1: dying.Player.PlayVoiceChat(VoiceChatType.Cuss); break;
-                case 2: dying.Player.PlayVoiceChat(VoiceChatType.HealMe); break;
-                case 3: dying.Player.PlayVoiceChat(VoiceChatType.NearDeath); break;
-                case 4: dying.Player.PlayVoiceChat(VoiceChatType.Pain1); break;
-                case 5: dying.Player.PlayVoiceChat(VoiceChatType.Pain2); break;
-                case 6: dying.Player.PlayVoiceChat(VoiceChatType.Pain3); break;
+                case 2: dying.Player.PlayVoiceChat(VoiceChatType.NearDeath); break;
+                case 3: dying.Player.PlayVoiceChat(VoiceChatType.Pain1); break;
+                case 4: dying.Player.PlayVoiceChat(VoiceChatType.Pain2); break;
+                case 5: dying.Player.PlayVoiceChat(VoiceChatType.Pain3); break;
             }
-        }
-
-        private static void PlayerHasDied(ModuleEvents.OnPlayerDying dying)
-        {
-            dying.Player.PlayVoiceChat(VoiceChatType.Death);
-            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpDeath));
-            dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Death());
         }
     }
 }
