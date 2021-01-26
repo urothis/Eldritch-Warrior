@@ -118,7 +118,7 @@ namespace Services.Module
             }
             else
             {
-                await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.GREEN)}:{colorString}", TalkVolume.Shout);
+                await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
                 Log.Info($"LOGIN:{$"NAME:{enter.Player.Name} ID:{enter.Player.CDKey} BIC:{Player.GetBicFileName(enter.Player)}"}.");
             }
         }
