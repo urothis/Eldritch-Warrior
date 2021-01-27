@@ -12,7 +12,7 @@ using NWN.API.Events;
 using NWN.Services;
 
 using NWNX.API;
-
+using NWNX.API.Events;
 
 namespace Services.Module
 {
@@ -34,7 +34,7 @@ namespace Services.Module
         {
             /* Print to console when we boot*/
             PrintBootTime();
-            
+
             /* NWNX */
             Administration.GameOptions.RestoreSpellUses = true;
 
@@ -42,8 +42,14 @@ namespace Services.Module
             SetAreaEnviroment();
             SetModuleSwitches();
 
+            //MonkWeapons();
             //LoadDiscord();
         }
+
+        /*private static void MonkWeapons()
+        {
+
+        }*/
 
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
