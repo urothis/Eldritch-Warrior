@@ -14,6 +14,14 @@ namespace Services.Module
         // constructor
         public ItemUnEquip(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerUnequipItem>(NwModule.Instance, OnPlayerUnequipItem);
 
-        private static void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => unequipItem.Item.PrintGPValueOnItem();
+        private static void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem)
+        {
+            unequipItem.Item.PrintGPValueOnItem();
+
+            if (unequipItem.UnequippedBy is NwPlayer nwPlayer)
+            {
+                nwPlayer.SaveCharacter();
+            }
+        }
     }
 }

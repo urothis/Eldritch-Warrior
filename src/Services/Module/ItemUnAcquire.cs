@@ -24,6 +24,11 @@ namespace Services.Module
             {
                 return;
             }
+
+            if (unacquireItem.LostBy is NwPlayer nwPlayer)
+            {
+                nwPlayer.SaveCharacter();
+            }
         }
     }
 }
