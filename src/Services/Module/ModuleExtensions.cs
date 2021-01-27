@@ -48,9 +48,17 @@ namespace Services.Module
                 nwItem.RemoveAllTemporaryItemProperties();
             }
         }
-        
-        /* Google list of explicit words */
-        public static IList<string> WordFilter => new List<string>
+
+        public static void SendMessageToAllPartyWithinDistance(this NwPlayer nwPlayer, string message, float distance)
+        {
+            foreach (NwPlayer member in nwPlayer.PartyMembers.Where(member => member.Distance(nwPlayer) == distance))
+            {
+                member.SendServerMessage(message);
+            }
+        }
+
+    /* Google list of explicit words */
+    public static IList<string> WordFilter => new List<string>
         {
             "ahole",
             "anus",
@@ -500,5 +508,5 @@ namespace Services.Module
             "yed",
             "zabourah"
         };
-    }
+}
 }

@@ -37,18 +37,14 @@ namespace Services.Module
             NotifyLoot(acquireItem);
         }
 
-        private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendMessageToAllPartyWithinDistance(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
+        private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
 
-        private static void SendMessageToAllPartyWithinDistance(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
+        private static void SendLootMessageToParty(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
         {
             if (acquireItem.AcquiredBy is NwPlayer player)
             {
                 player.SendServerMessage(message);
-
-                foreach (NwPlayer member in player.PartyMembers.Where(member => member.Distance(player) == distance))
-                {
-                    member.SendServerMessage(message);
-                }
+                player.SendMessageToAllPartyWithinDistance(message, distance);
             }
         }
 
