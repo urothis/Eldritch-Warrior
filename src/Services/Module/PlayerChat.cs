@@ -141,8 +141,7 @@ namespace Services.Module
                     NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
                     break;
                 case "save":
-                    chat.Sender.ExportCharacter();
-                    chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
+                    chat.Sender.SaveCharacter();
                     break;
                 case "delete":
                     Administration.DeletePlayerCharacter(chat.Sender, true); break;
@@ -423,7 +422,7 @@ namespace Services.Module
             }
 
             chat.Sender.SendServerMessage($"{chat.Sender.Name.ColorString(Color.WHITE)} has reset {chatArray[1]} {(chatArray[1].Equals("one") ? "level" : "levels")}.".ColorString(Color.GREEN));
-            chat.Sender.ExportCharacter();
+            chat.Sender.SaveCharacter();
             return chat.Sender.Xp = xp;
         }
 

@@ -51,10 +51,8 @@ namespace Services.Module
         {
             if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
             {
-                playerA.ExportCharacter();
-                playerB.ExportCharacter();
-                playerA.SendServerMessage("Server-vault character saved.");
-                playerB.SendServerMessage("Server-vault character saved.");
+                playerA.SaveCharacter();
+                playerB.SaveCharacter();
             }
         }
     }

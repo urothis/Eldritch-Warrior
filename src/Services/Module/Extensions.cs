@@ -3,7 +3,7 @@ using System.Linq;
 
 using NWN.API;
 
-using NWN.API.Events;
+using NWNX.API;
 
 namespace Services.Module
 {
@@ -26,6 +26,12 @@ namespace Services.Module
         public static void ClientStoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", player.Name).Value = player.HP;
         public static void ClientRestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", player.Name).Value;
 
+        public static void SaveCharacter(this NwPlayer player)
+        {
+            player.ExportCharacter();
+            player.SendServerMessage($"{player.GetBicFileName().ColorString(Color.YELLOW)}.bic file has been saved.".ColorString(Color.WHITE));
+        }
+
         public static void DestroyAllItems(this NwPlayer player)
         {
             foreach (NwItem item in player.Items)
@@ -36,7 +42,7 @@ namespace Services.Module
 
         public static void RemoveAllTemporaryItemProperties(this NwItem nwItem)
         {
-            foreach (ItemProperty property in nwItem.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
+            foreach (NWN.API.ItemProperty property in nwItem.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
             {
                 nwItem.RemoveItemProperty(property);
             }
