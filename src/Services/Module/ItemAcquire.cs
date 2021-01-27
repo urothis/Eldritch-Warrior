@@ -20,7 +20,7 @@ namespace Services.Module
         private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)
         {
             acquireItem.Item.PrintGPValueOnItem();
-            CheckAndRemoveTemporaryItemProperties(acquireItem);
+            acquireItem.Item.CheckAndRemoveTemporaryItemProperties();
 
             /* This is to short circuit the rest of this code if we are DM */
             if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
