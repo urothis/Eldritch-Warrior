@@ -14,7 +14,18 @@ namespace Services.Module
 
         private static void OnPlayerRest(ModuleEvents.OnPlayerRest playerRest)
         {
-            
+            switch (playerRest.RestEventType)
+            {
+                case NWN.API.Constants.RestEventType.Started:
+                    break;
+                case NWN.API.Constants.RestEventType.Invalid:
+                    break;
+                case NWN.API.Constants.RestEventType.Finished:
+                case NWN.API.Constants.RestEventType.Cancelled:
+                    playerRest.Player.SaveCharacter();
+                break;
+                default: break;
+            }
         }
     }
 }
