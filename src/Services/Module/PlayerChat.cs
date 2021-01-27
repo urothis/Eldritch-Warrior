@@ -134,6 +134,9 @@ namespace Services.Module
                 case "eyes":
                     SetEyes(chat, chatArray);
                     break;
+                case "visual":
+                    SetVisual(chat, chatArray);
+                    break;
                 case "lfg":
                     NwModule.Instance.SpeakString($"{chat.Sender.Name.ColorString(Color.WHITE)} is looking for a party!", TalkVolume.Shout);
                     break;
@@ -141,9 +144,8 @@ namespace Services.Module
                     chat.Sender.ExportCharacter();
                     chat.Sender.SendServerMessage($"{chat.Sender.GetBicFileName()}.bic saved".ColorString(Color.GREEN));
                     break;
-                case "visual":
-                    SetVisual(chat, chatArray);
-                    break;
+                case "delete":
+                    Administration.DeletePlayerCharacter(chat.Sender, true); break;
                 default:
                     break;
             }

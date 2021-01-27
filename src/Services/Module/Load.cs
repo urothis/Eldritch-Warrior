@@ -34,8 +34,10 @@ namespace Services.Module
         {
             /* Print to console when we boot*/
             PrintBootTime();
+            
             /* NWNX */
             Administration.GameOptions.RestoreSpellUses = true;
+
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
             SetModuleSwitches();
