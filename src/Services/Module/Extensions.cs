@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 using NWN.API;
+
 using NWN.API.Events;
 
 namespace Services.Module
@@ -57,8 +58,8 @@ namespace Services.Module
             }
         }
 
-    /* Google list of explicit words */
-    public static IList<string> WordFilter => new List<string>
+        /* Google list of explicit words */
+        public static IList<string> WordFilter => new List<string>
         {
             "ahole",
             "anus",
@@ -508,5 +509,5 @@ namespace Services.Module
             "yed",
             "zabourah"
         };
-}
+    }
 }
