@@ -6,7 +6,7 @@ using NWN.API.Events;
 
 namespace Services.Module
 {
-    public static class ModuleExtensions
+    public static class Extensions
     {
         /* List of DM Public Keys */
         public static readonly Dictionary<string, string> DMList = new()
