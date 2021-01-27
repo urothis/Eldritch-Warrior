@@ -18,9 +18,6 @@ namespace Services.Module
         // constructor
         public ItemEquip(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerEquipItem>(NwModule.Instance, OnPlayerEquipItem);
 
-        private static void OnPlayerEquipItem(ModuleEvents.OnPlayerDying dying)
-        {
-            
-        }
+        private static void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem) => equipItem.Item.PrintGPValueOnItem();
     }
 }
