@@ -74,6 +74,10 @@ namespace Services.Module
         {
             switch (chatArray[0])
             {
+                case "xp":
+                    _ = int.TryParse(chatArray[1], out int x);
+                    chat.Sender.Xp += x;
+                    break;
                 case "live":
                     chat.Sender.HP = chat.Sender.HP = chat.Sender.MaxHP;
                     break;
