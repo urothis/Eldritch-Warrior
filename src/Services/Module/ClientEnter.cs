@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using NLog;
@@ -63,7 +62,7 @@ namespace Services.Module
 
             foreach (string censoredWord in censoredText)
             {
-                if (ModuleExtensions.WordFilter.Contains(censoredWord.ToLower()))
+                if (Extensions.WordFilter.Contains(censoredWord.ToLower()))
                 {
                     enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
                     Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
@@ -84,7 +83,7 @@ namespace Services.Module
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{Player.GetBicFileName(enter.Player).ColorString(Color.WHITE)}";
             string clientDM = $"NAME:{enter.Player.Name} ID:{enter.Player.CDKey}";
 
-            if (enter.Player.IsDM && ModuleExtensions.DMList.ContainsKey(enter.Player.CDKey))
+            if (enter.Player.IsDM && Extensions.DMList.ContainsKey(enter.Player.CDKey))
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
                 Log.Info($"DM VERIFIED:{clientDM}.");
