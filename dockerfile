@@ -10,7 +10,7 @@ WORKDIR /src/moduleBuild
 RUN nasher pack
 
 # Pull Dotnet image to build the project
-FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim-amd64 AS build
 RUN apt-get update && apt-get clean && rm -rf /var/lib/apt/lists/*
 ADD ./src/Services /Build
 WORKDIR /Build
