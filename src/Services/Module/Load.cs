@@ -42,14 +42,20 @@ namespace Services.Module
             SetAreaEnviroment();
             SetModuleSwitches();
 
-            //MonkWeapons();
+            MonkWeapons();
             //LoadDiscord();
         }
 
-        /*private static void MonkWeapons()
+        private static void MonkWeapons()
         {
-
-        }*/
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.Dart);
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.Handaxe);
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.LightHammer);
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.LightMace);
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.Sickle);
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.Shuriken);
+            Weapon.SetWeaponIsMonkWeapon(BaseItemType.Quarterstaff);
+        }
 
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
