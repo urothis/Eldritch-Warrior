@@ -23,10 +23,10 @@ RUN apt-get update && apt-get clean && rm -rf /var/lib/apt/lists/*
 # copy our module over
 COPY --from=moduleBuild /src/moduleBuild/Eldritch_Warrior.mod /nwn/data/data/mod
 # install our services
-COPY --from=build /Build/out /nwn/Dotnet/Plugins/ExampleService/
+COPY --from=build /Build/out /nwn/Dotnet/Plugins/Services/
 # install the unzip package so we can grab the latest managed binaries
 RUN apt update && apt install unzip
-RUN cd /nwn/Dotnet && wget "https://github.com/nwn-dotnet/NWN.Managed/releases/download/v8193.20.13/NWN.Managed.zip" -O temp.zip && unzip temp.zip && rm temp.zip
+RUN cd /nwn/Dotnet && wget "https://github.com/nwn-dotnet/NWN.Managed/releases/download/v8193.20.19/NWN.Managed.zip" -O temp.zip && unzip temp.zip && rm temp.zip
 ENV NWN_SERVERNAME=DotnetTest \
   NWN_MODULE=Eldritch_Warrior \
   NWN_PUBLICSERVER=0 \
