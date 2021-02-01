@@ -25,17 +25,14 @@ namespace Services.Module
 
         private static async Task LevelUpVfx(ModuleEvents.OnPlayerLevelUp levelUp)
         {
-            if (levelUp.Player.Level % 10 == 0)
-            {
-                await NwTask.Delay(TimeSpan.FromSeconds(0.1));
-                levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfWailOBanshees));
-
-            }
+            await NwTask.Delay(TimeSpan.FromSeconds(0.0));
+            levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpLightningS));
 
             if (levelUp.Player.Level % 5 == 0)
             {
-                await NwTask.Delay(TimeSpan.FromSeconds(0.8));
-                levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpLightningS));
+                await NwTask.Delay(TimeSpan.FromSeconds(0.0));
+                levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfWailOBanshees));
+
             }
 
             switch (levelUp.Player.GoodEvilAlignment)
@@ -51,7 +48,7 @@ namespace Services.Module
                 case Alignment.Good:
                     await NwTask.Delay(TimeSpan.FromSeconds(0.2));
                     levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfLosHoly10));
-                    await NwTask.Delay(TimeSpan.FromSeconds(0.5));
+                    await NwTask.Delay(TimeSpan.FromSeconds(0.4));
                     levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfLosHoly20));
                     await NwTask.Delay(TimeSpan.FromSeconds(0.6));
                     levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfLosHoly30));
