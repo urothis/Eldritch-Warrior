@@ -23,8 +23,8 @@ namespace Services.Module
             ? (nwItem.Description = $"{"Gold Piece Value:".ColorString(Color.YELLOW)}{nwItem.GoldValue.ToString().ColorString(Color.ORANGE)}\n\n{nwItem.OriginalDescription}")
             : nwItem.OriginalDescription;
 
-        public static void ClientStoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", player.Name).Value = player.HP;
-        public static void ClientRestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", player.Name).Value;
+        public static void ClientStoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value = player.HP;
+        public static void ClientRestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value;
 
         public static void SaveCharacter(this NwPlayer player)
         {
