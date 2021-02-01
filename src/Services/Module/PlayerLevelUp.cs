@@ -25,6 +25,7 @@ namespace Services.Module
 
         private static async Task LevelUpVfx(ModuleEvents.OnPlayerLevelUp levelUp)
         {
+            levelUp.Player.ForceRest();
             await NwTask.Delay(TimeSpan.FromSeconds(0.0));
             levelUp.Player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpLightningS));
 
