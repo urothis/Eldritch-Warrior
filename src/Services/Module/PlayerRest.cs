@@ -17,11 +17,13 @@ namespace Services.Module
             switch (playerRest.RestEventType)
             {
                 case NWN.API.Constants.RestEventType.Started:
+                    playerRest.Player.FadeToBlack((float)0.003);
                     break;
                 case NWN.API.Constants.RestEventType.Invalid:
                     break;
                 case NWN.API.Constants.RestEventType.Finished:
                 case NWN.API.Constants.RestEventType.Cancelled:
+                    playerRest.Player.FadeFromBlack((float)0.003);
                     playerRest.Player.SaveCharacter();
                 break;
                 default: break;
