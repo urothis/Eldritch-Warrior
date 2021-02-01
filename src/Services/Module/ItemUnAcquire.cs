@@ -16,8 +16,15 @@ namespace Services.Module
 
         private static void OnUnacquireItem(ModuleEvents.OnUnacquireItem unacquireItem)
         {
-            unacquireItem.Item.PrintGPValueOnItem();
-            unacquireItem.Item.RemoveAllTemporaryItemProperties();
+            /*
+                if statement is here to stop
+                System.NullReferenceException: Object reference not set to an instance of an object.
+            */
+            if (unacquireItem.Item is NwItem)
+            {
+                unacquireItem.Item.PrintGPValueOnItem();
+                unacquireItem.Item.RemoveAllTemporaryItemProperties();
+            }
 
             /* This is to short circuit the rest of this code if we are DM */
             if (unacquireItem.LostBy is NwPlayer { IsDM: true })
@@ -28,6 +35,11 @@ namespace Services.Module
             if (unacquireItem.LostBy is NwPlayer nwPlayer)
             {
                 nwPlayer.SaveCharacter();
+            }
+
+            if (unacquireItem.Item == null)
+            {
+                throw new System.NullReferenceException(nameof(unacquireItem.Item));
             }
         }
     }

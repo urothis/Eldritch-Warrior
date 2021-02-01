@@ -18,8 +18,15 @@ namespace Services.Module
 
         private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)
         {
-            acquireItem.Item.PrintGPValueOnItem();
-            acquireItem.Item.CheckAndRemoveTemporaryItemProperties();
+            /*
+                if statement is here to stop
+                System.NullReferenceException: Object reference not set to an instance of an object.
+            */
+            if (acquireItem.Item is NwItem)
+            {
+                acquireItem.Item.PrintGPValueOnItem();
+                acquireItem.Item.RemoveAllTemporaryItemProperties();
+            }
 
             /* This is to short circuit the rest of this code if we are DM */
             if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
