@@ -19,12 +19,15 @@ namespace Services.Module
         public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Items.Any(x => x.ResRef == nwItem);
         public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
 
-        public static string PrintGPValueOnItem(this NwItem nwItem) => !nwItem.PlotFlag
+        public static string PrintGPValueOnItem(this NwItem nwItem)
+            => !nwItem.PlotFlag
             ? (nwItem.Description = $"{"Gold Piece Value:".ColorString(Color.YELLOW)}{nwItem.GoldValue.ToString().ColorString(Color.ORANGE)}\n\n{nwItem.OriginalDescription}")
             : nwItem.OriginalDescription;
 
-        public static void ClientStoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value = player.HP;
-        public static void ClientRestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value;
+        public static void ClientStoreHitPoints(this NwPlayer player)
+            => player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value = player.HP;
+        public static void ClientRestoreHitPoints(this NwPlayer player)
+            => player.HP = player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value;
 
         public static void SaveCharacter(this NwPlayer player)
         {
