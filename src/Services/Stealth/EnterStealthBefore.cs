@@ -24,7 +24,7 @@ namespace Services.Stealth
             if (!enterStealthBefore.Player.StealthModeActive &&
             !pc.HasFeatPrepared(Feat.HideInPlainSight))
             {
-                logger.Info("HELLO WORLD!");
+                //NWNX_Events_SkipEvent();
             }
         }
     }

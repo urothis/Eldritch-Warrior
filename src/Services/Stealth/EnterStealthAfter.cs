@@ -10,18 +10,18 @@ using NWNX.Services;
 
 namespace Services.Stealth
 {
-    [ServiceBinding(typeof(EnterStealthAfter))]
-    public class EnterStealthAfter
+    [ServiceBinding(typeof(ExitStealthAfter))]
+    public class ExitStealthAfter
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public EnterStealthAfter(NWNXEventService nWNX) => nWNX.Subscribe<StealthEvents.OnEnterStealthAfter>(OnEnterStealthAfter);
+        public ExitStealthAfter(NWNXEventService nWNX) => nWNX.Subscribe<StealthEvents.OnExitStealthAfter>(OnExitStealthAfter);
 
-        private void OnEnterStealthBefore(StealthEvents.OnEnterStealthBefore enterStealthBefore)
+        private void OnExitStealthAfter(StealthEvents.OnExitStealthAfter stealthAfter)
         {
-            var pc = (NwCreature)enterStealthBefore.Player;
+            var pc = (NwCreature)stealthAfter.Player;
 
-            if (!enterStealthBefore.Player.StealthModeActive &&
+            if (!stealthAfter.Player.StealthModeActive &&
             !pc.HasFeatPrepared(Feat.HideInPlainSight))
             {
                 logger.Info("HELLO WORLD!");
