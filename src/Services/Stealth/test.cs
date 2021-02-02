@@ -10,12 +10,12 @@ using NWNX.Services;
 
 namespace Services.Stealth
 {
-    [ServiceBinding(typeof(EnterStealthBefore))]
-    public class EnterStealthBefore
+    [ServiceBinding(typeof(EnterStealthAfter))]
+    public class EnterStealthAfter
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public EnterStealthBefore(NWNXEventService nWNX) => nWNX.Subscribe<StealthEvents.OnEnterStealthBefore>(OnEnterStealthBefore);
+        public EnterStealthAfter(NWNXEventService nWNX) => nWNX.Subscribe<StealthEvents.OnEnterStealthAfter>(OnEnterStealthAfter);
 
         private void OnEnterStealthBefore(StealthEvents.OnEnterStealthBefore enterStealthBefore)
         {
