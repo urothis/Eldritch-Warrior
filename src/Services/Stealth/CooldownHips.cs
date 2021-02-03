@@ -18,7 +18,7 @@ namespace Services.Stealth
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
         internal Dictionary<Guid, DateTime> usage;
-        private readonly int cooldownTimer = 6;
+        private readonly int cooldownSeconds = 6;
         public CooldownHips(NWNXEventService nWNX)
         {
             nWNX.Subscribe<StealthEvents.OnEnterStealthBefore>(OnEnterStealthBefore);
@@ -29,17 +29,16 @@ namespace Services.Stealth
 
         private void OnEnterStealthBefore(StealthEvents.OnEnterStealthBefore enterStealthBefore)
         {
-            NwCreature? pc = (NwCreature)enterStealthBefore.Player;
-            DateTime getValue = usage[pc.UUID];
-            usage[pc.UUID] = DateTime.Now;
-            int timeLapsed = usage[pc.UUID].Second - getValue.Second;
+            NwCreature pc = (NwCreature)enterStealthBefore.Player;
+            DateTime timeThen = usage[pc.UUID];
+            DateTime timeNow = DateTime.Now;
 
             if (!enterStealthBefore.Player.StealthModeActive &&
             !pc.HasFeatPrepared(Feat.HideInPlainSight) &&
-            timeLapsed - cooldownTimer >= 0)
+            timeNow.Second - timeThen.Second >= cooldownSeconds)
             {
                 //NWNX_Events_SkipEvent();
-                logger.Info("hello worldddddddddddddddddddddddddddddddddddddddddd");
+                logger.Info("HELLO OnEnterStealthBefore");
             }
         }
 
@@ -50,7 +49,7 @@ namespace Services.Stealth
             if (!stealthAfter.Player.StealthModeActive &&
             !pc.HasFeatPrepared(Feat.HideInPlainSight))
             {
-                logger.Info("HELLO WORLD!");
+                logger.Info("HELLO OnExitStealthAfter");
             }
         }
     }
