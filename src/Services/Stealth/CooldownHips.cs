@@ -30,7 +30,7 @@ namespace Services.Stealth
         private void OnEnterStealthBefore(StealthEvents.OnEnterStealthBefore enterStealthBefore)
         {
             NwCreature pc = (NwCreature)enterStealthBefore.Player;
-            DateTime timeThen = usage[pc.UUID];
+            DateTime timeThen;
             DateTime timeNow = DateTime.Now;
 
             if (!usage.ContainsKey(pc.UUID))
@@ -39,10 +39,14 @@ namespace Services.Stealth
                 logger.Info("HELLO OnEnterStealthBefore null");
                 return;
             }
+            else
+            {
+                timeThen = usage[pc.UUID];
+            }
 
             if (!pc.HasFeatPrepared(Feat.HideInPlainSight) && timeNow.Second - timeThen.Second >= cooldownSeconds)
             {
-                enterStealthBefore.Skip = true;
+                //enterStealthBefore.Skip = true;
                 logger.Info("HELLO OnEnterStealthBefore");
             }
         }
