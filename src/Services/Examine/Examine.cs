@@ -18,9 +18,9 @@ namespace Services.Examine
 
         public static void OnExamineObjectBefore(ExamineEvents.OnExamineObjectBefore onExamineObject)
         {
-            if (onExamineObject.Examinee is not NwCreature) return;
+            if (onExamineObject.Examinee is NwCreature creature)
 
-            logger.Info(PrintCRValue((NwCreature)onExamineObject.Examinee));
+            logger.Info(PrintCRValue(creature));
 
             /*if (onExamineObject.Examiner.IsReactionTypeHostile((NwCreature)onExamineObject.Examinee))
             {
