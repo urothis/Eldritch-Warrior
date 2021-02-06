@@ -16,17 +16,12 @@ ADD ./src/Services /Build
 WORKDIR /Build
 RUN dotnet publish -c Release -o out
 
-# Build the final NWN server image
-FROM index.docker.io/nwnxee/unified:latest
+FROM index.docker.io/nwndotnet/nwn.managed:8193.20.30
 LABEL maintainer="urothis"
-RUN apt-get update && apt-get clean && rm -rf /var/lib/apt/lists/*
-# copy our module over
+# copy module
 COPY --from=moduleBuild /src/moduleBuild/Eldritch_Warrior.mod /nwn/data/data/mod
 # install our services
-COPY --from=build /Build/out /nwn/Dotnet/Plugins/Services/
-# install the unzip package so we can grab the latest managed binaries
-RUN apt update && apt install unzip
-RUN cd /nwn/Dotnet && wget "https://github.com/nwn-dotnet/NWN.Managed/releases/download/v8193.20.25/NWN.Managed.zip" -O temp.zip && unzip temp.zip && rm temp.zip
+COPY --from=build /Build/out /nwn/nwnm/Plugins/Services/
 ENV NWN_SERVERNAME=DotnetTest \
   NWN_MODULE=Eldritch_Warrior \
   NWN_PUBLICSERVER=0 \
