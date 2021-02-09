@@ -14,7 +14,7 @@ namespace Services.Examine
 
         public static void OnExamineObjectBefore(ExamineEvents.OnExamineObjectBefore onExamineObject)
         {
-            if (onExamineObject.Examinee is NwCreature creature && onExamineObject.Examiner.IsReactionTypeHostile(creature) && onExamineObject.Examiner.GetSkillRank(Skill.Lore) > creature.Level + 3 + (creature.Level / 8 + 2))
+            if (onExamineObject.Examinee is NwCreature creature && onExamineObject.Examiner.IsReactionTypeHostile(creature) && onExamineObject.Examiner.GetSkillRank(Skill.Lore) > creature.Level + 3 + (creature.Level / 8))
             {
                 creature.Description = PrintCRValue(creature);
             }
