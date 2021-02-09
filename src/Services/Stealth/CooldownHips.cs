@@ -31,7 +31,6 @@ namespace Services.Stealth
         {
             NwCreature pc = (NwCreature)enterStealthBefore.Player;
             DateTime timeThen;
-            DateTime timeNow = DateTime.Now;
 
             if (!usage.ContainsKey(pc.UUID))
             {
@@ -43,7 +42,7 @@ namespace Services.Stealth
                 timeThen = usage[pc.UUID];
             }
 
-            if (pc.HasFeatPrepared(Feat.HideInPlainSight) && timeNow.Second - timeThen.Second >= cooldownSeconds)
+            if (pc.HasFeatPrepared(Feat.HideInPlainSight) && DateTime.Now.Second - timeThen.Second >= cooldownSeconds)
             {
                 enterStealthBefore.Skip = true;
                 enterStealthBefore.Player.SendServerMessage($"\n{"FEAT_HIDE_IN_PLAIN_SIGHT".ColorString(Color.ORANGE)} cooldown active.\n Cooldown last one round.\n");
@@ -55,9 +54,9 @@ namespace Services.Stealth
             NwCreature pc = (NwCreature)stealthAfter.Player;
             usage[pc.UUID] = DateTime.Now;
 
-            if (!pc.HasFeatPrepared(Feat.HideInPlainSight))
+            if (pc.HasFeatPrepared(Feat.HideInPlainSight))
             {
-                logger.Info("HELLO OnExitStealthAfter");
+                stealthAfter.Player.SendServerMessage($"\n{"FEAT_HIDE_IN_PLAIN_SIGHT".ColorString(Color.ORANGE)} cooldown active.\nOne Round.\n");
             }
         }
     }
