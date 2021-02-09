@@ -16,7 +16,7 @@ ADD ./src/Services /Build
 WORKDIR /Build
 RUN dotnet publish -c Release -o out
 
-FROM index.docker.io/nwndotnet/nwn.managed:8193.20.30
+FROM index.docker.io/nwndotnet/nwn.managed:8193.20.34
 LABEL maintainer="urothis"
 # copy module
 COPY --from=moduleBuild /src/moduleBuild/Eldritch_Warrior.mod /nwn/data/data/mod
@@ -41,7 +41,7 @@ ENV NWN_SERVERNAME=DotnetTest \
   NWN_SERVERVAULT=1 \
   NWN_DMPASSWORD=test \
   # managed required
-  NWNX_DOTNET_ASSEMBLY=/nwn/Dotnet/NWN.Managed \
+  # NWNX_DOTNET_ASSEMBLY=/nwn/Dotnet/NWN.Managed \
   NWM_NLOG_CONFIG=/nwn/home/nlog.config \
   # nwnx env
   NWNX_ADMINISTRATION_SKIP=n \
