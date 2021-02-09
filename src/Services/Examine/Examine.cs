@@ -1,5 +1,3 @@
-//using NLog;
-
 using NWN.API;
 using NWN.API.Constants;
 using NWN.Services;
@@ -12,13 +10,11 @@ namespace Services.Examine
     [ServiceBinding(typeof(ExamineObject))]
     public class ExamineObject
     {
-        //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         public ExamineObject(NWNXEventService nWNX) => nWNX.Subscribe<ExamineEvents.OnExamineObjectBefore>(OnExamineObjectBefore);
 
         public static void OnExamineObjectBefore(ExamineEvents.OnExamineObjectBefore onExamineObject)
         {
-            if (onExamineObject.Examinee is NwCreature creature && onExamineObject.Examiner.IsReactionTypeHostile(creature) && onExamineObject.Examiner.GetSkillRank(Skill.Lore) > creature.Level)
+            if (onExamineObject.Examinee is NwCreature creature && onExamineObject.Examiner.IsReactionTypeHostile(creature) && onExamineObject.Examiner.GetSkillRank(Skill.Lore) > creature.Level + 3 + (creature.Level / 8 + 2))
             {
                 creature.Description = PrintCRValue(creature);
             }

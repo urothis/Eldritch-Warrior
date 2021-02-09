@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 
-//using NLog;
-
 using NWN.API;
 using NWN.API.Constants;
 using NWN.Services;
+
 using NWNX.API.Events;
 using NWNX.Services;
 
@@ -14,8 +13,6 @@ namespace Services.Stealth
     [ServiceBinding(typeof(CooldownHips))]
     public class CooldownHips
     {
-        //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         internal Dictionary<Guid, DateTime> usage;
         private readonly int cooldownSeconds = 6;
 
