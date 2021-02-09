@@ -55,6 +55,11 @@ namespace Services.Module
             Weapon.SetWeaponIsMonkWeapon(BaseItemType.Sickle);
             Weapon.SetWeaponIsMonkWeapon(BaseItemType.Shuriken);
             Weapon.SetWeaponIsMonkWeapon(BaseItemType.Quarterstaff);
+
+            Weapon.SetWeaponUnarmed(BaseItemType.Dart);
+            Weapon.SetWeaponUnarmed(BaseItemType.Shuriken);
+            Weapon.SetWeaponUnarmed(BaseItemType.Grenade);
+            Weapon.SetWeaponUnarmed(BaseItemType.ThrowingAxe);
         }
 
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
