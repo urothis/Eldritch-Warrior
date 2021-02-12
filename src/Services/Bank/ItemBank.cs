@@ -18,10 +18,10 @@ namespace Services.Bank
 
         public ItemBank(ScriptEventService scriptEventService)
         {
+            scriptEventService.SetHandler<PlaceableEvents.OnClose>("bank_onclose", OnBankClose);
+            scriptEventService.SetHandler<PlaceableEvents.OnDisturbed>("bank_disturb", OnBankDisturbed);
             scriptEventService.SetHandler<PlaceableEvents.OnUsed>("bank_used_player", OnBankUsed);
             scriptEventService.SetHandler<PlaceableEvents.OnUsed>("bank_used_static", OnBankUsed);
-            scriptEventService.SetHandler<PlaceableEvents.OnDisturbed>("bank_disturb", OnBankDisturbed);
-            scriptEventService.SetHandler<PlaceableEvents.OnClose>("bank_onclose", OnBankClose);
         }
 
         private static readonly List<BaseItemType> BlockedItemTypes = new()
@@ -41,6 +41,23 @@ namespace Services.Bank
         {
         };
 
+
+        private void OnBankClose(PlaceableEvents.OnClose onBankDisturbed)
+        {
+            if (onBankDisturbed.LastClosedBy is not NwPlayer player) return;
+            // save chest
+            player.GetCampaignVariable<string>("banking_" + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
+
+            // destroy all items inside the chest
+            foreach (var itemInChest in onBankDisturbed.Placeable.Items)
+            {
+                itemInChest.Destroy();
+            }
+
+            // destroy
+            onBankDisturbed.Placeable.Destroy();
+        }
+        
         private void OnBankUsed(PlaceableEvents.OnUsed onUsed)
         {
             if (onUsed.UsedBy is NwPlayer player)
@@ -54,7 +71,6 @@ namespace Services.Bank
             if (onBankDisturbed.Disturber is NwPlayer player)
             {
                 var item = onBankDisturbed.DisturbedItem;
-                var chest = onBankDisturbed.Placeable;
                 switch (onBankDisturbed.DisturbType)
                 {
                     case InventoryDisturbType.Added:
@@ -86,7 +102,7 @@ namespace Services.Bank
                             return;
                         }
 
-                        if (chest.Items.Count() > 10)
+                        if (onBankDisturbed.Placeable.Items.Count<NwItem>() > 10)
                         {
                             player.FloatingTextString("You can only store 10 items.");
                             BankRefuse(player, item);
@@ -104,20 +120,11 @@ namespace Services.Bank
             }
         }
 
-        private void OnBankClose(PlaceableEvents.OnClose onBankDisturbed)
+        private static void BankRefuse(NwPlayer player, NwItem item)
         {
-            if (onBankDisturbed.LastClosedBy is not NwPlayer player) return;
-            // save chest
-            player.GetCampaignVariable<string>("banking_" + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
-
-            // destroy all items inside the chest
-            foreach (var itemInChest in onBankDisturbed.Placeable.Items)
-            {
-                itemInChest.Destroy();
-            }
-
-            // destroy
-            onBankDisturbed.Placeable.Destroy();
+            var serializedItem = item.Serialize();
+            item.Destroy();
+            player.AcquireItem(NwItem.Deserialize<NwItem>(serializedItem));
         }
 
         public static NwPlaceable GetPlayerBankObject(NwPlayer player, string objectTag)
@@ -134,13 +141,6 @@ namespace Services.Bank
             // set value on player
             player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value = bank.Serialize();
             return bank;
-        }
-
-        private static void BankRefuse(NwPlayer player, NwItem item)
-        {
-            var serializedItem = item.Serialize();
-            item.Destroy();
-            player.AcquireItem(NwItem.Deserialize<NwItem>(serializedItem));
         }
     }
 }
