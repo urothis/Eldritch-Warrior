@@ -15,6 +15,7 @@ namespace Services.Bank
     public class ItemBank
     {
         private static readonly string itemBankName = "ITEM_BANK";
+
         public ItemBank(ScriptEventService scriptEventService)
         {
             scriptEventService.SetHandler<PlaceableEvents.OnUsed>("bank_used_player", OnBankUsed);
@@ -40,34 +41,11 @@ namespace Services.Bank
         {
         };
 
-        public static NwPlaceable GetPlayerBankObject(NwPlayer player, string objectTag)
+        private void OnBankUsed(PlaceableEvents.OnUsed onUsed)
         {
-            var store = player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value;
-            return store != string.Empty ? NwObject.Deserialize<NwPlaceable>(store) : CreateNewBankObject(player, objectTag);
-        }
-
-        public static NwPlaceable CreateNewBankObject(NwPlayer player, string objectTag)
-        {
-            var bank = NwPlaceable.Create("_bank_", player.Location);
-            // set variable on object
-            bank.GetLocalVariable<string>("CHEST_TAG").Value = objectTag;
-            // set value on player
-            player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value = bank.Serialize();
-            return bank;
-        }
-
-        private static void BankRefuse(NwPlayer player, NwItem item)
-        {
-            var serializedItem = item.Serialize();
-            item.Destroy();
-            player.AcquireItem(NwItem.Deserialize<NwItem>(serializedItem));
-        }
-
-        private void OnBankUsed(PlaceableEvents.OnUsed onBankUsed)
-        {
-            if (onBankUsed.UsedBy is NwPlayer player)
+            if (onUsed.UsedBy is NwPlayer player)
             {
-                player.ForceOpenInventory(GetPlayerBankObject(player, onBankUsed.Placeable.Tag));
+                player.ForceOpenInventory(GetPlayerBankObject(player, onUsed.Placeable.Tag));
             }
         }
 
@@ -140,6 +118,29 @@ namespace Services.Bank
 
             // destroy
             onBankDisturbed.Placeable.Destroy();
+        }
+
+        public static NwPlaceable GetPlayerBankObject(NwPlayer player, string objectTag)
+        {
+            var store = player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value;
+            return store != string.Empty ? NwObject.Deserialize<NwPlaceable>(store) : CreateNewBankObject(player, objectTag);
+        }
+
+        public static NwPlaceable CreateNewBankObject(NwPlayer player, string objectTag)
+        {
+            var bank = NwPlaceable.Create("_bank_", player.Location);
+            // set variable on object
+            bank.GetLocalVariable<string>("CHEST_TAG").Value = objectTag;
+            // set value on player
+            player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value = bank.Serialize();
+            return bank;
+        }
+
+        private static void BankRefuse(NwPlayer player, NwItem item)
+        {
+            var serializedItem = item.Serialize();
+            item.Destroy();
+            player.AcquireItem(NwItem.Deserialize<NwItem>(serializedItem));
         }
     }
 }
