@@ -26,8 +26,14 @@ namespace Services.TwoHand
             }
             else if (CheckCreaturekSizeAndWeapon(creature))
             {
-                
+                AddBuff(creature);
             }
+        }
+
+        private static void AddBuff(NwCreature creature)
+        {
+            creature.ApplyEffect(EffectDuration.Permanent, Effect.ACIncrease(5, ACBonus.ShieldEnchantment));
+            creature.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpAcBonus));
         }
 
         private static bool CheckCreaturekSizeAndWeapon(NwCreature creature)
