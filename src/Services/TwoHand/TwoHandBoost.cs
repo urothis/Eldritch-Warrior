@@ -27,7 +27,12 @@ namespace Services.TwoHand
             else if (CheckCreaturekSizeAndWeapon(creature))
             {
                 AddBuff(creature);
+                return;
             }
+            else
+            {
+
+            }    
         }
 
         private static void AddBuff(NwCreature creature)
