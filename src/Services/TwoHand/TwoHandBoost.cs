@@ -20,29 +20,24 @@ namespace Services.TwoHand
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerUnequipItem>(NwModule.Instance, OnPlayerUnequipItem);
         }
 
-        private void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => TwoHandBoost();
+        private void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => TwoHandBoost(unequipItem.UnequippedBy);
+        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem) => TwoHandBoost(equipItem.Player);
 
-        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem) => TwoHandBoost();
-
-        private void TwoHandBoost()
+        private static void TwoHandBoost(NwCreature creature)
         {
-            if (TwoHandBoostCheckCreatureSize(oPC) || TwoHandBoostCheckShield(oPC))
+            if (TwoHandBoostCheckCreatureSize(creature))
             {
-                return;
+
             }
+        }
 
-            object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
-
-            if (TwoHandBoostCheckSizeAndWeapon(oPC))
+        private static bool TwoHandBoostCheckCreatureSize(NwCreature creature)
+        {
+            return creature.Size switch
             {
-                TwoHandBoostBuffAdd(oPC);
-                return;
-            }
-
-            else
-            {
-                TwoHandBoostBuffRemoved(oPC);
-            }
+                CreatureSize.Huge or CreatureSize.Invalid or CreatureSize.Large => true,
+                _ => false,
+            };
         }
     }
 }
