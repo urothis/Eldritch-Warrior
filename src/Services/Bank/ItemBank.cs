@@ -14,7 +14,7 @@ namespace Services.Bank
     [ServiceBinding(typeof(ItemBank))]
     public class ItemBank
     {
-        private static readonly string itemBankName = "ITEM_BANK";
+        private static readonly string itemBankCampaign = "ITEM_BANK_";
 
         public ItemBank(ScriptEventService scriptEventService)
         {
@@ -46,10 +46,10 @@ namespace Services.Bank
         {
             if (onBankDisturbed.LastClosedBy is not NwPlayer player) return;
             // save chest
-            player.GetCampaignVariable<string>("banking_" + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
+            player.GetCampaignVariable<string>(itemBankCampaign + onBankDisturbed.Placeable.Area.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
 
             // destroy all items inside the chest
-            foreach (var itemInChest in onBankDisturbed.Placeable.Items)
+            foreach (NwItem itemInChest in onBankDisturbed.Placeable.Items)
             {
                 itemInChest.Destroy();
             }
@@ -57,7 +57,7 @@ namespace Services.Bank
             // destroy
             onBankDisturbed.Placeable.Destroy();
         }
-        
+
         private void OnBankUsed(PlaceableEvents.OnUsed onUsed)
         {
             if (onUsed.UsedBy is NwPlayer player)
@@ -70,7 +70,7 @@ namespace Services.Bank
         {
             if (onBankDisturbed.Disturber is NwPlayer player)
             {
-                var item = onBankDisturbed.DisturbedItem;
+                NwItem item = onBankDisturbed.DisturbedItem;
                 switch (onBankDisturbed.DisturbType)
                 {
                     case InventoryDisturbType.Added:
@@ -102,17 +102,18 @@ namespace Services.Bank
                             return;
                         }
 
-                        if (onBankDisturbed.Placeable.Items.Count<NwItem>() > 10)
+                        int itemLimit = 75;
+                        if (onBankDisturbed.Placeable.Items.Count() > itemLimit)
                         {
-                            player.FloatingTextString("You can only store 10 items.");
+                            player.FloatingTextString($"You can only store {itemLimit} items.");
                             BankRefuse(player, item);
                             return;
                         }
 
-                        player.GetCampaignVariable<string>("banking_" + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
+                        player.GetCampaignVariable<string>(itemBankCampaign + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
                         break;
                     case InventoryDisturbType.Removed:
-                        player.GetCampaignVariable<string>("banking_" + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
+                        player.GetCampaignVariable<string>(itemBankCampaign + onBankDisturbed.Placeable.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
                         break;
                     case InventoryDisturbType.Stolen:
                         break;
@@ -122,24 +123,24 @@ namespace Services.Bank
 
         private static void BankRefuse(NwPlayer player, NwItem item)
         {
-            var serializedItem = item.Serialize();
+            string serializedItem = item.Serialize();
             item.Destroy();
-            player.AcquireItem(NwItem.Deserialize<NwItem>(serializedItem));
+            player.AcquireItem(NwObject.Deserialize<NwItem>(serializedItem));
         }
 
         public static NwPlaceable GetPlayerBankObject(NwPlayer player, string objectTag)
         {
-            var store = player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value;
+            string store = player.GetCampaignVariable<string>(itemBankCampaign, player.UUID.ToUUIDString()).Value;
             return store != string.Empty ? NwObject.Deserialize<NwPlaceable>(store) : CreateNewBankObject(player, objectTag);
         }
 
         public static NwPlaceable CreateNewBankObject(NwPlayer player, string objectTag)
         {
-            var bank = NwPlaceable.Create("_bank_", player.Location);
+            NwPlaceable bank = NwPlaceable.Create("_bank_", player.Location);
             // set variable on object
             bank.GetLocalVariable<string>("CHEST_TAG").Value = objectTag;
             // set value on player
-            player.GetCampaignVariable<string>(itemBankName, player.UUID.ToUUIDString()).Value = bank.Serialize();
+            player.GetCampaignVariable<string>(itemBankCampaign, player.UUID.ToUUIDString()).Value = bank.Serialize();
             return bank;
         }
     }
