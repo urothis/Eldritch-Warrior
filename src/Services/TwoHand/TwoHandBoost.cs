@@ -36,11 +36,11 @@ namespace Services.TwoHand
             {
                 return true;
             }
-            if (creature.Size.Equals(CreatureSize.Small))
+            else if (creature.Size.Equals(CreatureSize.Small) && HasTwoHandBoostMediumWeapon(creature))
             {
                 return true;
             }
-            if (creature.Size.Equals(CreatureSize.Tiny))
+            else if (creature.Size.Equals(CreatureSize.Tiny) && HasTwoHandBoostSmallmWeapon(creature))
             {
                 return true;
             }
@@ -48,6 +48,45 @@ namespace Services.TwoHand
             {
                 return false;
             }
+        }
+
+        private static bool HasTwoHandBoostSmallmWeapon(NwCreature creature)
+        {
+            return creature.GetItemInSlot(InventorySlot.RightHand).BaseItemType switch
+            {
+                BaseItemType.Handaxe or
+                BaseItemType.Kama => true,
+                BaseItemType.LightCrossbow or
+                BaseItemType.LightHammer or
+                BaseItemType.LightMace or
+                BaseItemType.Shortsword or
+                BaseItemType.Sickle or
+                BaseItemType.Sling or
+                BaseItemType.ThrowingAxe or
+                _ => false,
+            };
+        }
+
+        private static bool HasTwoHandBoostMediumWeapon(NwCreature creature)
+        {
+            return creature.GetItemInSlot(InventorySlot.RightHand).BaseItemType switch
+            {
+                BaseItemType.Battleaxe or
+                BaseItemType.Bastardsword or
+                BaseItemType.Club or
+                BaseItemType.DwarvenWaraxe or
+                BaseItemType.HeavyCrossbow or
+                BaseItemType.Katana => true,
+                BaseItemType.Morningstar or
+                BaseItemType.LightFlail or
+                BaseItemType.Longsword or
+                BaseItemType.MagicStaff or
+                BaseItemType.Rapier or
+                BaseItemType.Scimitar or
+                BaseItemType.Shortbow or
+                BaseItemType.Warhammer or
+                _ => false,
+            };
         }
 
         private static bool HasTwoHandLargeWeapon(NwCreature creature)
