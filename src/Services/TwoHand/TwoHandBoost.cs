@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-
-using NWNX.API;
 
 namespace Services.TwoHand
 {
@@ -29,11 +23,35 @@ namespace Services.TwoHand
             {
                 return;
             }
+            else if (TwoHandBoostCheckSizeAndWeapon(creature))
+            {
+                
+            }
         }
 
-        private static bool StopScript(NwCreature creature) => TwoHandBoostCheckCreatureSize(creature) || TwoHandBoostCheckShield(creature);
+        private static bool TwoHandBoostCheckSizeAndWeapon(NwCreature creature)
+        {
+            if (creature.Size.Equals(CreatureSize.Medium))
+            {
+                return true;
+            }
+            if (creature.Size.Equals(CreatureSize.Small))
+            {
+                return true;
+            }
+            if (creature.Size.Equals(CreatureSize.Tiny))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
-        private static bool TwoHandBoostCheckShield(NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand).BaseItemType switch
+        private static bool StopScript(NwCreature creature) => TwoHandBoostCheckCreatureSize(creature) || HasShieldEquipped(creature);
+
+        private static bool HasShieldEquipped(NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand).BaseItemType switch
         {
             BaseItemType.LargeShield or BaseItemType.SmallShield or BaseItemType.TowerShield => true,
             _ => false,
