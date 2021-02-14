@@ -25,11 +25,19 @@ namespace Services.TwoHand
 
         private static void TwoHandBoost(NwCreature creature)
         {
-            if (TwoHandBoostCheckCreatureSize(creature))
+            if (StopScript(creature))
             {
-
+                return;
             }
         }
+
+        private static bool StopScript(NwCreature creature) => TwoHandBoostCheckCreatureSize(creature) || TwoHandBoostCheckShield(creature);
+
+        private static bool TwoHandBoostCheckShield(NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand).BaseItemType switch
+        {
+            BaseItemType.LargeShield or BaseItemType.SmallShield or BaseItemType.TowerShield => true,
+            _ => false,
+        };
 
         private static bool TwoHandBoostCheckCreatureSize(NwCreature creature)
         {
