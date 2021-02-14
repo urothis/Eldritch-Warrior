@@ -20,14 +20,32 @@ namespace Services.TwoHand
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerUnequipItem>(NwModule.Instance, OnPlayerUnequipItem);
         }
 
-        private void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem obj)
+        private void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => TwoHandBoost();
+
+        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem)
         {
-            throw new NotImplementedException();
+            TwoHandBoost();
         }
 
-        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem obj)
+        private void TwoHandBoost()
         {
-            throw new NotImplementedException();
+            if (TwoHandBoostCheckCreatureSize(oPC) || TwoHandBoostCheckShield(oPC))
+            {
+                return;
+            }
+
+            object oItem = GetItemInSlot(INVENTORY_SLOT_RIGHTHAND, oPC);
+
+            if (TwoHandBoostCheckSizeAndWeapon(oPC))
+            {
+                TwoHandBoostBuffAdd(oPC);
+                return;
+            }
+
+            else
+            {
+                TwoHandBoostBuffRemoved(oPC);
+            }
         }
     }
 }
