@@ -49,7 +49,7 @@ namespace Services.TwoHand
             }
         }
 
-        private static bool StopScript(NwCreature creature) => TwoHandBoostCheckCreatureSize(creature) || HasShieldEquipped(creature);
+        private static bool StopScript(NwCreature creature) => CheckCreatureSize(creature) || HasShieldEquipped(creature);
 
         private static bool HasShieldEquipped(NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand).BaseItemType switch
         {
@@ -57,7 +57,7 @@ namespace Services.TwoHand
             _ => false,
         };
 
-        private static bool TwoHandBoostCheckCreatureSize(NwCreature creature)
+        private static bool CheckCreatureSize(NwCreature creature)
         {
             return creature.Size switch
             {
