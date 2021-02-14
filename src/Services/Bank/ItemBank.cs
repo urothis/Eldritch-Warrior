@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -128,13 +127,13 @@ namespace Services.Bank
             player.AcquireItem(NwObject.Deserialize<NwItem>(serializedItem));
         }
 
-        public static NwPlaceable GetPlayerBankObject(NwPlayer player, string objectTag)
+        private static NwPlaceable GetPlayerBankObject(NwPlayer player, string objectTag)
         {
             string store = player.GetCampaignVariable<string>(itemBankCampaign, player.UUID.ToUUIDString()).Value;
             return store != string.Empty ? NwObject.Deserialize<NwPlaceable>(store) : CreateNewBankObject(player, objectTag);
         }
 
-        public static NwPlaceable CreateNewBankObject(NwPlayer player, string objectTag)
+        private static NwPlaceable CreateNewBankObject(NwPlayer player, string objectTag)
         {
             NwPlaceable bank = NwPlaceable.Create("_bank_", player.Location);
             // set variable on object
