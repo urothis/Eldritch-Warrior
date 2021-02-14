@@ -2,6 +2,7 @@ using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
+using System;
 
 namespace Services.TwoHand
 {
@@ -23,15 +24,15 @@ namespace Services.TwoHand
             {
                 return;
             }
-            else if (TwoHandBoostCheckSizeAndWeapon(creature))
+            else if (CheckCreaturekSizeAndWeapon(creature))
             {
                 
             }
         }
 
-        private static bool TwoHandBoostCheckSizeAndWeapon(NwCreature creature)
+        private static bool CheckCreaturekSizeAndWeapon(NwCreature creature)
         {
-            if (creature.Size.Equals(CreatureSize.Medium))
+            if (creature.Size.Equals(CreatureSize.Medium) && HasTwoHandLargeWeapon(creature))
             {
                 return true;
             }
@@ -47,6 +48,26 @@ namespace Services.TwoHand
             {
                 return false;
             }
+        }
+
+        private static bool HasTwoHandLargeWeapon(NwCreature creature)
+        {
+            return creature.GetItemInSlot(InventorySlot.RightHand).BaseItemType switch
+            {
+                BaseItemType.DireMace or 
+                BaseItemType.Doubleaxe or 
+                BaseItemType.Greataxe or 
+                BaseItemType.Greatsword or 
+                BaseItemType.Halberd or 
+                BaseItemType.HeavyFlail or 
+                BaseItemType.Longbow or
+                BaseItemType.Quarterstaff or 
+                BaseItemType.Scythe or 
+                BaseItemType.ShortSpear or 
+                BaseItemType.Trident or 
+                BaseItemType.TwoBladedSword => true,
+                _ => false,
+            };
         }
 
         private static bool StopScript(NwCreature creature) => CheckCreatureSize(creature) || HasShieldEquipped(creature);
