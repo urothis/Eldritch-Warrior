@@ -22,10 +22,7 @@ namespace Services.TwoHand
 
         private void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => TwoHandBoost();
 
-        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem)
-        {
-            TwoHandBoost();
-        }
+        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem) => TwoHandBoost();
 
         private void TwoHandBoost()
         {
