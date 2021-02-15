@@ -1,6 +1,7 @@
-//using NLog;
+//using System;
 
 using System;
+
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
@@ -9,7 +10,6 @@ namespace Services.Subrace
 {
     public static class Extensions
     {
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static void SubRaceEnter(this ModuleEvents.OnClientEnter enter)
         {
             //  The player didn't input a subrace so stop here
@@ -21,7 +21,11 @@ namespace Services.Subrace
             //  If valid Subrace proceed else tell player subrace is not valid
             if (enter.Player.SubraceValid())
             {
-                return;
+                if (enter.Player.GetCampaignVariable<string>("SUBRACE", enter.Player.UUID.ToUUIDString()).Value == string.Empty)
+                {
+                    //New Character apply everything otherwise reapply subrace
+                    enter.Player.GetCampaignVariable<string>("SUBRACE", enter.Player.UUID.ToUUIDString()).Value = enter.Player.UUID.ToUUIDString();
+                }
             }
             else
             {
