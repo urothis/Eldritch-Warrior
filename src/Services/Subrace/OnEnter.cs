@@ -12,9 +12,6 @@ namespace Services.Subrace
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public OnEnter(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnClientEnter>(NwModule.Instance, OnClientEnter);
 
-        private static void OnClientEnter(ModuleEvents.OnClientEnter enter)
-        {
-
-        }
+        private static void OnClientEnter(ModuleEvents.OnClientEnter onClient) => onClient.SubRaceEnter();
     }
 }
