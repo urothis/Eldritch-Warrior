@@ -11,7 +11,10 @@ namespace Services.Subrace
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static void SubRaceEnter(this ModuleEvents.OnClientEnter enter)
         {
-
+            if (enter.Player.SubRace.ToString().Length == 0)
+            {
+                return;
+            }
         }
     }
 }
