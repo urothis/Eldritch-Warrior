@@ -5,6 +5,7 @@ using System;
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
+using NWN.API.Constants;
 
 namespace Services.Subrace
 {
@@ -25,6 +26,11 @@ namespace Services.Subrace
                 {
                     //New Character apply everything otherwise reapply subrace
                     enter.Player.GetCampaignVariable<string>("SUBRACE", enter.Player.UUID.ToUUIDString()).Value = enter.Player.UUID.ToUUIDString();
+                    enter.Player.TransformSubrace();
+                }
+                else
+                {
+                    //Reapply subrace
                 }
             }
             else
@@ -33,40 +39,24 @@ namespace Services.Subrace
             }
         }
 
+        private static void TransformSubrace(this NwPlayer player)
+        {
+
+        }
+
         public static bool SubraceValid(this NwPlayer pc)
         {
-            if (Array.Exists(Roster.dwarf, x => x == pc.SubRace))
+            return pc.RacialType switch
             {
-                return true;
-            }
-            else if (Array.Exists(Roster.elf, x => x == pc.SubRace))
-            {
-                return true;
-            }
-            else if (Array.Exists(Roster.gnome, x => x == pc.SubRace))
-            {
-                return true;
-            }
-            else if (Array.Exists(Roster.halfling, x => x == pc.SubRace))
-            {
-                return true;
-            }
-            else if (Array.Exists(Roster.human, x => x == pc.SubRace))
-            {
-                return true;
-            }
-            else if (Array.Exists(Roster.orc, x => x == pc.SubRace))
-            {
-                return true;
-            }
-            else if (Array.Exists(Roster.Planetouched, x => x == pc.SubRace))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+                RacialType.Dwarf when Array.Exists(Roster.dwarf, x => x == pc.SubRace) => true,
+                RacialType.Elf when Array.Exists(Roster.elf, x => x == pc.SubRace) => true,
+                RacialType.Gnome when Array.Exists(Roster.gnome, x => x == pc.SubRace) => true,
+                RacialType.Halfling when Array.Exists(Roster.halfling, x => x == pc.SubRace) => true,
+                RacialType.Human when Array.Exists(Roster.human, x => x == pc.SubRace) => true,
+                RacialType.HalfOrc when Array.Exists(Roster.orc, x => x == pc.SubRace) => true,
+                RacialType.All when Array.Exists(Roster.Planetouched, x => x == pc.SubRace) => true,
+                _ => false
+            };
         }
     }
 }
