@@ -7,7 +7,7 @@ using NWN.API.Events;
 using NWN.Services;
 using NWN.API.Constants;
 
-namespace Services.Subrace
+namespace Services.PlayableRaces
 {
     public static class Extensions
     {
