@@ -13,6 +13,9 @@ namespace Services.PlayableRaces
         public int SoundSet { get; set; }
         public int PortraitID { get; set; }
         public AppearanceType Appearance { get; set; }
+        public RacialType RaceType { get; set; }
+        public int MoveRate { get; set; }
+        public int Size { get; set; }
 
         struct Ability
         {
