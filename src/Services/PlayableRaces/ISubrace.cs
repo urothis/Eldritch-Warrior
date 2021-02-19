@@ -1,11 +1,6 @@
-using System;
 using System.Collections.Generic;
 
-using NWN.API;
 using NWN.API.Constants;
-using NWN.API.Events;
-
-using NWN.Services;
 
 namespace Services.PlayableRaces
 {
@@ -25,6 +20,7 @@ namespace Services.PlayableRaces
         public string Armor { get; set; }
         public string WeaponLeft { get; set; }
         public string WeaponRight { get; set; }
+        public bool IsUndead { get; set; }
 
         struct Ability
         {
@@ -67,41 +63,6 @@ namespace Services.PlayableRaces
 		{
 			return;
 		}
-}
-
-
-public struct AbilityScore
-{
-	public byte Strength;
-	public byte Dexterity;
-	public byte Constitution;
-	public byte Intelligence;
-	public byte Wisdom;
-	public byte Charisma;
-}
-
-public struct SubRaceData {
-	public string Name;
-	public AbilityScoreBonus stat;
-	public byte MaxLevel;
-	public byte SR;
-	public string HideResRef;
-}
-
-interface ISubrace
-{
-	public string Name
-	{
-		get;
-		set;
-	}
-
-	public AbilityScoreBonus statBonus
-	{
-		get;
-		set;
-	}
-
 }
 
 public abstract class Subrace : ISubrace

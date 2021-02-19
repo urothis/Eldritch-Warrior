@@ -41,12 +41,6 @@ namespace Services.PlayableRaces
 
         private static void TransformSubrace(this NwPlayer player)
         {
-            player.SetAbilityModifiers();
-        }
-
-        private static void SetAbilityModifiers(this NwPlayer player)
-        {
-
         }
 
         public static bool SubraceValid(this NwPlayer pc)
