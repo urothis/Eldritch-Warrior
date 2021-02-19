@@ -7,8 +7,8 @@ namespace Services.PlayableRaces
             "Gold",
             "Gray",
             "Shield",
-            "Wild",
-            "Urdunnir"
+            "Urdunnir",
+            "Wild"
         };
 
         public static readonly string[] elf = {
