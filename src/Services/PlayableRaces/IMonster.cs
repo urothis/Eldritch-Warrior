@@ -8,7 +8,5 @@ namespace Services.PlayableRaces
         public CreatureSize Size { get; set; }
         public int SoundSet { get; set; }
         public int PortraitID { get; set; }
-
-
     }
 }
