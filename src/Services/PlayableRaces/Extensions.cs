@@ -1,11 +1,13 @@
 //using System;
-
 using System;
+using System.Collections.Generic;
 
 using NWN.API;
+using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-using NWN.API.Constants;
+
+using NWNX.API;
 
 namespace Services.PlayableRaces
 {
@@ -39,8 +41,15 @@ namespace Services.PlayableRaces
             }
         }
 
-        private static void TransformSubrace(this NwPlayer player)
+        private static void TransformSubrace(this NwCreature player)
         {
+            switch (player.SubRace)
+            {
+                case "Dwarf-Artic":
+                    break;
+                default:
+                    break;
+            }
         }
 
         public static bool SubraceValid(this NwPlayer pc)
