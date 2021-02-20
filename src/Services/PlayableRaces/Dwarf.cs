@@ -1,41 +1,30 @@
 using System.Collections.Generic;
-using NWN.API;
 using NWN.API.Constants;
 
 namespace Services.PlayableRaces
 {
-    public abstract class Dwarf : ISubrace
+    public abstract class Dwarf
     {
+        private string hideResRef = "";
+        private string creatureArmor = "";
+        private string creatureWeaponLeft = "";
+        private string creatureWeaponRight = "";
+        private List<Feat> featList = new List<Feat>();
+        private List<EffectType> effects = new List<EffectType>();
+
+        public bool IsUndead { get; set; }
         public int MaxLevel { get; set; }
         public int SoundSet { get; set; }
         public int SR { get; set; }
         public int PortraitID { get; set; }
-        public bool IsUndead { get; set; }
+        public string HideResRef { get => hideResRef; set => hideResRef = value; }
+        public string CreatureArmor { get => creatureArmor; set => creatureArmor = value; }
+        public string CreatureWeaponLeft { get => creatureWeaponLeft; set => creatureWeaponLeft = value; }
+        public string CreatureWeaponRight { get => creatureWeaponRight; set => creatureWeaponRight = value; }
+        public List<EffectType> Effects { get => effects; set => effects = value; }
+        public List<Feat> FeatList { get => featList; set => featList = value; }
         public AppearanceType Appearance { get; set; }
-        public MovementRate MoveRate { get; set; }
         public CreatureSize Size { get; set; }
-        public abstract List<Feat> FeatList { get; set; }
-        public abstract List<EffectType> Effects { get; set; }
-        public abstract string HideResRef { get; set; }
-        public abstract string Armor { get; set; }
-        public abstract string WeaponLeft { get; set; }
-        public abstract string WeaponRight { get; set; }
-    }
-
-    public class Artic : Dwarf
-    {
-        public Artic()
-        {
-            MaxLevel = 58;
-            IsUndead = false;
-            HideResRef = "";
-        }
-
-        public override List<Feat> FeatList { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public override List<EffectType> Effects { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public override string HideResRef { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public override string Armor { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public override string WeaponLeft { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
-        public override string WeaponRight { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
+        public MovementRate MoveRate { get; set; }
     }
 }
