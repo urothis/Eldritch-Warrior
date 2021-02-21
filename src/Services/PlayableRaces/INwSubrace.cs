@@ -24,9 +24,9 @@ namespace Services.PlayableRaces
 
     public struct BodyParts
     {
-        public CreaturePart Head { get; set; }
         public int Hair { get; set; }
         //http://wiki.avlis.org/Dynamic_Dye_Color_Chart
+        public CreaturePart Head { get; set; }
         public int Skin { get; set; }
         public CreatureWingType Wing { get; set; }
         public CreatureTailType Tail { get; set; }
