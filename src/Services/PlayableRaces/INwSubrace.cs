@@ -2,10 +2,6 @@ using System.Collections.Generic;
 
 using NWN.API;
 using NWN.API.Constants;
-using NWN.API.Events;
-using NWN.Services;
-using NWNX.API.Events;
-using NWNX.Services;
 
 namespace Services.PlayableRaces
 {
@@ -49,5 +45,15 @@ namespace Services.PlayableRaces
         public int Skin { get; set; }
         public CreatureWingType Wing { get; set; }
         public CreatureTailType Tail { get; set; }
+    }
+
+    public struct AbilityModifier
+    {
+        public int Strength;
+        public int Dexterity;
+        public int Constitution;
+        public int Intelligence;
+        public int Wisdom;
+        public int Charisma;
     }
 }

@@ -1,20 +1,20 @@
-using System.Collections.Generic;
 using NWN.API;
+
 using NWN.API.Constants;
 
 namespace Services.PlayableRaces
 {
-    public class IceDwarf : INwSubrace
+    public class DwarfArtic : INwSubrace
     {
         TemplateData INwSubrace.Data =>
             new TemplateData
             {
-                RawName = null,
-                SubraceName = "Ice-Dwarf",
+                RawName = "Dwarf-Artic",
+                SubraceName = "Dwarf Artic",
                 Race = RacialType.Dwarf,
             };
 
-        void INwSubrace.Apply(NwPlayer player)
+        public void Apply(NwPlayer player)
         {
             throw new System.NotImplementedException();
         }
