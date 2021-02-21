@@ -8,8 +8,28 @@ namespace Services.PlayableRaces
     public interface INwSubrace
     {
         public TemplateData Data { get; }
-        public void Init(NwPlayer player);
         public void Apply(NwPlayer player);
+        public void Init(NwPlayer player);
+    }
+
+    public struct AbilityModifier
+    {
+        public int Strength;
+        public int Dexterity;
+        public int Constitution;
+        public int Intelligence;
+        public int Wisdom;
+        public int Charisma;
+    }
+
+    public struct BodyParts
+    {
+        public CreaturePart Head { get; set; }
+        public int Hair { get; set; }
+        //http://wiki.avlis.org/Dynamic_Dye_Color_Chart
+        public int Skin { get; set; }
+        public CreatureWingType Wing { get; set; }
+        public CreatureTailType Tail { get; set; }
     }
 
     public struct TemplateData
@@ -35,25 +55,5 @@ namespace Services.PlayableRaces
         public bool IsUndead;
         public AbilityModifier StatModifier;
         public BodyParts bodyParts;
-    }
-
-    public struct BodyParts
-    {
-        public CreaturePart Head { get; set; }
-        public int Hair { get; set; }
-        //http://wiki.avlis.org/Dynamic_Dye_Color_Chart
-        public int Skin { get; set; }
-        public CreatureWingType Wing { get; set; }
-        public CreatureTailType Tail { get; set; }
-    }
-
-    public struct AbilityModifier
-    {
-        public int Strength;
-        public int Dexterity;
-        public int Constitution;
-        public int Intelligence;
-        public int Wisdom;
-        public int Charisma;
     }
 }
