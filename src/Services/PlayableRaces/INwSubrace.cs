@@ -24,12 +24,12 @@ namespace Services.PlayableRaces
 
     public struct BodyParts
     {
-        public int Hair { get; set; }
         //http://wiki.avlis.org/Dynamic_Dye_Color_Chart
-        public CreaturePart Head { get; set; }
+        public int Hair { get; set; }
         public int Skin { get; set; }
-        public CreatureWingType Wing { get; set; }
+        public CreaturePart Head { get; set; }
         public CreatureTailType Tail { get; set; }
+        public CreatureWingType Wing { get; set; }
     }
 
     public struct TemplateData
@@ -39,21 +39,20 @@ namespace Services.PlayableRaces
         public RacialType Race;
         public RacialType[] RacesAllowed;
         public Alignment[] AlignmentsAllowed;
+        public bool IsUndead;
         public int MaxLevel;
-        public int SR;
-        public int SoundSet;
         public int PortraitID;
-        public AppearanceType Appearance;
-        public MovementRate MoveRate;
-        public CreatureSize Size;
-        public List<Feat> FeatList;
-        public List<EffectType> Effects;
+        public int SoundSet;
+        public int SR;
         public string HideResRef;
-        public string Armor;
         public string WeaponLeft;
         public string WeaponRight;
-        public bool IsUndead;
         public AbilityModifier StatModifier;
+        public AppearanceType Appearance;
         public BodyParts bodyParts;
+        public CreatureSize Size;
+        public MovementRate MoveRate;
+        public List<EffectType> Effects;
+        public List<Feat> FeatList;
     }
 }
