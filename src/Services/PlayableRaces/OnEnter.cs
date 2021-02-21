@@ -26,16 +26,6 @@ namespace Services.PlayableRaces
                     //New Character apply everything otherwise reapply subrace
                     onClient.Player.GetCampaignVariable<string>("SUBRACE", onClient.Player.UUID.ToUUIDString()).Value = onClient.Player.UUID.ToUUIDString();
                     // apply new stuff here
-                    dynamic? subrace = null;
-
-                    switch (onClient.Player.SubRace)
-                    {
-                        case "Dwarf-Artic":
-                            subrace = new DwarfArtic();
-                            break;
-                        default:
-                            break;
-                    }
                 }
                 else
                 {
