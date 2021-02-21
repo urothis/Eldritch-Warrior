@@ -6,6 +6,7 @@ namespace Services.PlayableRaces
     public interface IRaces
     {
         public bool IsUndead { get; set; }
+        public int ArmorClass { get; set; }
         public int MaxLevel { get; set; }
         public int SR { get; set; }
         public MovementRate MoveRate { get; set; }
