@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-using NWN.API;
 using NWN.API.Constants;
 
 namespace Services.PlayableRaces
@@ -22,7 +21,7 @@ namespace Services.PlayableRaces
         public new List<EffectType>? Effects { get; set; }
         public new List<Feat>? FeatList { get; set; }
         public new List<Alignment>? AlignmentsAllowed { get; set; }
-        
+
         //http://wiki.avlis.org/Dynamic_Dye_Color_Chart
         public int Hair { get; set; }
         public int Skin { get; set; }

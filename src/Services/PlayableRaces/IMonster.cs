@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 
-using NWN.API;
 using NWN.API.Constants;
 
 namespace Services.PlayableRaces
@@ -22,7 +21,7 @@ namespace Services.PlayableRaces
         public new List<EffectType>? Effects { get; set; }
         public new List<Feat>? FeatList { get; set; }
         public new List<Alignment>? AlignmentsAllowed { get; set; }
-        
+
         public int PortraitID { get; set; }
         public int SoundSet { get; set; }
         public AppearanceType Appearance { get; set; }

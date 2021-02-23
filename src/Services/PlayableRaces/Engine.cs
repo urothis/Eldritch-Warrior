@@ -31,7 +31,17 @@ namespace Services.PlayableRaces
 
         private void ClientEnter(ModuleEvents.OnClientEnter obj)
         {
+            if (obj.Player.SubRace[0].Equals('!'))
+            {
 
+            }
+            else if (obj.Player.SubRace[0].Equals('!'))
+            {
+            }
+            else
+            {
+                
+            }
         }
     }
 }
