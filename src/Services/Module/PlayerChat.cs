@@ -148,7 +148,7 @@ namespace Services.Module
                     chat.Sender.SaveCharacter();
                     break;
                 case "delete":
-                    Administration.DeletePlayerCharacter(chat.Sender, true); break;
+                    chat.Sender.Delete($"{chat.Sender.BicFileName}.bic has been deleted."); break;
                 default:
                     break;
             }

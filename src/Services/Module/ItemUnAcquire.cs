@@ -1,5 +1,3 @@
-using NLog;
-
 using NWN.API;
 using NWN.API.Events;
 
@@ -11,8 +9,6 @@ namespace Services.Module
 
     public class ItemUnAcquire
     {
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-
         public ItemUnAcquire(NativeEventService native) =>
             native.Subscribe<NwModule, ModuleEvents.OnUnacquireItem>(NwModule.Instance, OnUnacquireItem);
 

@@ -20,7 +20,7 @@ namespace Services.TwoHand
 
         private static void TwoHandBoost(NwCreature creature)
         {
-            /*if (StopScript(creature))
+            if (StopScript(creature))
             {
                 return;
             }
@@ -32,7 +32,7 @@ namespace Services.TwoHand
             else
             {
                 RemoveBuff(creature);
-            }*/
+            }
         }
 
         private static void RemoveBuff(NwCreature creature) => creature.RemoveEffect(Effect.ACIncrease(5, ACBonus.ShieldEnchantment));

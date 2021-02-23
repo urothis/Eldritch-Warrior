@@ -48,7 +48,7 @@ namespace Services.Bank
             player.GetCampaignVariable<string>(itemBankCampaign + onBankDisturbed.Placeable.Area.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
 
             // destroy all items inside the chest
-            foreach (NwItem itemInChest in onBankDisturbed.Placeable.Items)
+            foreach (NwItem itemInChest in onBankDisturbed.Placeable.Inventory.Items)
             {
                 itemInChest.Destroy();
             }
@@ -102,7 +102,7 @@ namespace Services.Bank
                         }
 
                         int itemLimit = 75;
-                        if (onBankDisturbed.Placeable.Items.Count() > itemLimit)
+                        if (onBankDisturbed.Placeable.Inventory.Items.Count() > itemLimit)
                         {
                             player.FloatingTextString($"You can only store {itemLimit} items.");
                             BankRefuse(player, item);
