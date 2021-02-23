@@ -31,16 +31,20 @@ namespace Services.PlayableRaces
 
         private void ClientEnter(ModuleEvents.OnClientEnter obj)
         {
-            if (obj.Player.SubRace[0].Equals('!'))
+            if (obj.Player.SubraceValid())
             {
+                if (obj.Player.SubRace[0].Equals('!'))
+                {
+                    obj.InitPlayableRace();
+                    return;
+                }
+                else if (obj.Player.SubRace[0].Equals('!'))
+                {
+                }
+                else
+                {
 
-            }
-            else if (obj.Player.SubRace[0].Equals('!'))
-            {
-            }
-            else
-            {
-                
+                }
             }
         }
     }

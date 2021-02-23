@@ -1,4 +1,4 @@
-namespace Services.Subrace
+namespace Services.PlayableRaces
 {
     public static class Roster
     {
