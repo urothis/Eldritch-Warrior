@@ -1,4 +1,4 @@
-//using NLog;
+using NLog;
 
 using NWN.API;
 using NWN.API.Events;
@@ -11,11 +11,14 @@ namespace Services.Module
 
     public class ItemUnAcquire
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+
         public ItemUnAcquire(NativeEventService native) =>
             native.Subscribe<NwModule, ModuleEvents.OnUnacquireItem>(NwModule.Instance, OnUnacquireItem);
 
         private static void OnUnacquireItem(ModuleEvents.OnUnacquireItem unacquireItem)
         {
+            //Log.Debug(unacquireItem);
             /*
                 if statement is here to stop
                 System.NullReferenceException: Object reference not set to an instance of an object.
@@ -35,11 +38,6 @@ namespace Services.Module
             if (unacquireItem.LostBy is NwPlayer nwPlayer)
             {
                 nwPlayer.SaveCharacter();
-            }
-
-            if (unacquireItem.Item == null)
-            {
-                throw new System.NullReferenceException(nameof(unacquireItem.Item));
             }
         }
     }
