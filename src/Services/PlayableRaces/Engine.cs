@@ -12,7 +12,6 @@ namespace Services.PlayableRaces
     [ServiceBinding(typeof(Engine))]
     public class Engine
     {
-        private char wildcard = '!';
         public Engine(NativeEventService nativeEventService, NWNXEventService nWNX)
         {
             nativeEventService.Subscribe<NwModule, ModuleEvents.OnClientEnter>(NwModule.Instance, ClientEnter);
@@ -32,20 +31,7 @@ namespace Services.PlayableRaces
 
         private void ClientEnter(ModuleEvents.OnClientEnter obj)
         {
-            var pc = obj.Player.SubRace;
 
-            if (String.IsNullOrEmpty(pc))
-            {
-                //We are not a playable race, exit.
-            }
-            else if (pc[0].Equals(wildcard))
-            {
-                //Go to validate subrace an init
-            }
-            else
-            {
-                obj.Player.SendServerMessage($"\n{"ERROR".ColorString(Color.RED)}: The subrace name you have entered doesn't exist.\n");
-            }
         }
     }
 }
