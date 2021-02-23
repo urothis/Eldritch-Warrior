@@ -2,11 +2,13 @@ using System;
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
+using NLog;
 
 namespace Services.PlayableRaces
 {
     public static class Extensions
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static bool SubraceValid(this NwPlayer pc)
         {
             return pc.RacialType switch
@@ -24,6 +26,7 @@ namespace Services.PlayableRaces
 
         public static void InitPlayableRace(this ModuleEvents.OnClientEnter obj)
         {
+            Log.Info("HELLO InitPlayableRace");
         }
     }
 }

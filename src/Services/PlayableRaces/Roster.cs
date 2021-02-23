@@ -3,33 +3,33 @@ namespace Services.PlayableRaces
     public static class Roster
     {
         public static readonly string[] dwarf = {
-            "Artic",
-            "Gold",
-            "Gray",
-            "Shield",
-            "Wild",
+            "Artic Dwarf",
+            "Gold Dwarf",
+            "Gray Dwarf",
+            "Shield Dwarf",
+            "Wild Dwarf",
             "Urdunnir"
         };
 
         public static readonly string[] elf = {
-            "Aquatic",
-            "Avariel",
+            "Aquatic Elf",
+            "Avariel Elf",
             "Drow",
-            "Moon",
-            "Sun",
-            "Wild",
-            "Wood"
+            "Moon Elf",
+            "Sun Elf",
+            "Wild Elf",
+            "Wood Elf"
         };
 
         public static readonly string[] gnome = {
-            "Deep",
-            "Forest",
-            "Rock"
+            "Deep Gnome",
+            "Forest Gnome",
+            "Rock Gnome"
         };
 
         public static readonly string[] orc = {
-            "Gray",
-            "Mountain",
+            "Gray Orc",
+            "Mountain Orc",
             "Orog"
         };
 
