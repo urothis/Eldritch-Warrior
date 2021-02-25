@@ -34,8 +34,8 @@ namespace Services.Module
 
         private static async void ClientPrintLogout(ModuleEvents.OnClientLeave leave)
         {
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.Player.GetBicFileName().ColorString(Color.WHITE)}";
-            string client = $"NAME:{leave.Player.Name} ID:{leave.Player.CDKey} BIC:{leave.Player.GetBicFileName()}";
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.Player.BicFileName.ColorString(Color.WHITE)}";
+            string client = $"NAME:{leave.Player.Name} ID:{leave.Player.CDKey} BIC:{leave.Player.BicFileName}";
             string clientDM = $"NAME:{leave.Player.Name} ID:{leave.Player.CDKey}";
 
             if (leave.Player.IsDM)

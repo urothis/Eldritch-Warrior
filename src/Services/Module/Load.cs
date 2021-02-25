@@ -1,18 +1,12 @@
 using System;
 using System.Globalization;
 using System.Linq;
-
-//using JNogueira.Discord.Webhook.Client;
-
 using NLog;
-
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-
 using NWNX.API;
-using NWNX.API.Events;
 
 namespace Services.Module
 {
@@ -36,7 +30,7 @@ namespace Services.Module
             PrintBootTime();
 
             /* NWNX */
-            Administration.GameOptions.RestoreSpellUses = true;
+            NwServer.Instance.ServerInfo.PlayOptions.RestoreSpellUses = true;
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
             SetModuleSwitches();
