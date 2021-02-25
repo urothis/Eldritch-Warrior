@@ -5,18 +5,6 @@ namespace Services.TwoHand
 {
     public static class Extensions
     {
-        public static bool HasShieldEquipped(this NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand).BaseItemType switch
-        {
-            BaseItemType.LargeShield or BaseItemType.SmallShield or BaseItemType.TowerShield => true,
-            _ => false,
-        };
-
-        public static bool CheckCreatureSize(this NwCreature creature) => creature.Size switch
-        {
-            CreatureSize.Huge or CreatureSize.Invalid or CreatureSize.Large => true,
-            _ => false,
-        };
-
         public static void AddBuff(this NwCreature creature)
         {
             creature.ApplyEffect(EffectDuration.Permanent, Effect.ACIncrease(5, ACBonus.ShieldEnchantment));
@@ -46,9 +34,18 @@ namespace Services.TwoHand
                 return false;
             }
         }
-
-        private static bool HasTwoHandBoostSmallmWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand).BaseItemType switch
+        private static bool CheckCreatureSize(this NwCreature creature) => creature.Size switch
         {
+            CreatureSize.Huge or CreatureSize.Invalid or CreatureSize.Large => true,
+            _ => false,
+        };
+
+        private static bool HasShieldEquipped(this NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand)?.BaseItemType is
+            BaseItemType.LargeShield or
+            BaseItemType.SmallShield or
+            BaseItemType.TowerShield;
+
+        private static bool HasTwoHandBoostSmallmWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
             BaseItemType.Handaxe or
             BaseItemType.Kama or
             BaseItemType.LightCrossbow or
@@ -57,12 +54,9 @@ namespace Services.TwoHand
             BaseItemType.Shortsword or
             BaseItemType.Sickle or
             BaseItemType.Sling or
-            BaseItemType.ThrowingAxe => true,
-            _ => false,
-        };
+            BaseItemType.ThrowingAxe;
 
-        private static bool HasTwoHandBoostMediumWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand).BaseItemType switch
-        {
+        private static bool HasTwoHandBoostMediumWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
             BaseItemType.Battleaxe or
             BaseItemType.Bastardsword or
             BaseItemType.Club or
@@ -76,12 +70,9 @@ namespace Services.TwoHand
             BaseItemType.Rapier or
             BaseItemType.Scimitar or
             BaseItemType.Shortbow or
-            BaseItemType.Warhammer => true,
-            _ => false,
-        };
+            BaseItemType.Warhammer;
 
-        private static bool HasTwoHandLargeWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand).BaseItemType switch
-        {
+        private static bool HasTwoHandLargeWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
             BaseItemType.DireMace or
             BaseItemType.Doubleaxe or
             BaseItemType.Greataxe or
@@ -93,8 +84,6 @@ namespace Services.TwoHand
             BaseItemType.Scythe or
             BaseItemType.ShortSpear or
             BaseItemType.Trident or
-            BaseItemType.TwoBladedSword => true,
-            _ => false,
-        };
+            BaseItemType.TwoBladedSword;
     }
 }
