@@ -38,9 +38,6 @@ namespace Services.PlayableRaces
                     obj.InitPlayableRace();
                     return;
                 }
-                else if (obj.Player.SubRace[0].Equals('!'))
-                {
-                }
                 else
                 {
 

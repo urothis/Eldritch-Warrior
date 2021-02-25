@@ -36,7 +36,7 @@ namespace Services.Module
             PrintBootTime();
 
             /* NWNX */
-            NwServer.Instance.ServerInfo.PlayOptions.RestoreSpellUses = true;
+            Administration.GameOptions.RestoreSpellUses = true;
             /* Set Fog Color an Amount in all outdoor areas */
             SetAreaEnviroment();
             SetModuleSwitches();

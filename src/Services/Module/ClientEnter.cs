@@ -24,7 +24,7 @@ namespace Services.Module
             /* Check player name and boot if its inappropriate */
             if (ClientCheckName(enter, enter.Player.Name))
             {
-                enter.Player.Delete($"{enter.Player.BicFileName}.bic has been deleted.");
+                //enter.Player.Delete($"{enter.Player.BicFileName}.bic has been deleted.");
                 return;
             }
 

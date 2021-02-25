@@ -16,8 +16,9 @@ ADD ./src/Services /Build
 WORKDIR /Build
 RUN dotnet publish -c Release -o out
 
-FROM index.docker.io/nwndotnet/nwn.managed:8193.20.42
+FROM index.docker.io/nwndotnet/nwn.managed:8193.20.44
 LABEL maintainer="urothis"
+
 # copy module
 COPY --from=moduleBuild /src/moduleBuild/Eldritch_Warrior.mod /nwn/data/data/mod
 # install our services

@@ -48,7 +48,8 @@ namespace Services.Bank
             player.GetCampaignVariable<string>(itemBankCampaign + onBankDisturbed.Placeable.Area.Tag, player.UUID.ToUUIDString()).Value = onBankDisturbed.Placeable.Serialize();
 
             // destroy all items inside the chest
-            foreach (NwItem itemInChest in onBankDisturbed.Placeable.Inventory.Items)
+            //foreach (NwItem itemInChest in onBankDisturbed.Placeable.HasInventory.Items)
+            foreach (NwItem itemInChest in onBankDisturbed.Placeable.HasInventory)
             {
                 itemInChest.Destroy();
             }
