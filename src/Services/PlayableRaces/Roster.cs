@@ -49,7 +49,7 @@ namespace Services.PlayableRaces
             "Tethyrian"
         };
 
-        public static readonly string[] Planetouched = {
+        public static readonly string[] planetouched = {
             "Aasimar",
             "Genasi-Air",
             "Genasi-Earth",

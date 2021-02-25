@@ -3,6 +3,7 @@ using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NLog;
+using System.Linq;
 
 namespace Services.PlayableRaces
 {
@@ -11,17 +12,60 @@ namespace Services.PlayableRaces
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static bool SubraceValid(this NwPlayer pc)
         {
-            return pc.RacialType switch
+            switch (pc.RacialType)
             {
-                RacialType.Dwarf when Array.Exists(Roster.dwarf, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                RacialType.Elf when Array.Exists(Roster.elf, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                RacialType.Gnome when Array.Exists(Roster.gnome, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                RacialType.Halfling when Array.Exists(Roster.halfling, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                RacialType.Human when Array.Exists(Roster.human, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                RacialType.HalfOrc when Array.Exists(Roster.orc, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                RacialType.All when Array.Exists(Roster.Planetouched, x => x.Equals(pc.SubRace, StringComparison.InvariantCultureIgnoreCase)) => true,
-                _ => false
-            };
+                case RacialType.Dwarf:
+                    {
+                        if (Roster.dwarf.Contains(pc.SubRace))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                case RacialType.Elf:
+                    {
+                        if (Roster.elf.Contains(pc.SubRace))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                case RacialType.Gnome:
+                    {
+                        if (Roster.gnome.Contains(pc.SubRace))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                case RacialType.HalfElf:
+                case RacialType.Human:
+                    {
+                        if (Roster.human.Contains(pc.SubRace) || Roster.planetouched.Contains(pc.SubRace))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                case RacialType.Halfling:
+                    {
+                        if (Roster.halfling.Contains(pc.SubRace))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                case RacialType.HalfOrc:
+                    {
+                        if (Roster.orc.Contains(pc.SubRace))
+                        {
+                            return true;
+                        }
+                        break;
+                    }
+                default: break;
+            }
+            return false;
         }
 
         public static void InitPlayableRace(this ModuleEvents.OnClientEnter obj)
