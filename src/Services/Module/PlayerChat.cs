@@ -12,6 +12,7 @@ using NWN.API.Events;
 using NWN.Services;
 
 using NWNX.API;
+using NWNX.Services;
 
 namespace Services.Module
 {
@@ -148,7 +149,8 @@ namespace Services.Module
                     chat.Sender.SaveCharacter();
                     break;
                 case "delete":
-                    chat.Sender.Delete($"{chat.Sender.BicFileName}.bic has been deleted."); break;
+                    chat.Sender.Delete("");
+                    break;
                 default:
                     break;
             }

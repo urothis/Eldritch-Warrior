@@ -16,7 +16,7 @@ namespace Services.Module
             { "QRMXQ6GM", "milliorn" },
         };
 
-        public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Inventory.Items.Any(x => x.ResRef == nwItem);
+        public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Items.Any(x => x.ResRef == nwItem);
         public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
 
         public static string PrintGPValueOnItem(this NwItem nwItem)
@@ -25,19 +25,19 @@ namespace Services.Module
             : nwItem.OriginalDescription;
 
         public static void ClientStoreHitPoints(this NwPlayer player)
-            => player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.BicFileName}").Value = player.HP;
+            => player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value = player.HP;
         public static void ClientRestoreHitPoints(this NwPlayer player)
-            => player.HP = player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.BicFileName}").Value;
+            => player.HP = player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.GetBicFileName()}").Value;
 
         public static void SaveCharacter(this NwPlayer player)
         {
             player.ExportCharacter();
-            player.SendServerMessage($"{player.BicFileName.ColorString(Color.GREEN)}.bic file has been saved.".ColorString(Color.WHITE));
+            player.SendServerMessage($"{player.GetBicFileName().ColorString(Color.GREEN)}.bic file has been saved.".ColorString(Color.WHITE));
         }
 
         public static void DestroyAllItems(this NwPlayer player)
         {
-            foreach (NwItem item in player.Inventory.Items)
+            foreach (NwItem item in player.Items)
             {
                 item.Destroy();
             }

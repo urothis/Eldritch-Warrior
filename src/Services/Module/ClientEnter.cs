@@ -80,7 +80,7 @@ namespace Services.Module
         */
         private static async Task ClientPrintLogin(ModuleEvents.OnClientEnter enter)
         {
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.Player.BicFileName.ColorString(Color.WHITE)}";
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.Player.GetBicFileName().ColorString(Color.WHITE)}";
             string clientDM = $"NAME:{enter.Player.Name} ID:{enter.Player.CDKey}";
 
             if (enter.Player.IsDM && Extensions.DMList.ContainsKey(enter.Player.CDKey))
@@ -98,7 +98,7 @@ namespace Services.Module
             else
             {
                 await NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
-                Log.Info($"LOGIN:{$"NAME:{enter.Player.Name} ID:{enter.Player.CDKey} BIC:{enter.Player.BicFileName}"}.");
+                Log.Info($"LOGIN:{$"NAME:{enter.Player.Name} ID:{enter.Player.CDKey} BIC:{enter.Player.GetBicFileName()}"}.");
             }
         }
     }
