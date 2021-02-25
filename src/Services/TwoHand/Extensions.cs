@@ -34,6 +34,7 @@ namespace Services.TwoHand
                 return false;
             }
         }
+        
         private static bool CheckCreatureSize(this NwCreature creature) => creature.Size switch
         {
             CreatureSize.Huge or CreatureSize.Invalid or CreatureSize.Large => true,
