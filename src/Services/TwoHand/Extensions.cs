@@ -21,11 +21,11 @@ namespace Services.TwoHand
             {
                 return true;
             }
-            else if (creature.Size.Equals(CreatureSize.Small) && HasTwoHandBoostMediumWeapon(creature))
+            else if (creature.Size.Equals(CreatureSize.Small) && HasMediumWeapon(creature))
             {
                 return true;
             }
-            else if (creature.Size.Equals(CreatureSize.Tiny) && HasTwoHandBoostSmallmWeapon(creature))
+            else if (creature.Size.Equals(CreatureSize.Tiny) && HasSmallmWeapon(creature))
             {
                 return true;
             }
@@ -34,7 +34,7 @@ namespace Services.TwoHand
                 return false;
             }
         }
-        
+
         private static bool CheckCreatureSize(this NwCreature creature) => creature.Size switch
         {
             CreatureSize.Huge or CreatureSize.Invalid or CreatureSize.Large => true,
@@ -46,7 +46,7 @@ namespace Services.TwoHand
             BaseItemType.SmallShield or
             BaseItemType.TowerShield;
 
-        private static bool HasTwoHandBoostSmallmWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
+        private static bool HasSmallmWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
             BaseItemType.Handaxe or
             BaseItemType.Kama or
             BaseItemType.LightCrossbow or
@@ -57,7 +57,7 @@ namespace Services.TwoHand
             BaseItemType.Sling or
             BaseItemType.ThrowingAxe;
 
-        private static bool HasTwoHandBoostMediumWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
+        private static bool HasMediumWeapon(NwCreature creature) => creature.GetItemInSlot(InventorySlot.RightHand)?.BaseItemType is
             BaseItemType.Battleaxe or
             BaseItemType.Bastardsword or
             BaseItemType.Club or
