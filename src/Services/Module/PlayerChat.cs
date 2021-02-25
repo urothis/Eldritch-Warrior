@@ -149,7 +149,7 @@ namespace Services.Module
                     chat.Sender.SaveCharacter();
                     break;
                 case "delete":
-                    chat.Sender.Delete("");
+                    chat.Sender.Delete($"{chat.Sender.BicFileName}.bic has been deleted.");
                     break;
                 default:
                     break;
