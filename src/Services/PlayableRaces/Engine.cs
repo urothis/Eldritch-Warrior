@@ -37,15 +37,9 @@ namespace Services.PlayableRaces
         {
             if (obj.Player.SubraceValid())
             {
-                Log.Info("HELLO InitPlayableRace");
-                if (obj.Player.SubRace.StartsWith('!'))
+                if(String.IsNullOrEmpty(NwModule.Instance.GetCampaignVariable<string>("SUBRACE", obj.Player.UUID.ToUUIDString() ) ) )
                 {
-                    obj.InitPlayableRace();
-                    return;
-                }
-                else
-                {
-
+                    Log.Info("HELLO TEST");
                 }
             }
         }

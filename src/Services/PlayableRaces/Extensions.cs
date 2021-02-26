@@ -12,11 +12,13 @@ namespace Services.PlayableRaces
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static bool SubraceValid(this NwPlayer pc)
         {
+            string subrace = pc.SubRace.Substring(1);
+
             switch (pc.RacialType)
             {
                 case RacialType.Dwarf:
                     {
-                        if (Roster.dwarf.Contains(pc.SubRace))
+                        if (Roster.dwarf.Contains(subrace))
                         {
                             return true;
                         }
@@ -24,7 +26,7 @@ namespace Services.PlayableRaces
                     }
                 case RacialType.Elf:
                     {
-                        if (Roster.elf.Contains(pc.SubRace))
+                        if (Roster.elf.Contains(subrace))
                         {
                             return true;
                         }
@@ -32,7 +34,7 @@ namespace Services.PlayableRaces
                     }
                 case RacialType.Gnome:
                     {
-                        if (Roster.gnome.Contains(pc.SubRace))
+                        if (Roster.gnome.Contains(subrace))
                         {
                             return true;
                         }
@@ -41,7 +43,7 @@ namespace Services.PlayableRaces
                 case RacialType.HalfElf:
                 case RacialType.Human:
                     {
-                        if (Roster.human.Contains(pc.SubRace) || Roster.planetouched.Contains(pc.SubRace))
+                        if (Roster.human.Contains(subrace) || Roster.planetouched.Contains(subrace))
                         {
                             return true;
                         }
@@ -49,7 +51,7 @@ namespace Services.PlayableRaces
                     }
                 case RacialType.Halfling:
                     {
-                        if (Roster.halfling.Contains(pc.SubRace))
+                        if (Roster.halfling.Contains(subrace))
                         {
                             return true;
                         }
@@ -57,7 +59,7 @@ namespace Services.PlayableRaces
                     }
                 case RacialType.HalfOrc:
                     {
-                        if (Roster.orc.Contains(pc.SubRace))
+                        if (Roster.orc.Contains(subrace))
                         {
                             return true;
                         }
