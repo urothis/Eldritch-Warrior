@@ -1,10 +1,11 @@
 using System;
 using NWN.API;
+using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 using NWNX.API.Events;
 using NWNX.Services;
-
+using NWNX.API.
 namespace Services.PlayableRaces
 {
     [ServiceBinding(typeof(Engine))]
@@ -33,7 +34,14 @@ namespace Services.PlayableRaces
             {
                 if (obj.Player.Xp == 0)
                 {
-                    obj.ApplySubrace();
+                    switch (obj.Player.RacialType)
+                    {
+                        case RacialType.Dwarf:
+                            var dwarf = new Dwarf(obj);
+                            ApplySubrace(dwarf, obj);
+                            break;
+
+                    }
                 }
                 else
                 {
@@ -44,6 +52,16 @@ namespace Services.PlayableRaces
             {
                 obj.Player.SendServerMessage($"{"ERROR".ColorString(Color.RED)}!!! - INVALID SUBRACE NAME.");
             }
+        }
+
+        private static void ApplySubrace(IRace race, ModuleEvents.OnClientEnter obj)
+        {
+            ApplyAttributes(race, obj);
+        }
+
+        private static void ApplyAttributes(IRace race, ModuleEvents.OnClientEnter obj)
+        {
+            //Apply Ability bonuses here
         }
     }
 }

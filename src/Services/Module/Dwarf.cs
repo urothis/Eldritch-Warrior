@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 namespace Services.PlayableRaces
@@ -21,7 +20,7 @@ namespace Services.PlayableRaces
         public List<EffectType>? Effects { get; set; }
         public List<Feat>? FeatList { get; set; }
         public List<Alignment>? AlignmentsAllowed { get; set; }
-        public List<ClassType>? FavoredClasses {get; set; }
+        public List<ClassType>? FavoredClasses { get; set; }
         public int Hair { get; set; }
         public int Skin { get; set; }
         public CreaturePart Head { get; set; }
