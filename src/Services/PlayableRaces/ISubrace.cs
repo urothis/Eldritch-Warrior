@@ -23,6 +23,7 @@ namespace Services.PlayableRaces
         public new List<Alignment>? AlignmentsAllowed { get; set; }
 
         //http://wiki.avlis.org/Dynamic_Dye_Color_Chart
+        
         public int Hair { get; set; }
         public int Skin { get; set; }
         public CreaturePart Head { get; set; }

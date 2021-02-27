@@ -1,9 +1,10 @@
 using System;
+using System.Linq;
+using NLog;
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
-using NLog;
-using System.Linq;
+
 
 namespace Services.PlayableRaces
 {
@@ -12,7 +13,7 @@ namespace Services.PlayableRaces
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static bool SubraceValid(this NwPlayer pc)
         {
-            string subrace = pc.SubRace.Substring(1);
+            string subrace = pc.SubRace;
 
             switch (pc.RacialType)
             {
@@ -70,7 +71,7 @@ namespace Services.PlayableRaces
             return false;
         }
 
-        public static void InitPlayableRace(this ModuleEvents.OnClientEnter obj)
+        public static void ApplySubrace(this ModuleEvents.OnClientEnter obj)
         {
             Log.Info("HELLO InitPlayableRace");
         }

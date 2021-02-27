@@ -20,5 +20,6 @@ namespace Services.PlayableRaces
         List<EffectType>? Effects { get; set; }
         List<Feat>? FeatList { get; set; }
         List<Alignment>? AlignmentsAllowed { get; set; }
+        List<ClassType>? FavoredClasses {get; set; }
     }
 }
