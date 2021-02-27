@@ -5,7 +5,8 @@ using NWN.API.Events;
 using NWN.Services;
 using NWNX.API.Events;
 using NWNX.Services;
-using NWNX.API.
+using NWNX.API;
+
 namespace Services.PlayableRaces
 {
     [ServiceBinding(typeof(Engine))]
@@ -38,9 +39,23 @@ namespace Services.PlayableRaces
                     {
                         case RacialType.Dwarf:
                             var dwarf = new Dwarf(obj);
-                            ApplySubrace(dwarf, obj);
-                            break;
+                            //Apply Ability Bonus);
 
+                            ApplyUndead(dwarf);
+
+                            ApplyItems(dwarf, obj);
+
+                            obj.Player.SetColor(ColorChannel.Hair, dwarf.Hair);
+                            obj.Player.SetColor(ColorChannel.Skin, dwarf.Skin);
+                            //Add Feats
+                            if (dwarf.FeatList.Count > 0)
+                            {
+                                foreach (var feat in dwarf.FeatList)
+                                {
+                                    obj.Player.AddFeat(feat);
+                                }
+                            }
+                            break;
                     }
                 }
                 else
@@ -54,14 +69,17 @@ namespace Services.PlayableRaces
             }
         }
 
-        private static void ApplySubrace(IRace race, ModuleEvents.OnClientEnter obj)
+        private void ApplyItems(Dwarf dwarf, ModuleEvents.OnClientEnter obj)
         {
-            ApplyAttributes(race, obj);
+            throw new NotImplementedException();
         }
 
-        private static void ApplyAttributes(IRace race, ModuleEvents.OnClientEnter obj)
+        private static void ApplyUndead(Dwarf dwarf)
         {
-            //Apply Ability bonuses here
+            if (dwarf.IsUndead)
+            {
+
+            }
         }
     }
 }

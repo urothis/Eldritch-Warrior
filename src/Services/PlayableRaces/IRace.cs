@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using NWN.API.Constants;
+using NWN.API.Events;
+using NWN.API;
 
 namespace Services.PlayableRaces
 {
@@ -20,6 +23,31 @@ namespace Services.PlayableRaces
         List<EffectType>? Effects { get; set; }
         List<Feat>? FeatList { get; set; }
         List<Alignment>? AlignmentsAllowed { get; set; }
-        List<ClassType>? FavoredClasses {get; set; }
+        List<ClassType>? FavoredClasses { get; set; }
+
+        public static void ApplyUndead(IRace race)
+        {
+
+        }
+
+        public static void ApplyItems(IRace race, ModuleEvents.OnClientEnter obj)
+        {
+            if (!String.IsNullOrEmpty(race.HideResRef))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(race.HideResRef), InventorySlot.CreatureSkin);
+            }
+            if (!String.IsNullOrEmpty(race.WeaponLeft))
+            {
+
+            }
+            if (!String.IsNullOrEmpty(race.WeaponRight))
+            {
+
+            }
+        }
     }
 }
