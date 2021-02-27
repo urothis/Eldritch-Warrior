@@ -42,11 +42,19 @@ namespace Services.PlayableRaces
             }
             if (!String.IsNullOrEmpty(race.WeaponLeft))
             {
-
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(race.WeaponLeft), InventorySlot.CreatureLeftWeapon);
             }
             if (!String.IsNullOrEmpty(race.WeaponRight))
             {
-
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(race.WeaponRight), InventorySlot.CreatureRightWeapon);
             }
         }
     }

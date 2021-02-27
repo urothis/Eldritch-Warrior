@@ -48,7 +48,7 @@ namespace Services.PlayableRaces
                             obj.Player.SetColor(ColorChannel.Hair, dwarf.Hair);
                             obj.Player.SetColor(ColorChannel.Skin, dwarf.Skin);
                             //Add Feats
-                            if (dwarf.FeatList.Count > 0)
+                            if (dwarf.FeatList?.Count > 0)
                             {
                                 foreach (var feat in dwarf.FeatList)
                                 {
