@@ -1,9 +1,11 @@
 using System.Collections.Generic;
+
 using NWN.API.Constants;
+using NWN.API.Events;
 
 namespace Services.PlayableRaces
 {
-    public interface IRace
+    public class Dwarf : IRace
     {
         public bool IsUndead { get; set; }
         public int ModifyStrength { get; set; }
@@ -32,5 +34,28 @@ namespace Services.PlayableRaces
         public List<ClassType>? FavoredClasses { get; set; }
         public List<EffectType>? Effects { get; set; }
         public List<Feat>? FeatList { get; set; }
+
+
+        public Dwarf(ModuleEvents.OnClientEnter obj)
+        {
+            switch (obj.Player.SubRace)
+            {
+                case "Artic Dwarf": DwarfArtic(); break;
+            }
+        }
+
+        private void DwarfArtic()
+        {
+            ModifyStrength = 4;
+            ModifyDexterity = -2;
+            ModifyConstitution = 2;
+            ModifyCharisma = -2;
+            MaxLevel = 58;
+            HideResRef = "";
+            Hair = 62;
+            Skin = 27;
+            FeatList?.Add(Feat.ImprovedUnarmedStrike);
+            FavoredClasses?.Add(ClassType.Ranger);
+        }
     }
 }

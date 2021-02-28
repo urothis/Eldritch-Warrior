@@ -1,11 +1,15 @@
 using System;
+
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
+
+using NWNX.API;
+
 using NWNX.API.Events;
 using NWNX.Services;
-using NWNX.API;
+
 
 namespace Services.PlayableRaces
 {
@@ -39,14 +43,19 @@ namespace Services.PlayableRaces
                     {
                         case RacialType.Dwarf:
                             var dwarf = new Dwarf(obj);
+
                             //Apply Ability Bonus);
 
-                            ApplyUndead(dwarf);
-
-                            ApplyItems(dwarf, obj);
+                            if (dwarf.IsUndead)
+                            {
+                                ApplyUndead(dwarf);
+                            }
+                            
+                            //ApplyItems(dwarf, obj);
 
                             obj.Player.SetColor(ColorChannel.Hair, dwarf.Hair);
                             obj.Player.SetColor(ColorChannel.Skin, dwarf.Skin);
+
                             //Add Feats
                             if (dwarf.FeatList?.Count > 0)
                             {
@@ -79,6 +88,39 @@ namespace Services.PlayableRaces
             if (dwarf.IsUndead)
             {
 
+            }
+        }
+
+        public static void ApplyUndead(ModuleEvents.OnClientEnter obj)
+        {
+
+        }
+
+        public static void ApplyItems(IRace race, ModuleEvents.OnClientEnter obj)
+        {
+            if (!String.IsNullOrEmpty(race.HideResRef))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(race.HideResRef), InventorySlot.CreatureSkin);
+            }
+            if (!String.IsNullOrEmpty(race.WeaponLeft))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(race.WeaponLeft), InventorySlot.CreatureLeftWeapon);
+            }
+            if (!String.IsNullOrEmpty(race.WeaponRight))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(race.WeaponRight), InventorySlot.CreatureRightWeapon);
             }
         }
     }
