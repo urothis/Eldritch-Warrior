@@ -48,9 +48,9 @@ namespace Services.PlayableRaces
 
                             if (dwarf.IsUndead)
                             {
-                                ApplyUndead(dwarf);
+                                dwarf.ApplyUndead(obj);
                             }
-                            
+
                             //ApplyItems(dwarf, obj);
 
                             obj.Player.SetColor(ColorChannel.Hair, dwarf.Hair);
@@ -78,24 +78,6 @@ namespace Services.PlayableRaces
             }
         }
 
-        private void ApplyItems(Dwarf dwarf, ModuleEvents.OnClientEnter obj)
-        {
-            throw new NotImplementedException();
-        }
-
-        private static void ApplyUndead(Dwarf dwarf)
-        {
-            if (dwarf.IsUndead)
-            {
-
-            }
-        }
-
-        public static void ApplyUndead(ModuleEvents.OnClientEnter obj)
-        {
-
-        }
-
         public static void ApplyItems(IRace race, ModuleEvents.OnClientEnter obj)
         {
             if (!String.IsNullOrEmpty(race.HideResRef))
@@ -106,6 +88,7 @@ namespace Services.PlayableRaces
                 }
                 obj.Player.ActionEquipItem(NwItem.Create(race.HideResRef), InventorySlot.CreatureSkin);
             }
+
             if (!String.IsNullOrEmpty(race.WeaponLeft))
             {
                 if (obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).IsValid)
@@ -114,6 +97,7 @@ namespace Services.PlayableRaces
                 }
                 obj.Player.ActionEquipItem(NwItem.Create(race.WeaponLeft), InventorySlot.CreatureLeftWeapon);
             }
+
             if (!String.IsNullOrEmpty(race.WeaponRight))
             {
                 if (obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).IsValid)

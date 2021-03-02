@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+
 using NWN.API.Constants;
+using NWN.API.Events;
 
 namespace Services.PlayableRaces
 {
@@ -32,5 +34,8 @@ namespace Services.PlayableRaces
         public List<ClassType>? FavoredClasses { get; set; }
         public List<EffectType>? Effects { get; set; }
         public List<Feat>? FeatList { get; set; }
+
+        public void ApplyUndead(ModuleEvents.OnClientEnter obj);
+        public bool HasSkin(ModuleEvents.OnClientEnter obj);
     }
 }

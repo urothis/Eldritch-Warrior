@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 
@@ -56,6 +56,16 @@ namespace Services.PlayableRaces
             Skin = 27;
             FeatList?.Add(Feat.ImprovedUnarmedStrike);
             FavoredClasses?.Add(ClassType.Ranger);
+        }
+
+        public void ApplyUndead(ModuleEvents.OnClientEnter obj)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool HasSkin(ModuleEvents.OnClientEnter obj)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }
