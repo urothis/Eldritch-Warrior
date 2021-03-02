@@ -52,9 +52,7 @@ namespace Services.PlayableRaces
                             }
 
                             //ApplyItems(dwarf, obj);
-
-                            obj.Player.SetColor(ColorChannel.Hair, dwarf.Hair);
-                            obj.Player.SetColor(ColorChannel.Skin, dwarf.Skin);
+                            dwarf.ApplyAppearance(obj);
 
                             //Add Feats
                             if (dwarf.FeatList?.Count > 0)

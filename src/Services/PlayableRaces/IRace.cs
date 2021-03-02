@@ -36,6 +36,7 @@ namespace Services.PlayableRaces
         public List<Feat>? FeatList { get; set; }
 
         public void ApplyUndead(ModuleEvents.OnClientEnter obj);
-        public bool HasSkin(ModuleEvents.OnClientEnter obj);
+        public void ApplyAppearance(ModuleEvents.OnClientEnter obj);
+        public void ApplyItems(ModuleEvents.OnClientEnter obj);
     }
 }

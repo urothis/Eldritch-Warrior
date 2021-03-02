@@ -63,7 +63,12 @@ namespace Services.PlayableRaces
             throw new System.NotImplementedException();
         }
 
-        public bool HasSkin(ModuleEvents.OnClientEnter obj)
+        public void ApplyAppearance(ModuleEvents.OnClientEnter obj)
+        {
+            
+        }
+
+        public void ApplyItems(ModuleEvents.OnClientEnter obj)
         {
             throw new System.NotImplementedException();
         }
