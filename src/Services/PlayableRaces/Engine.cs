@@ -1,13 +1,10 @@
 using System;
-
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-
 using NWNX.API.Events;
 using NWNX.Services;
-
 
 namespace Services.PlayableRaces
 {

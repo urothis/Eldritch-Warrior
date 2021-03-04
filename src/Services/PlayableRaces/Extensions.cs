@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-//using NLog;
 using NWN.API;
 using NWN.API.Constants;
 
@@ -8,7 +7,6 @@ namespace Services.PlayableRaces
 {
     public static class Extensions
     {
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static bool SubraceValid(this NwPlayer pc)
         {
             string subrace = pc.SubRace;

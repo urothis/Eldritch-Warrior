@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using NLog;
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
+
 
 namespace Services.PlayableRaces
 {
     public class Dwarf : IRace
     {
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public bool IsUndead { get; set; }
         public int ModifyStrength { get; set; }
         public int ModifyDexterity { get; set; }
@@ -72,31 +75,40 @@ namespace Services.PlayableRaces
             if (Hair is not null)
             {
                 obj.Player.SetColor(ColorChannel.Hair, (int)Hair);
+                Log.Info("Hair");
             }
 
             if (Skin is not null)
             {
                 obj.Player.SetColor(ColorChannel.Hair, (int)Skin);
+                Log.Info("Skin");
             }
 
             if (Head is not null)
             {
                 obj.Player.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)Head);
+                Log.Info("Head");
             }
 
             if (PortraitID is not null)
             {
                 obj.Player.PortraitId = (int)PortraitID;
+                Log.Info("PortraitID");
+
             }
 
             if (SoundSet is not null)
             {
                 //NWNX_Creature_SetSoundset
+                Log.Info("SoundSet");
+
             }
 
             if (ChangeSize is not null)
             {
                 //NWNX_Creature_SetSize
+                Log.Info("ChangeSize");
+
             }
 
             if (Tail is not null)
@@ -165,6 +177,7 @@ namespace Services.PlayableRaces
             foreach (var feat in FeatList!)
             {
                 obj.Player.AddFeat(feat);
+                Log.Info($"{feat} FeatList");
             }
         }
 
@@ -184,6 +197,8 @@ namespace Services.PlayableRaces
             ApplyUndead(obj);
             ApplyAppearance(obj);
             ApplyItems(obj);
+            ApplyFeats(obj);
+            ApplyEffects(obj);
         }
     }
 }
