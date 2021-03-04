@@ -27,7 +27,7 @@ namespace Services.PlayableRaces
         public CreaturePart? Head { get; set; }
         public CreatureSize? ChangeSize { get; set; }
         public CreatureTailType? Tail { get; set; }
-        public CreatureWingType Wing { get; set; }
+        public CreatureWingType? Wing { get; set; }
         public MovementRate MoveRate { get; set; }
         public RacialType Race { get; set; }
         public List<Alignment>? AlignmentsAllowed { get; set; }
@@ -73,29 +73,40 @@ namespace Services.PlayableRaces
             {
                 obj.Player.SetColor(ColorChannel.Hair, (int)Hair);
             }
+
             if (Skin is not null)
             {
                 obj.Player.SetColor(ColorChannel.Hair, (int)Skin);
             }
+
             if (Head is not null)
             {
                 obj.Player.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)Head);
             }
+
             if (PortraitID is not null)
             {
                 obj.Player.PortraitId = (int)PortraitID;
             }
+
             if (SoundSet is not null)
             {
                 //Add Soundset from nwnxee
             }
+
             if (ChangeSize is not null)
             {
                 // add size from nwnxee
             }
+
             if (Tail is not null)
             {
                 obj.Player.TailType = (CreatureTailType)Tail;
+            }
+
+            if (Wing is not null)
+            {
+                obj.Player.WingType = (CreatureWingType)Wing;
             }
         }
 
