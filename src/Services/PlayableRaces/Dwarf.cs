@@ -26,7 +26,7 @@ namespace Services.PlayableRaces
         public string? WeaponRight { get; set; }
         public CreaturePart? Head { get; set; }
         public CreatureSize? ChangeSize { get; set; }
-        public CreatureTailType Tail { get; set; }
+        public CreatureTailType? Tail { get; set; }
         public CreatureWingType Wing { get; set; }
         public MovementRate MoveRate { get; set; }
         public RacialType Race { get; set; }
@@ -91,7 +91,11 @@ namespace Services.PlayableRaces
             }
             if (ChangeSize is not null)
             {
-
+                // add size from nwnxee
+            }
+            if (Tail is not null)
+            {
+                obj.Player.TailType = (CreatureTailType)Tail;
             }
         }
 
