@@ -15,16 +15,16 @@ namespace Services.PlayableRaces
         public int ModifyIntelligence { get; set; }
         public int ModifyWisdom { get; set; }
         public int ModifyCharisma { get; set; }
-        public int Hair { get; set; }
-        public int Skin { get; set; }
+        public int? Hair { get; set; }
+        public int? Skin { get; set; }
         public int MaxLevel { get; set; }
         public int SR { get; set; }
-        public int PortraitID { get; set; }
-        public int SoundSet { get; set; }
+        public int? PortraitID { get; set; }
+        public int? SoundSet { get; set; }
         public string? HideResRef { get; set; }
         public string? WeaponLeft { get; set; }
         public string? WeaponRight { get; set; }
-        public CreaturePart Head { get; set; }
+        public CreaturePart? Head { get; set; }
         public CreatureSize Size { get; set; }
         public CreatureTailType Tail { get; set; }
         public CreatureWingType Wing { get; set; }
@@ -61,18 +61,33 @@ namespace Services.PlayableRaces
 
         public void ApplyUndead(ModuleEvents.OnClientEnter obj)
         {
-            throw new System.NotImplementedException();
+            if (IsUndead)
+            {
+
+            }
         }
 
         public void ApplyAppearance(ModuleEvents.OnClientEnter obj)
         {
-            if (Hair > 0)
+            if (Hair is not null)
             {
-                obj.Player.SetColor(ColorChannel.Hair, Hair);
+                obj.Player.SetColor(ColorChannel.Hair, (int)Hair);
             }
-            if (Skin > 0)
+            if (Skin is not null)
             {
-                obj.Player.SetColor(ColorChannel.Hair, Hair);
+                obj.Player.SetColor(ColorChannel.Hair, (int)Skin);
+            }
+            if (Head is not null)
+            {
+                obj.Player.SetCreatureBodyPart(CreaturePart.Head, (CreatureModelType)Head);
+            }
+            if (PortraitID is not null)
+            {
+                obj.Player.PortraitId = (int)PortraitID;
+            }
+            if (SoundSet is not null)
+            {
+                //Add Soundset from nwnxee
             }
         }
 
@@ -103,6 +118,16 @@ namespace Services.PlayableRaces
                     obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).Destroy();
                 }
                 obj.Player.ActionEquipItem(NwItem.Create(WeaponRight), InventorySlot.CreatureRightWeapon);
+            }
+        }
+
+        public void ApplyFeats(ModuleEvents.OnClientEnter obj)
+        {
+            if (FeatList?.Count < 1) return;
+
+            foreach (var feat in FeatList!)
+            {
+                obj.Player.AddFeat(feat);
             }
         }
     }

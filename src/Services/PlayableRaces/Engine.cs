@@ -44,13 +44,9 @@ namespace Services.PlayableRaces
 
                             //Apply Ability Bonus);
 
-                            if (dwarf.IsUndead)
-                            {
-                                dwarf.ApplyUndead(obj);
-                            }
-
+                            dwarf.ApplyUndead(obj);
                             dwarf.ApplyAppearance(obj);
-                            //ApplyItems(dwarf, obj);
+                            dwarf.ApplyItems(obj);
 
                             //Add Feats
                             if (dwarf.FeatList?.Count > 0)

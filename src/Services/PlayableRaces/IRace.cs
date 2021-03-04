@@ -14,16 +14,16 @@ namespace Services.PlayableRaces
         public int ModifyIntelligence { get; set; }
         public int ModifyWisdom { get; set; }
         public int ModifyCharisma { get; set; }
-        public int Hair { get; set; }
-        public int Skin { get; set; }
+        public int? Hair { get; set; }
+        public int? Skin { get; set; }
         public int MaxLevel { get; set; }
         public int SR { get; set; }
-        public int PortraitID { get; set; }
-        public int SoundSet { get; set; }
+        public int? PortraitID { get; set; }
+        public int? SoundSet { get; set; }
         public string? HideResRef { get; set; }
         public string? WeaponLeft { get; set; }
         public string? WeaponRight { get; set; }
-        public CreaturePart Head { get; set; }
+        public CreaturePart? Head { get; set; }
         public CreatureSize Size { get; set; }
         public CreatureTailType Tail { get; set; }
         public CreatureWingType Wing { get; set; }
@@ -38,6 +38,6 @@ namespace Services.PlayableRaces
         public void ApplyUndead(ModuleEvents.OnClientEnter obj);
         public void ApplyItems(ModuleEvents.OnClientEnter obj);
         public void ApplyAppearance(ModuleEvents.OnClientEnter obj);
-
+        public void ApplyFeats(ModuleEvents.OnClientEnter obj);
     }
 }
