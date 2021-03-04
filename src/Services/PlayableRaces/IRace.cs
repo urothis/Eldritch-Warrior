@@ -24,7 +24,7 @@ namespace Services.PlayableRaces
         public string? WeaponLeft { get; set; }
         public string? WeaponRight { get; set; }
         public CreaturePart? Head { get; set; }
-        public CreatureSize Size { get; set; }
+        public CreatureSize? ChangeSize { get; set; }
         public CreatureTailType Tail { get; set; }
         public CreatureWingType Wing { get; set; }
         public MovementRate MoveRate { get; set; }
