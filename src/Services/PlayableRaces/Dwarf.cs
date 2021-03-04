@@ -133,6 +133,7 @@ namespace Services.PlayableRaces
                 {
                     obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).Destroy();
                 }
+
                 obj.Player.ActionEquipItem(NwItem.Create(HideResRef), InventorySlot.CreatureSkin);
             }
 
@@ -142,6 +143,7 @@ namespace Services.PlayableRaces
                 {
                     obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).Destroy();
                 }
+
                 obj.Player.ActionEquipItem(NwItem.Create(WeaponLeft), InventorySlot.CreatureLeftWeapon);
             }
 
@@ -151,6 +153,7 @@ namespace Services.PlayableRaces
                 {
                     obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).Destroy();
                 }
+
                 obj.Player.ActionEquipItem(NwItem.Create(WeaponRight), InventorySlot.CreatureRightWeapon);
             }
         }
@@ -173,6 +176,14 @@ namespace Services.PlayableRaces
             {
                 obj.Player.ApplyEffect(EffectDuration.Permanent, effect);
             }
+        }
+
+        public void ApplyPlayableRace(ModuleEvents.OnClientEnter obj)
+        {
+            //SetStats
+            ApplyUndead(obj);
+            ApplyAppearance(obj);
+            ApplyItems(obj);
         }
     }
 }

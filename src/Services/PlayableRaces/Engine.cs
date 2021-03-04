@@ -41,21 +41,7 @@ namespace Services.PlayableRaces
                     {
                         case RacialType.Dwarf:
                             var dwarf = new Dwarf(obj);
-
-                            //Apply Ability Bonus);
-
-                            dwarf.ApplyUndead(obj);
-                            dwarf.ApplyAppearance(obj);
-                            dwarf.ApplyItems(obj);
-
-                            //Add Feats
-                            if (dwarf.FeatList?.Count > 0)
-                            {
-                                foreach (var feat in dwarf.FeatList)
-                                {
-                                    obj.Player.AddFeat(feat);
-                                }
-                            }
+                            dwarf.ApplyPlayableRace(obj);
                             break;
                     }
                 }

@@ -40,6 +40,6 @@ namespace Services.PlayableRaces
         public void ApplyAppearance(ModuleEvents.OnClientEnter obj);
         public void ApplyFeats(ModuleEvents.OnClientEnter obj);
         public void ApplyEffects(ModuleEvents.OnClientEnter obj);
-
+        public void ApplyPlayableRace(ModuleEvents.OnClientEnter obj);
     }
 }
