@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using NWN.API;
 using NWN.API.Constants;
@@ -63,11 +64,6 @@ namespace Services.PlayableRaces
             throw new System.NotImplementedException();
         }
 
-        public void ApplyItems(ModuleEvents.OnClientEnter obj)
-        {
-            throw new System.NotImplementedException();
-        }
-
         public void ApplyAppearance(ModuleEvents.OnClientEnter obj)
         {
             if (Hair > 0)
@@ -77,6 +73,36 @@ namespace Services.PlayableRaces
             if (Skin > 0)
             {
                 obj.Player.SetColor(ColorChannel.Hair, Hair);
+            }
+        }
+
+        public void ApplyItems(ModuleEvents.OnClientEnter obj)
+        {
+            if (!String.IsNullOrEmpty(HideResRef))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureSkin).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(HideResRef), InventorySlot.CreatureSkin);
+            }
+
+            if (!String.IsNullOrEmpty(WeaponLeft))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureLeftWeapon).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(WeaponLeft), InventorySlot.CreatureLeftWeapon);
+            }
+
+            if (!String.IsNullOrEmpty(WeaponRight))
+            {
+                if (obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).IsValid)
+                {
+                    obj.Player.GetItemInSlot(InventorySlot.CreatureRightWeapon).Destroy();
+                }
+                obj.Player.ActionEquipItem(NwItem.Create(WeaponRight), InventorySlot.CreatureRightWeapon);
             }
         }
     }
