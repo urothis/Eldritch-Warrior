@@ -31,9 +31,9 @@ namespace Services.PlayableRaces
         public MovementRate? MoveRate { get; set; }
         public RacialType? Race { get; set; }
         public List<Alignment>? AlignmentsAllowed { get; set; }
-        public AppearanceType Appearance { get; set; }
+        public AppearanceType? Appearance { get; set; }
         public List<ClassType>? FavoredClasses { get; set; }
-        public List<EffectType>? Effects { get; set; }
+        public List<Effect>? Effects { get; set; }
         public List<Feat>? FeatList { get; set; }
 
 
@@ -118,6 +118,11 @@ namespace Services.PlayableRaces
             {
                 //NWNX_Creature_SetRacialType
             }
+
+            if (Appearance is not null)
+            {
+                obj.Player.CreatureAppearanceType = (AppearanceType)Appearance;
+            }
         }
 
         public void ApplyItems(ModuleEvents.OnClientEnter obj)
@@ -157,6 +162,16 @@ namespace Services.PlayableRaces
             foreach (var feat in FeatList!)
             {
                 obj.Player.AddFeat(feat);
+            }
+        }
+
+        public void ApplyEffects(ModuleEvents.OnClientEnter obj)
+        {
+            if (Effects?.Count < 1) return;
+
+            foreach (var effect in Effects!)
+            {
+                obj.Player.ApplyEffect(EffectDuration.Permanent, effect);
             }
         }
     }

@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-
+using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 
@@ -30,14 +30,16 @@ namespace Services.PlayableRaces
         public MovementRate? MoveRate { get; set; }
         public RacialType? Race { get; set; }
         public List<Alignment>? AlignmentsAllowed { get; set; }
-        public AppearanceType Appearance { get; set; }
+        public AppearanceType? Appearance { get; set; }
         public List<ClassType>? FavoredClasses { get; set; }
-        public List<EffectType>? Effects { get; set; }
+        public List<Effect>? Effects { get; set; }
         public List<Feat>? FeatList { get; set; }
 
         public void ApplyUndead(ModuleEvents.OnClientEnter obj);
         public void ApplyItems(ModuleEvents.OnClientEnter obj);
         public void ApplyAppearance(ModuleEvents.OnClientEnter obj);
         public void ApplyFeats(ModuleEvents.OnClientEnter obj);
+        public void ApplyEffects(ModuleEvents.OnClientEnter obj);
+
     }
 }
