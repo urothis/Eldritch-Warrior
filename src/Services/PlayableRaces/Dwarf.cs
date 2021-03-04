@@ -28,8 +28,8 @@ namespace Services.PlayableRaces
         public CreatureSize? ChangeSize { get; set; }
         public CreatureTailType? Tail { get; set; }
         public CreatureWingType? Wing { get; set; }
-        public MovementRate MoveRate { get; set; }
-        public RacialType Race { get; set; }
+        public MovementRate? MoveRate { get; set; }
+        public RacialType? Race { get; set; }
         public List<Alignment>? AlignmentsAllowed { get; set; }
         public AppearanceType Appearance { get; set; }
         public List<ClassType>? FavoredClasses { get; set; }
@@ -91,12 +91,12 @@ namespace Services.PlayableRaces
 
             if (SoundSet is not null)
             {
-                //Add Soundset from nwnxee
+                //NWNX_Creature_SetSoundset
             }
 
             if (ChangeSize is not null)
             {
-                // add size from nwnxee
+                //NWNX_Creature_SetSize
             }
 
             if (Tail is not null)
@@ -107,6 +107,16 @@ namespace Services.PlayableRaces
             if (Wing is not null)
             {
                 obj.Player.WingType = (CreatureWingType)Wing;
+            }
+
+            if (MoveRate is not null)
+            {
+                //NWNX_Creature_SetMovementRate
+            }
+
+            if (Race is not null)
+            {
+                //NWNX_Creature_SetRacialType
             }
         }
 

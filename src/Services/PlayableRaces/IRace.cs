@@ -27,8 +27,8 @@ namespace Services.PlayableRaces
         public CreatureSize? ChangeSize { get; set; }
         public CreatureTailType? Tail { get; set; }
         public CreatureWingType? Wing { get; set; }
-        public MovementRate MoveRate { get; set; }
-        public RacialType Race { get; set; }
+        public MovementRate? MoveRate { get; set; }
+        public RacialType? Race { get; set; }
         public List<Alignment>? AlignmentsAllowed { get; set; }
         public AppearanceType Appearance { get; set; }
         public List<ClassType>? FavoredClasses { get; set; }
