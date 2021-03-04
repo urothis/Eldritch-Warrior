@@ -63,14 +63,21 @@ namespace Services.PlayableRaces
             throw new System.NotImplementedException();
         }
 
-        public void ApplyAppearance(ModuleEvents.OnClientEnter obj)
-        {
-            
-        }
-
         public void ApplyItems(ModuleEvents.OnClientEnter obj)
         {
             throw new System.NotImplementedException();
+        }
+
+        public void ApplyAppearance(ModuleEvents.OnClientEnter obj)
+        {
+            if (Hair > 0)
+            {
+                obj.Player.SetColor(ColorChannel.Hair, Hair);
+            }
+            if (Skin > 0)
+            {
+                obj.Player.SetColor(ColorChannel.Hair, Hair);
+            }
         }
     }
 }
