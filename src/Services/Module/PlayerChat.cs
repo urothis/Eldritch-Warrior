@@ -11,9 +11,6 @@ using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 
-using NWNX.API;
-using NWNX.Services;
-
 namespace Services.Module
 {
     [ServiceBinding(typeof(PlayerChat))]

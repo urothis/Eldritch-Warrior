@@ -10,8 +10,6 @@ namespace Services.Module
     public class ItemEquip
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-
-        // constructor
         public ItemEquip(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerEquipItem>(NwModule.Instance, OnPlayerEquipItem);
 
         private static void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem)

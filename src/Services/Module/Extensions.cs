@@ -1,18 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-
-using NLog;
-
 using NWN.API;
-using NWN.API.Constants;
-using NWN.API.Events;
 
 namespace Services.Module
 {
     public static class Extensions
     {
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-
         /* List of DM Public Keys */
         public static readonly Dictionary<string, string> DMList = new()
         {
@@ -22,53 +15,6 @@ namespace Services.Module
 
         public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Inventory.Items.Any(x => x.ResRef == nwItem);
         public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
-        public static void NotifyLoot(this ModuleEvents.OnAcquireItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
-        /* Auto-Kill if we logout while in combat state */
-        public static int ClientLeaveDeathLog(this ModuleEvents.OnClientLeave leave) => leave.Player.IsInCombat ? leave.Player.HP = -1 : leave.Player.HP;
-        public static void SendLootMessageToParty(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
-        {
-            if (acquireItem.AcquiredBy is NwPlayer player)
-            {
-                if (!player.IsDM)
-                {
-                    player.SendMessageToAllPartyWithinDistance(message, distance);
-                }
-
-                player.SendServerMessage(message);
-            }
-        }
-
-        public static async void ClientPrintLogout(this ModuleEvents.OnClientLeave leave)
-        {
-            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Player.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.Player.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.Player.BicFileName.ColorString(Color.WHITE)}";
-            string client = $"NAME:{leave.Player.Name} ID:{leave.Player.CDKey} BIC:{leave.Player.BicFileName}";
-            string clientDM = $"NAME:{leave.Player.Name} ID:{leave.Player.CDKey}";
-
-            if (leave.Player.IsDM)
-            {
-                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(Color.GREEN)}:{colorString}");
-                Log.Info($"DM Exiting:{clientDM}.");
-            }
-            else
-            {
-                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
-                Log.Info($"LOGOUT:{client}.");
-            }
-        }
-        /*
-            If you are bartering items with another player and you have items in the temporary inventories
-            that someone dropped to offer you and you logout and login you will dupe those items. This is part of the
-            code to stop bartering exploits that are similar to the one above but it doesn't stop that exploit. Basically
-            you just create an invalid state or force one to put an item in to dupe it.
-        */
-        public static void FixBarterExploit(this ModuleEvents.OnAcquireItem acquireItem)
-        {
-            if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
-            {
-                playerA.SaveCharacter();
-                playerB.SaveCharacter();
-            }
-        }
 
         public static string PrintGPValueOnItem(this NwItem nwItem)
             => !nwItem.PlotFlag

@@ -1,11 +1,11 @@
 using System;
 using System.Globalization;
 using System.Linq;
-using NLog;
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
+
 using NWNX.API;
 
 namespace Services.Module
@@ -13,7 +13,6 @@ namespace Services.Module
     [ServiceBinding(typeof(Load))]
     public class Load
     {
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         private static readonly int hours = 24;
 
         public Load(NativeEventService nativeEventService, SchedulerService schedulerService)
