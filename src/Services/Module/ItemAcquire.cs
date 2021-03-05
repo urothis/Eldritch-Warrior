@@ -35,17 +35,7 @@ namespace Services.Module
 
             if (acquireItem.AcquiredBy is NwPlayer && acquireItem.AcquiredFrom is NwPlayer)
             {
-                FixBarterExploit(acquireItem);
-                return;
-            }
-        }
-
-        private static void FixBarterExploit(ModuleEvents.OnAcquireItem acquireItem)
-        {
-            if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
-            {
-                playerA.SaveCharacter();
-                playerB.SaveCharacter();
+                acquireItem.FixBarterExploit();
             }
         }
     }
