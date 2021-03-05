@@ -1,8 +1,6 @@
 //using NLog;
-
 using NWN.API;
 using NWN.API.Events;
-
 using NWN.Services;
 
 namespace Services.Module
@@ -26,6 +24,7 @@ namespace Services.Module
             {
                 acquireItem.Item.PrintGPValueOnItem();
                 acquireItem.Item.RemoveAllTemporaryItemProperties();
+                acquireItem.NotifyLoot();
             }
 
             /* This is to short circuit the rest of this code if we are DM */
@@ -38,19 +37,6 @@ namespace Services.Module
             {
                 FixBarterExploit(acquireItem);
                 return;
-            }
-
-            NotifyLoot(acquireItem);
-        }
-
-        private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
-
-        private static void SendLootMessageToParty(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
-        {
-            if (acquireItem.AcquiredBy is NwPlayer player)
-            {
-                player.SendServerMessage(message);
-                player.SendMessageToAllPartyWithinDistance(message, distance);
             }
         }
 

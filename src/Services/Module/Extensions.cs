@@ -1,9 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
-
 using NWN.API;
-
-using NWNX.API;
+using NWN.API.Events;
 
 namespace Services.Module
 {
@@ -18,6 +16,20 @@ namespace Services.Module
 
         public static bool HasItemByResRef(this NwPlayer player, string nwItem) => player.Inventory.Items.Any(x => x.ResRef == nwItem);
         public static bool HasTemporaryItemProperty(this NwItem nwItem) => nwItem.ItemProperties.Any(x => x.DurationType == EffectDuration.Temporary);
+        public static void NotifyLoot(this ModuleEvents.OnAcquireItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);
+
+        public static void SendLootMessageToParty(ModuleEvents.OnAcquireItem acquireItem, string message, float distance)
+        {
+            if (acquireItem.AcquiredBy is NwPlayer player)
+            {
+                if (!player.IsDM)
+                {
+                    player.SendMessageToAllPartyWithinDistance(message, distance);
+                }
+                
+                player.SendServerMessage(message);
+            }
+        }
 
         public static string PrintGPValueOnItem(this NwItem nwItem)
             => !nwItem.PlotFlag
@@ -25,9 +37,9 @@ namespace Services.Module
             : nwItem.OriginalDescription;
 
         public static void ClientStoreHitPoints(this NwPlayer player)
-            => player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.BicFileName}").Value = player.HP;
+            => player.GetCampaignVariable<int>("Hit_Points", player.UUID.ToUUIDString()).Value = player.HP;
         public static void ClientRestoreHitPoints(this NwPlayer player)
-            => player.HP = player.GetCampaignVariable<int>("Hit_Points", $"{player.CDKey}-{player.BicFileName}").Value;
+            => player.HP = player.GetCampaignVariable<int>("Hit_Points", player.UUID.ToUUIDString()).Value;
 
         public static void SaveCharacter(this NwPlayer player)
         {
