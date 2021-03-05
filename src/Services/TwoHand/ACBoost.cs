@@ -1,5 +1,4 @@
 using NWN.API;
-using NWN.API.Constants;
 using NWN.API.Events;
 
 using NWN.Services;
