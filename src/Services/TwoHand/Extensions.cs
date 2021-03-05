@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Linq;
 using NWN.API;
 using NWN.API.Constants;
 
@@ -11,7 +13,13 @@ namespace Services.TwoHand
             creature.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpAcBonus));
         }
 
-        public static void RemoveBuff(this NwCreature creature) => creature.RemoveEffect(Effect.ACIncrease(5, ACBonus.ShieldEnchantment));
+        public static void RemoveBuff(this NwCreature creature)
+        {
+            foreach (var effect in (IEnumerable)creature.ActiveEffects.Where<Effect>(x => x.EffectType == (EffectType)ACBonus.ShieldEnchantment))
+            {
+                creature.RemoveEffect((Effect)effect);
+            }
+        }
 
         public static bool StopScript(this NwCreature creature) => creature.CheckCreatureSize() || creature.HasShieldEquipped();
 
