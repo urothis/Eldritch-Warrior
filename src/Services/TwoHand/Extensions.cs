@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Linq;
+//using NLog;
 using NWN.API;
 using NWN.API.Constants;
 
@@ -7,17 +9,23 @@ namespace Services.TwoHand
 {
     public static class Extensions
     {
+        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static void AddBuff(this NwCreature creature)
         {
-            creature.ApplyEffect(EffectDuration.Permanent, Effect.ACIncrease(5, ACBonus.ShieldEnchantment));
+            Effect acBoost = Effect.ACIncrease(5, ACBonus.ShieldEnchantment);
+            acBoost.Tag = "AC_BOOST";
+            creature.ApplyEffect(EffectDuration.Permanent, acBoost);
             creature.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpAcBonus));
         }
 
         public static void RemoveBuff(this NwCreature creature)
         {
-            foreach (var effect in (IEnumerable)creature.ActiveEffects.Where<Effect>(x => x.EffectType == (EffectType)ACBonus.ShieldEnchantment))
+            foreach (var effect in creature.ActiveEffects)
             {
-                creature.RemoveEffect((Effect)effect);
+                if (effect.Tag == "AC_BOOST")
+                {
+                    creature.RemoveEffect(effect);
+                }
             }
         }
 
