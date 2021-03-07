@@ -10,27 +10,18 @@ namespace Services.TwoHand
     {
         public ACBoost(NativeEventService nativeEventService)
         {
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerEquipItem>(NwModule.Instance, OnPlayerEquipItem);
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerUnequipItem>(NwModule.Instance, OnPlayerUnequipItem);
+            nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerEquipItem>(NwModule.Instance, PlayerEquipItem);
+            nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerUnequipItem>(NwModule.Instance, PlayerUnequipItem);
         }
 
-        private void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => TwoHandBoost(unequipItem.UnequippedBy);
-        private void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem) => TwoHandBoost(equipItem.Player);
-
-        private static void TwoHandBoost(NwCreature creature)
+        private void PlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => (unequipItem.UnequippedBy as NwCreature).RemoveBuff();
+        private void PlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem)
         {
-            if (creature.StopScript())
+            var pc = equipItem.Player as NwCreature;
+
+            if (!pc.CheckCreatureSize() || !pc.HasShieldEquipped() && pc.CheckCreaturekSizeAndWeapon())
             {
-                return;
-            }
-            else if (creature.CheckCreaturekSizeAndWeapon())
-            {
-                creature.AddBuff();
-                return;
-            }
-            else
-            {
-                creature.RemoveBuff();
+                pc.AddBuff();
             }
         }
     }

@@ -1,4 +1,4 @@
-using NLog;
+//using NLog;
 using NWN.API;
 using NWN.API.Constants;
 
@@ -6,7 +6,7 @@ namespace Services.TwoHand
 {
     public static class Extensions
     {
-        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static void AddBuff(this NwCreature creature)
         {
             Effect acBoost = Effect.ACIncrease(5, ACBonus.ShieldEnchantment);
@@ -17,17 +17,13 @@ namespace Services.TwoHand
 
         public static void RemoveBuff(this NwCreature creature)
         {
-            Log.Info("START");
             foreach (Effect effect in creature.ActiveEffects)
             {
-                Log.Info($"{effect.Tag}");
                 if (effect.Tag == "AC_BOOST")
                 {
-                    Log.Info(effect.Tag);
                     creature.RemoveEffect(effect);
                 }
             }
-            Log.Info("END");
         }
 
         public static bool StopScript(this NwCreature creature) => creature.CheckCreatureSize() || creature.HasShieldEquipped();
@@ -36,12 +32,12 @@ namespace Services.TwoHand
             creature.Size.Equals(CreatureSize.Small) && HasMediumWeapon(creature) ||
             creature.Size.Equals(CreatureSize.Tiny) && HasSmallmWeapon(creature);
 
-        private static bool CheckCreatureSize(this NwCreature creature) => creature.Size is
+        public static bool CheckCreatureSize(this NwCreature creature) => creature.Size is
             CreatureSize.Huge or
             CreatureSize.Invalid or
             CreatureSize.Large;
 
-        private static bool HasShieldEquipped(this NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand)?.BaseItemType is
+        public static bool HasShieldEquipped(this NwCreature creature) => creature.GetItemInSlot(InventorySlot.LeftHand)?.BaseItemType is
             BaseItemType.LargeShield or
             BaseItemType.SmallShield or
             BaseItemType.TowerShield;
