@@ -1,7 +1,4 @@
-using System;
-using System.Collections;
-using System.Linq;
-//using NLog;
+using NLog;
 using NWN.API;
 using NWN.API.Constants;
 
@@ -9,7 +6,7 @@ namespace Services.TwoHand
 {
     public static class Extensions
     {
-        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public static void AddBuff(this NwCreature creature)
         {
             Effect acBoost = Effect.ACIncrease(5, ACBonus.ShieldEnchantment);
@@ -20,13 +17,17 @@ namespace Services.TwoHand
 
         public static void RemoveBuff(this NwCreature creature)
         {
-            foreach (var effect in creature.ActiveEffects)
+            Log.Info("START");
+            foreach (Effect effect in creature.ActiveEffects)
             {
+                Log.Info($"{effect.Tag}");
                 if (effect.Tag == "AC_BOOST")
                 {
+                    Log.Info(effect.Tag);
                     creature.RemoveEffect(effect);
                 }
             }
+            Log.Info("END");
         }
 
         public static bool StopScript(this NwCreature creature) => creature.CheckCreatureSize() || creature.HasShieldEquipped();
