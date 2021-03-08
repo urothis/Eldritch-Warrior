@@ -54,6 +54,11 @@ namespace Services.PlayableRaces
                                 Halfling halfling = new Halfling(obj);
                                 halfling.ApplyAppearance(obj);
                                 break;
+                            case RacialType.Human:
+                            case RacialType.HalfElf:
+                                Human human = new Human(obj);
+                                human.ApplyAppearance(obj);
+                                break;
                         }
                     }
                     else

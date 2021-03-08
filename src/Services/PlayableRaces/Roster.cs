@@ -1,3 +1,5 @@
+using System;
+
 namespace Services.PlayableRaces
 {
     public static class Roster
@@ -39,24 +41,9 @@ namespace Services.PlayableRaces
             "Strongheart"
         };
 
-        public static readonly string[] human = {
-            "Calishite",
-            "Chondathan",
-            "Damaran",
-            "Illuskan",
-            "Mulan",
-            "Rashemi",
-            "Tethyrian"
-        };
+        public static readonly string[] human = Array.Empty<string>();
 
         public static readonly string[] planetouched = {
-            "Aasimar",
-            "Genasi-Air",
-            "Genasi-Earth",
-            "Genasi-Fire",
-            "Genasi-Water",
-            "Fey’ri",
-            "Tanarukk",
             "Tiefling"
         };
     }
