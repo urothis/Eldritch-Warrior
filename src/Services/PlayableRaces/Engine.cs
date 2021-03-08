@@ -40,6 +40,10 @@ namespace Services.PlayableRaces
                             var dwarf = new Dwarf(obj);
                             dwarf.ApplyPlayableRace(obj);
                             break;
+                        case RacialType.Elf:
+                            var elf = new Elf(obj);
+                            elf.ApplyAppearance(obj);
+                            break;
                     }
                 }
                 else

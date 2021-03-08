@@ -15,6 +15,7 @@ namespace Services.TwoHand
         }
 
         private void PlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem) => (unequipItem.UnequippedBy as NwCreature).RemoveBuff();
+        
         private void PlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem)
         {
             var pc = equipItem.Player as NwCreature;

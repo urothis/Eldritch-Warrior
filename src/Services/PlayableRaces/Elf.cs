@@ -50,16 +50,15 @@ namespace Services.PlayableRaces
 
         private void AquaticElf()
         {
-            ModifyStrength = 4;
-            ModifyDexterity = -2;
-            ModifyConstitution = 2;
-            ModifyCharisma = -2;
-            MaxLevel = 58;
-            HideResRef = "";
-            Hair = 62;
-            Skin = 27;
-            FeatList?.Add(Feat.ImprovedUnarmedStrike);
-            FavoredClasses?.Add(ClassType.Ranger);
+            MaxLevel = 59;
+            Hair = 68;
+            Skin = 24;
+            FavoredClasses?.Add(ClassType.Fighter);
+            ModifyDexterity = 2;
+            ModifyIntelligence = -2;
+            FeatList?.Add(Feat.WeaponProficiencyMartial);
+            FeatList?.Add(Feat.WeaponFocusTrident);
+            FeatList?.Add(Feat.Blooded);
         }
 
         public void ApplyUndead(ModuleEvents.OnClientEnter obj)
