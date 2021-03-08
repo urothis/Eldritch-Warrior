@@ -50,7 +50,7 @@ namespace Services.PlayableRaces
 
         private void DeepGnome(ModuleEvents.OnClientEnter obj)
         {
-            Appearance = obj.Player.Gender.Equals(Gender.Female) ? Appearance = (AppearanceType?)424 : (AppearanceType?)423;
+            Appearance = obj.Player.Gender.Equals(Gender.Female) ? Appearance = AppearanceType.SvirfFemale : AppearanceType.SvirfMale;
             MaxLevel = 57;
             FavoredClasses?.Add(ClassType.Wizard);
             ModifyStrength = -2;
