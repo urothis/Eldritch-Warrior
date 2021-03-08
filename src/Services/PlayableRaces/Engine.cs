@@ -30,30 +30,33 @@ namespace Services.PlayableRaces
 
         private void ClientEnter(ModuleEvents.OnClientEnter obj)
         {
-            if (obj.Player.SubraceValid())
+            if (obj.Player.SubRace.Length != 0)
             {
-                if (obj.Player.Xp == 0)
+                if (obj.Player.SubraceValid())
                 {
-                    switch (obj.Player.RacialType)
+                    if (obj.Player.Xp == 0)
                     {
-                        case RacialType.Dwarf:
-                            var dwarf = new Dwarf(obj);
-                            dwarf.ApplyPlayableRace(obj);
-                            break;
-                        case RacialType.Elf:
-                            var elf = new Elf(obj);
-                            elf.ApplyAppearance(obj);
-                            break;
+                        switch (obj.Player.RacialType)
+                        {
+                            case RacialType.Dwarf:
+                                var dwarf = new Dwarf(obj);
+                                dwarf.ApplyPlayableRace(obj);
+                                break;
+                            case RacialType.Elf:
+                                var elf = new Elf(obj);
+                                elf.ApplyAppearance(obj);
+                                break;
+                        }
+                    }
+                    else
+                    {
+                        //Reapply Subrace
                     }
                 }
                 else
                 {
-                    //Reapply Subrace
+                    obj.Player.SendServerMessage($"{"ERROR".ColorString(Color.RED)}!!! - INVALID SUBRACE NAME.");
                 }
-            }
-            else
-            {
-                obj.Player.SendServerMessage($"{"ERROR".ColorString(Color.RED)}!!! - INVALID SUBRACE NAME.");
             }
         }
     }
