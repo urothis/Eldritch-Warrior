@@ -39,12 +39,16 @@ namespace Services.PlayableRaces
                         switch (obj.Player.RacialType)
                         {
                             case RacialType.Dwarf:
-                                var dwarf = new Dwarf(obj);
+                                Dwarf dwarf = new Dwarf(obj);
                                 dwarf.ApplyPlayableRace(obj);
                                 break;
                             case RacialType.Elf:
-                                var elf = new Elf(obj);
+                                Elf elf = new Elf(obj);
                                 elf.ApplyAppearance(obj);
+                                break;
+                            case RacialType.Gnome:
+                                Gnome gnome = new Gnome(obj);
+                                gnome.ApplyAppearance(obj);
                                 break;
                         }
                     }

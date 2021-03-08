@@ -18,7 +18,7 @@ namespace Services.PlayableRaces
         public int? Skin { get; set; }
         public int MaxLevel { get; set; }
         public int SR { get; set; }
-        public int? PortraitID { get; set; }
+        public string? PortraitID { get; set; }
         public int? SoundSet { get; set; }
         public string? HideResRef { get; set; }
         public string? WeaponLeft { get; set; }

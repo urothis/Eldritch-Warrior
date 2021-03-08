@@ -8,7 +8,7 @@ using NWN.API.Events;
 
 namespace Services.PlayableRaces
 {
-    public class Elf : IRace
+    public class Gnome : IRace
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public bool IsUndead { get; set; }
@@ -40,25 +40,25 @@ namespace Services.PlayableRaces
         public List<Feat>? FeatList { get; set; }
 
 
-        public Elf(ModuleEvents.OnClientEnter obj)
+        public Gnome(ModuleEvents.OnClientEnter obj)
         {
             switch (obj.Player.SubRace)
             {
-                case "Aquatic Elf": AquaticElf(); break;
+                case "Deep Gnome": DeepGnome(obj); break;
             }
         }
 
-        private void AquaticElf()
+        private void DeepGnome(ModuleEvents.OnClientEnter obj)
         {
-            MaxLevel = 59;
-            Hair = 68;
-            Skin = 24;
-            FavoredClasses?.Add(ClassType.Fighter);
+            Appearance = obj.Player.Gender.Equals(Gender.Female) ? Appearance = (AppearanceType?)424 : (AppearanceType?)423;
+            MaxLevel = 57;
+            FavoredClasses?.Add(ClassType.Wizard);
+            ModifyStrength = -2;
             ModifyDexterity = 2;
-            ModifyIntelligence = -2;
-            FeatList?.Add(Feat.WeaponProficiencyMartial);
-            FeatList?.Add(Feat.WeaponFocusTrident);
-            FeatList?.Add(Feat.Blooded);
+            ModifyWisdom = 2;
+            ModifyCharisma = -4;
+            SR = 11 + obj.Player.Level;
+            PortraitID = obj.Player.Gender.Equals(Gender.Female) ? PortraitID = "po_gn_f_03_" : "po_gn_m_02_";
         }
 
         public void ApplyUndead(ModuleEvents.OnClientEnter obj)
