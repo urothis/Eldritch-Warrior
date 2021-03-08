@@ -50,6 +50,10 @@ namespace Services.PlayableRaces
                                 Gnome gnome = new Gnome(obj);
                                 gnome.ApplyAppearance(obj);
                                 break;
+                            case RacialType.Halfling:
+                                Halfling halfling = new Halfling(obj);
+                                halfling.ApplyAppearance(obj);
+                                break;
                         }
                     }
                     else

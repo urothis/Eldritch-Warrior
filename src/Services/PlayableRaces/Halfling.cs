@@ -8,7 +8,7 @@ using NWN.API.Events;
 
 namespace Services.PlayableRaces
 {
-    public class Elf : IRace
+    public class Halfling : IRace
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
         public bool IsUndead { get; set; }
@@ -40,31 +40,27 @@ namespace Services.PlayableRaces
         public List<Feat>? FeatList { get; set; }
 
 
-        public Elf(ModuleEvents.OnClientEnter obj)
+        public Halfling(ModuleEvents.OnClientEnter obj)
         {
             switch (obj.Player.SubRace)
             {
-                case "Aquatic Elf": AquaticElf(); break;
+                case "Ghostwise": Ghostwise(obj); break;
             }
         }
 
-        private void AquaticElf()
+        private void Ghostwise(ModuleEvents.OnClientEnter obj)
         {
-            MaxLevel = 59;
-            Hair = 68;
-            Skin = 24;
-            FavoredClasses?.Add(ClassType.Fighter);
-            ModifyDexterity = 2;
-            ModifyIntelligence = -2;
-            FeatList?.Add(Feat.WeaponProficiencyMartial);
-            FeatList?.Add(Feat.WeaponFocusTrident);
             FeatList?.Add(Feat.Blooded);
+            FavoredClasses?.Add(ClassType.Barbarian);
+            ModifyStrength = -2;
+            ModifyDexterity = 2;
         }
 
         public void ApplyUndead(ModuleEvents.OnClientEnter obj)
         {
             if (IsUndead)
             {
+
             }
         }
 
