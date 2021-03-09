@@ -13,32 +13,28 @@ namespace Services.ActivateItem
 
         private void ActivateItem(ModuleEvents.OnActivateItem activeItemEvent)
         {
-            NwItem item = activeItemEvent.ActivatedItem;
+            NwItem item = (NwItem)activeItemEvent.TargetObject;
             NwPlayer player = (NwPlayer)activeItemEvent.ItemActivator;
 
-            switch (item.BaseItemType)
+            if (activeItemEvent.ActivatedItem.Tag.Equals("itm_ammo_creator"))
             {
-                case BaseItemType.Arrow:
-                case BaseItemType.Bolt:
-                case BaseItemType.Bullet:
-                    item.StackSize = 99;
-                    item.PlotFlag = true;
-                    break;
-                case BaseItemType.Dart:
-                case BaseItemType.Shuriken:
-                case BaseItemType.ThrowingAxe:
-                    item.StackSize = 50;
-                    item.PlotFlag = true;
-                    break;
-                case BaseItemType.Grenade:
-                    item.StackSize = 10;
-                    item.PlotFlag = true;
-                    break;
-                default:
-                    player.SendServerMessage($"Invalid Target {item.BaseItemType.ToString().ColorString(Color.WHITE)}".ColorString(Color.ORANGE));
-                    return;
+                switch (item.BaseItemType)
+                {
+                    case BaseItemType.Arrow:
+                    case BaseItemType.Bolt:
+                    case BaseItemType.Bullet:
+                    case BaseItemType.Dart:
+                    case BaseItemType.Shuriken:
+                    case BaseItemType.ThrowingAxe:
+                    case BaseItemType.Grenade:
+                        item.Copy(player, true).PlotFlag = true;
+                        break;
+                    default:
+                        player.SendServerMessage($"Invalid Target {item.BaseItemType.ToString().ColorString(Color.WHITE)}".ColorString(Color.ORANGE));
+                        return;
+                }
             }
-            
+
             player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} replenished for {item.BaseItemType.ToString().ColorString(Color.WHITE)}");
         }
     }
