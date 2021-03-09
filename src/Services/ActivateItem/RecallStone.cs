@@ -4,6 +4,7 @@ using System.Numerics;
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
+using NWN.API.Constants;
 
 namespace Services.ActivateItem
 {
@@ -30,13 +31,42 @@ namespace Services.ActivateItem
             }
             else
             {
+                player.FloatingTextString("Teleporting commencing in...");
                 CheckIsInBattle(player, 6, location);
             }
         }
 
-        private void CheckIsInBattle(NwPlayer player, int v, Vector3 location)
+        private static void CheckIsInBattle(NwPlayer player, int timeLeft, Vector3 location)
         {
-            throw new System.NotImplementedException();
+            player.FloatingTextString($"{timeLeft}", false);
+
+            player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.DurParalyzeHold));
+            player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfPwkill));
+            player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpLightningS));
+
+            //  Cancel teleport if conditions are met
+            if (player.IsInCombat)
+            {
+                player.SendServerMessage("Cannot teleport while in combat.".ColorString(Color.ORANGE));
+                return;
+            }
+
+            if (player.Position != location)
+            {
+                player.SendServerMessage("Cannot teleport while in moving.".ColorString(Color.ORANGE));
+                return;
+            }
+
+            if (timeLeft == 0)
+            {
+                player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfElectricExplosion));
+                //Teleport
+            }
+            else
+            {
+                timeLeft--;
+                //Recursive
+            }
         }
     }
 }
