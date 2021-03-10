@@ -1,4 +1,4 @@
-using NWN.API;
+/*using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
 using NWN.API.Constants;
@@ -37,4 +37,4 @@ namespace Services.ActivateItem
             player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} replenished for {item.BaseItemType.ToString().ColorString(Color.WHITE)}");
         }
     }
-}
+}*/

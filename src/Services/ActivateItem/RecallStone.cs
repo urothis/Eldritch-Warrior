@@ -14,13 +14,13 @@ namespace Services.ActivateItem
         public class BootPlayerItemHandler : IItemHandler
         {
             public string Tag => "itm_recall";
-            private string[] noTeleport = { "test" };
+            private string[] noTeleport = { "test123" };
 
             public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
             {
                 NwPlayer player = (NwPlayer)activateItem.ItemActivator;
                 Vector3 location = player.Position;
-                var areaName = player.Area.Name;
+                string areaName = player.Area.Name;
 
                 if (noTeleport.Contains(areaName))
                 {
@@ -32,7 +32,7 @@ namespace Services.ActivateItem
                 }
                 else
                 {
-                    player.FloatingTextString("Teleporting commencing in...");
+                    player.FloatingTextString("Teleporting commencing in...".ColorString(Color.GREEN));
                     CheckIsInBattle(player, 6, location);
                 }
             }
@@ -40,7 +40,6 @@ namespace Services.ActivateItem
 
         private static async void CheckIsInBattle(NwPlayer player, int timeLeft, Vector3 location)
         {
-            player.FloatingTextString($"{timeLeft}", false);
             player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.DurParalyzeHold));
             player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfPwkill));
             player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.ImpLightningS));
@@ -60,11 +59,14 @@ namespace Services.ActivateItem
 
             if (timeLeft == 0)
             {
+                player.SendServerMessage("Teleporting...".ColorString(Color.GREEN));
+                player.PlayVoiceChat(VoiceChatType.Goodbye);
                 player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfElectricExplosion));
                 player.Location = NwModule.Instance.StartingLocation;
             }
             else
             {
+                player.FloatingTextString($"{timeLeft}", false);
                 timeLeft--;
                 await NwTask.Delay(TimeSpan.FromSeconds(1));
                 CheckIsInBattle(player, timeLeft, location);
