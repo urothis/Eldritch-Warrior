@@ -1,22 +1,18 @@
-/*using NWN.API;
+using NWN.API;
+using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
-using NWN.API.Constants;
 
 namespace Services.ActivateItem
 {
-    [ServiceBinding(typeof(AmmoDuplicator))]
-    public class AmmoDuplicator
+    [ServiceBinding(typeof(IItemHandler))]
+    public class AmmoDuplicator : IItemHandler
     {
-        public AmmoDuplicator(NativeEventService native) =>
-            native.Subscribe<NwModule, ModuleEvents.OnActivateItem>(NwModule.Instance, ActivateItem);
+        public string Tag => "itm_ammo_creator";
 
-        private void ActivateItem(ModuleEvents.OnActivateItem activeItemEvent)
+        public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
         {
-            NwItem item = (NwItem)activeItemEvent.TargetObject;
-            NwPlayer player = (NwPlayer)activeItemEvent.ItemActivator;
-
-            if (activeItemEvent.ActivatedItem.Tag.Equals("itm_ammo_creator"))
+            if (activateItem.TargetObject is NwItem item && activateItem.ItemActivator is NwPlayer player)
             {
                 switch (item.BaseItemType)
                 {
@@ -28,13 +24,13 @@ namespace Services.ActivateItem
                     case BaseItemType.ThrowingAxe:
                     case BaseItemType.Grenade:
                         item.Clone(player, "", true).PlotFlag = true;
+                        player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} replenished for {item.BaseItemType.ToString().ColorString(Color.WHITE)}");
                         break;
                     default:
                         player.SendServerMessage($"Invalid Target {item.BaseItemType.ToString().ColorString(Color.WHITE)}".ColorString(Color.ORANGE));
-                        return;
+                        break;
                 }
             }
-            player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} replenished for {item.BaseItemType.ToString().ColorString(Color.WHITE)}");
         }
     }
-}*/
+}

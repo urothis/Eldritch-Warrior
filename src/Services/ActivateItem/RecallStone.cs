@@ -8,33 +8,30 @@ using NWN.Services;
 
 namespace Services.ActivateItem
 {
-    public class RecallStone
+    [ServiceBinding(typeof(IItemHandler))]
+    public class RecallStone : IItemHandler
     {
-        [ServiceBinding(typeof(IItemHandler))]
-        public class BootPlayerItemHandler : IItemHandler
+        public string Tag => "itm_recall";
+        private string[] noTeleport = { "test123" };
+
+        public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
         {
-            public string Tag => "itm_recall";
-            private string[] noTeleport = { "test123" };
+            NwPlayer player = (NwPlayer)activateItem.ItemActivator;
+            Vector3 location = player.Position;
+            string areaName = player.Area.Name;
 
-            public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
+            if (noTeleport.Contains(areaName))
             {
-                NwPlayer player = (NwPlayer)activateItem.ItemActivator;
-                Vector3 location = player.Position;
-                string areaName = player.Area.Name;
-
-                if (noTeleport.Contains(areaName))
-                {
-                    player.SendServerMessage($"You cannot teleport out of {areaName.ToString().ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
-                }
-                else if (player.IsInCombat)
-                {
-                    player.SendServerMessage($"You cannot teleport while in combat.".ColorString(Color.ORANGE));
-                }
-                else
-                {
-                    player.FloatingTextString("Teleporting commencing in...".ColorString(Color.GREEN));
-                    CheckIsInBattle(player, 6, location);
-                }
+                player.SendServerMessage($"You cannot teleport out of {areaName.ToString().ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+            }
+            else if (player.IsInCombat)
+            {
+                player.SendServerMessage($"You cannot teleport while in combat.".ColorString(Color.ORANGE));
+            }
+            else
+            {
+                player.FloatingTextString("Teleporting commencing in...".ColorString(Color.GREEN));
+                CheckIsInBattle(player, 6, location);
             }
         }
 
