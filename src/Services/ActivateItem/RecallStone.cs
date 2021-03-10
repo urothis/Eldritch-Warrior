@@ -59,6 +59,7 @@ namespace Services.ActivateItem
                 player.SendServerMessage("Teleporting...".ColorString(Color.GREEN));
                 player.PlayVoiceChat(VoiceChatType.Goodbye);
                 player.ApplyEffect(EffectDuration.Instant, Effect.VisualEffect(VfxType.FnfElectricExplosion));
+                await NwTask.Delay(TimeSpan.FromSeconds(1));
                 player.Location = NwModule.Instance.StartingLocation;
             }
             else
