@@ -27,14 +27,13 @@ namespace Services.ActivateItem
                     case BaseItemType.Shuriken:
                     case BaseItemType.ThrowingAxe:
                     case BaseItemType.Grenade:
-                        item.Copy(player, true).PlotFlag = true;
+                        item.Clone(player, "", true).PlotFlag = true;
                         break;
                     default:
                         player.SendServerMessage($"Invalid Target {item.BaseItemType.ToString().ColorString(Color.WHITE)}".ColorString(Color.ORANGE));
                         return;
                 }
             }
-
             player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} replenished for {item.BaseItemType.ToString().ColorString(Color.WHITE)}");
         }
     }
