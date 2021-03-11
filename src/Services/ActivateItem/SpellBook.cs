@@ -14,7 +14,7 @@ namespace Services.ActivateItem
         {
             Random random = new Random();
             int start = 0;
-            int stop = random.Next(6, 20);
+            int stop = random.Next(6, 12);
             string scrollName = "";
 
             while (start < stop)
