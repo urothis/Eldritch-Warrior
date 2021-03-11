@@ -13,11 +13,11 @@ namespace Services.ActivateItem
         public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
         {
             Random random = new Random();
-            int count = 0;
-            int spellCount = random.Next(6, 20);
+            int start = 0;
+            int stop = random.Next(6, 20);
             string scrollName = "";
 
-            while (count < spellCount)
+            while (start < stop)
             {
                 switch (random.Next(0, 275))
                 {
@@ -300,7 +300,7 @@ namespace Services.ActivateItem
                 }
 
                 NwItem item = NwItem.Create(scrollName, activateItem.ItemActivator, random.Next(1, 6));
-                count++;
+                start++;
             }
             activateItem.ActivatedItem.Destroy();
         }
