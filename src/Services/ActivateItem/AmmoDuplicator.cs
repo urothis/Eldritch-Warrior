@@ -24,7 +24,7 @@ namespace Services.ActivateItem
                     case BaseItemType.ThrowingAxe:
                     case BaseItemType.Grenade:
                         item.Clone(player, "", true).PlotFlag = true;
-                        player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} replenished for {item.BaseItemType.ToString().ColorString(Color.WHITE)}");
+                        player.SendServerMessage($"{item.StackSize.ToString().ColorString(Color.SILVER)} {item.BaseItemType.ToString().ColorString(Color.WHITE)} ");
                         break;
                     default:
                         player.SendServerMessage($"Invalid Target {item.BaseItemType.ToString().ColorString(Color.WHITE)}".ColorString(Color.ORANGE));
