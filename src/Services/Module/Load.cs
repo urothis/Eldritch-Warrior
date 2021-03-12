@@ -65,6 +65,7 @@ namespace Services.Module
             _ = NwModule.Instance.GetLocalVariable<string>("X2_L_NOTREASURE").Value;
             _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_EXTERNAL_ONLY").Value;
             _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_NO_UNDERGROUND").Value;
+            NwModule.Instance.GetLocalVariable<string>("X2_S_UD_SPELLSCRIPT").Value = "spellhook";
         }
 
         private static FogColor AreaSetFogColor(Random random)
