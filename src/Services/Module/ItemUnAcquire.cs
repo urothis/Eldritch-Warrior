@@ -26,11 +26,6 @@ namespace Services.Module
             }
 
             /* This is to short circuit the rest of this code if we are DM */
-            if (unacquireItem.LostBy is NwPlayer { IsDM: true })
-            {
-                return;
-            }
-
             if (unacquireItem.LostBy is NwPlayer nwPlayer)
             {
                 nwPlayer.SaveCharacter();
