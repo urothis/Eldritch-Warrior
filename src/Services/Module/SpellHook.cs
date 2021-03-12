@@ -15,13 +15,18 @@ namespace Services.Module
 
         public static void OnSpellHooked(SpellEvents.OnSpellCast spellCast)
         {
-            if (spellCast.Caster is not NwPlayer) return;
-
-            ReplenishCantrips(spellCast);
-
-            if (spellCast.Caster.Area.GetLocalVariable<int>("NO_CASTING").Value == 1)
+            if (spellCast.Caster is NwPlayer player)
             {
+                ReplenishCantrips(spellCast);
 
+                if (spellCast.Caster.Area.GetLocalVariable<int>("NO_CASTING").Value == 1)
+                {
+                    if (spellCast.Harmful)
+                    {
+                        //SetModuleOverrideSpellScriptFinished
+                        player.SendServerMessage($"{"NO".ColorString(Color.RED)} {"offensive spellcasting".ColorString(Color.ORANGE)} in this area.");
+                    }
+                }
             }
         }
 
