@@ -29,7 +29,7 @@ namespace Services.Module
             }
         }
 
-        private static async void BuffPetsAsync(SpellEvents.OnSpellCast spellCast, NwPlayer player, Spell spell)
+        private static void BuffPetsAsync(SpellEvents.OnSpellCast spellCast, NwPlayer player, Spell spell)
         {
             //await player.GetAssociate(AssociateType.AnimalCompanion).ActionCastSpellAt(spellCast.Spell, player.GetAssociate(AssociateType.AnimalCompanion), spellCast.MetaMagicFeat, true, 0, ProjectilePathType.Default, true);
         }

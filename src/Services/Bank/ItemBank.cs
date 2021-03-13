@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -20,7 +21,6 @@ namespace Services.Bank
             scriptEventService.SetHandler<PlaceableEvents.OnClose>("bank_onclose", OnBankClose);
             scriptEventService.SetHandler<PlaceableEvents.OnDisturbed>("bank_disturb", OnBankDisturbed);
             scriptEventService.SetHandler<PlaceableEvents.OnUsed>("bank_used_player", OnBankUsed);
-            scriptEventService.SetHandler<PlaceableEvents.OnUsed>("bank_used_static", OnBankUsed);
         }
 
         private static readonly List<BaseItemType> BlockedItemTypes = new()
