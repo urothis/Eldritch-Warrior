@@ -21,7 +21,7 @@ namespace Services.Cooldown
 
         private void OnUseFeatBefore(FeatUseEvents.OnUseFeatBefore obj)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 }

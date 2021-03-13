@@ -1,3 +1,4 @@
+using System.Linq;
 using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
@@ -24,27 +25,13 @@ namespace Services.Module
                     player.SendServerMessage($"{"NO".ColorString(Color.RED)} {"offensive spellcasting".ColorString(Color.ORANGE)} in this area.");
                 }
 
-                BuffPets(spellCast, player, spell);
+                BuffPetsAsync(spellCast, player, spell);
             }
         }
 
-        private static void BuffPets(SpellEvents.OnSpellCast spellCast, NwPlayer player, Spell spell)
+        private static async void BuffPetsAsync(SpellEvents.OnSpellCast spellCast, NwPlayer player, Spell spell)
         {
-            if (spellCast.TargetObject == player)
-            {
-                //Buff pets with same spell applied to caster.
-                MetaMagic meta = spellCast.MetaMagicFeat;
-                var path = ProjectilePathType.Default; ;
-
-                switch (player.AssociateType)
-                {
-                    case AssociateType.AnimalCompanion: player.ActionCastSpellAt(spell, player.GetAssociate(AssociateType.AnimalCompanion), meta, true, 0, path, true); break;
-                    case AssociateType.Dominated: player.ActionCastSpellAt(spell, player.GetAssociate(AssociateType.Dominated), meta, true, 0, path, true); break;
-                    case AssociateType.Familiar: player.ActionCastSpellAt(spell, player.GetAssociate(AssociateType.Familiar), meta, true, 0, path, true); break;
-                    case AssociateType.Henchman: player.ActionCastSpellAt(spell, player.GetAssociate(AssociateType.Henchman), meta, true, 0, path, true); break;
-                    case AssociateType.Summoned: player.ActionCastSpellAt(spell, player.GetAssociate(AssociateType.Summoned), meta, true, 0, path, true); break;
-                }
-            }
+            //await player.GetAssociate(AssociateType.AnimalCompanion).ActionCastSpellAt(spellCast.Spell, player.GetAssociate(AssociateType.AnimalCompanion), spellCast.MetaMagicFeat, true, 0, ProjectilePathType.Default, true);
         }
 
         private static void ReplenishCantrips(SpellEvents.OnSpellCast spellCast)
@@ -60,7 +47,8 @@ namespace Services.Module
                 case Spell.Light:
                 case Spell.RayOfFrost:
                 case Spell.Resistance:
-                case Spell.Virtue: //NWNX_Creature_RestoreSpells
+                case Spell.Virtue:
+                    //NWNX_Creature_RestoreSpells
                     break;
             }
         }
