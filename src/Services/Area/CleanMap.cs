@@ -1,4 +1,5 @@
 using System;
+using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
 
@@ -11,7 +12,12 @@ namespace Services.Area
 
         private void Exit(AreaEvents.OnExit obj)
         {
-            System.Console.WriteLine($"{obj.ExitingObject.Name}");
+            NwPlayer pc = (NwPlayer)obj.ExitingObject;
+
+            foreach (var item in obj.Area.Objects)
+            {
+                System.Console.WriteLine(item.Name);
+            }
         }
     }
 }
