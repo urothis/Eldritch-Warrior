@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using NWN.API;
 using NWN.API.Events;
@@ -13,6 +14,12 @@ namespace Services.Bank
         public Items(ScriptEventService script)
         {
             script.SetHandler<PlaceableEvents.OnClose>("bank_close", Close);
+            script.SetHandler<PlaceableEvents.OnDisturbed>("bank_disturb", Disturbed);
+        }
+
+        private void Disturbed(PlaceableEvents.OnDisturbed obj)
+        {
+            throw new NotImplementedException();
         }
 
         private void Close(PlaceableEvents.OnClose obj)
