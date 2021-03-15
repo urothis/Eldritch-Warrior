@@ -3,7 +3,7 @@ using System.Linq;
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
-
+using NWN.API.Constants;
 using NWNX.API;
 
 namespace Services.Bank
@@ -19,7 +19,39 @@ namespace Services.Bank
 
         private void Disturbed(PlaceableEvents.OnDisturbed obj)
         {
-            throw new NotImplementedException();
+            NwPlayer pc = (NwPlayer)obj.Disturber;
+            NwItem item = obj.DisturbedItem;
+
+            switch (obj.DisturbType)
+            {
+                case InventoryDisturbType.Added:
+                case InventoryDisturbType.Removed:
+                    if (item.HasInventory)
+                    {
+                        pc.FloatingTextString($"{item.Name} has an inventory. Cannot bank this item.");
+                        item.CopyDestroyItem(pc);
+                    }
+                    else if (item.PlotFlag)
+                    {
+                        pc.FloatingTextString($"{item.Name} is marked plot. Cannot bank this item.");
+                        item.CopyDestroyItem(pc);
+                    }
+                    else if (item.Stolen)
+                    {
+                        pc.FloatingTextString($"{item.Name} is marked stolen. Cannot bank this item.");
+                        item.CopyDestroyItem(pc);
+                    }
+                    else if (!obj.ValidateChestLimit())
+                    {
+                        pc.FloatingTextString($"Maximum item count of {Extensions.maxItem} exceeded! Current item count is {obj.Placeable.Inventory.Items.Count<NwItem>()}.");
+                        item.CopyDestroyItem(pc);
+                    }
+                    else
+                    {
+                        pc.GetCampaignVariable<string>($"{Extensions.bankItem}_{pc.Area.Name}", pc.UUID.ToUUIDString()).Value = obj.Placeable.Serialize();
+                    }
+                    break;
+            }
         }
 
         private void Close(PlaceableEvents.OnClose obj)
