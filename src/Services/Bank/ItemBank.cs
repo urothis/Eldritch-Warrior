@@ -14,7 +14,7 @@ namespace Services.Bank
     [ServiceBinding(typeof(ItemBank))]
     public class ItemBank
     {
-        /*private static readonly string itemBankCampaign = "ITEM_BANK_";
+        private static readonly string itemBankCampaign = "ITEM_BANK_";
 
         public ItemBank(ScriptEventService scriptEventService)
         {
@@ -143,5 +143,5 @@ namespace Services.Bank
             player.GetCampaignVariable<string>(itemBankCampaign, player.UUID.ToUUIDString()).Value = bank.Serialize();
             return bank;
         }
-    */}
+    }
 }

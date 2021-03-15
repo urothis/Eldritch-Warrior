@@ -2,6 +2,7 @@ using System.Linq;
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
+using NWNX.API;
 
 namespace Services.Bank
 {
@@ -16,9 +17,6 @@ namespace Services.Bank
         private void Close(PlaceableEvents.OnClose obj)
         {
             NwPlayer pc = (NwPlayer)obj.LastClosedBy;
-            Location loc = obj.LastClosedBy.Location;
-            string name = pc.Name;
-            string chestTag = obj.Placeable.GetLocalVariable<string>("CHEST_TAG");
 
             if (!obj.ValidateChestLimit())
             {
@@ -29,6 +27,20 @@ namespace Services.Bank
             {
                 pc.FloatingTextString("Item with inventories cannot be stored in a bank chest.");
                 return;
+            }
+            else if (obj.Placeable.Inventory.Items.Any<NwItem>(i => i.PlotFlag))
+            {
+                pc.FloatingTextString("Items marked plot are not allowed.");
+                return;
+            }
+            else if (obj.Placeable.Inventory.Items.Any<NwItem>(i => i.Stolen))
+            {
+                pc.FloatingTextString("Stolen items are not allowed.");
+                return;
+            }
+            else
+            {
+                pc.GetCampaignVariable<string>($"{Extensions.bankItem}_{pc.Area.Name}", pc.UUID.ToUUIDString()).Value = obj.Placeable.Serialize();
             }
         }
     }
