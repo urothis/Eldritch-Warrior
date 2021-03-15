@@ -32,5 +32,13 @@ namespace Services.Area
                 }
             }
         }
+
+        public static async void CloseDoors(this AreaEvents.OnExit obj)
+        {
+            foreach (var door in obj.Area.FindObjectsOfTypeInArea<NwDoor>().Where(d => d.IsOpen))
+            {
+                await door.Close();
+            }
+        }
     }
 }

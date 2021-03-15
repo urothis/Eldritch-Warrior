@@ -16,10 +16,12 @@ namespace Services.Area
         private void Exit(AreaEvents.OnExit obj)
         {
             //Stop if players exist on map.
-            if (obj.Area.FindObjectsOfTypeInArea<NwPlayer>().Any()) return;
-
-            obj.CleanupCreaturesAndItems();
-            obj.CleanupPlaceables();
+            if (!obj.Area.FindObjectsOfTypeInArea<NwPlayer>().Any())
+            {
+                obj.CleanupCreaturesAndItems();
+                obj.CleanupPlaceables();
+                obj.CloseDoors();
+            }
         }
     }
 }
