@@ -16,7 +16,10 @@ namespace Services.Bank
 
         private void Close(PlaceableEvents.OnClose obj)
         {
-            throw new NotImplementedException();
+            var pc = obj.LastClosedBy;
+            Location loc = obj.LastClosedBy.Location;
+            string name = pc.Name;
+            string chestTag = obj.Placeable.GetLocalVariable<string>("CHEST_TAG");
         }
     }
 }
