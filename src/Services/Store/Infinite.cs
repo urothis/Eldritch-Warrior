@@ -1,5 +1,3 @@
-using System;
-using NWN.API;
 using NWN.API.Events;
 
 using NWN.Services;
@@ -9,12 +7,15 @@ namespace Services.Store
 
     public class Infinite
     {
-        public Infinite(ScriptEventService script) => script.SetHandler<StoreEvents.OnOpen>("plc_sell_loot", Open);
-
+        public Infinite(ScriptEventService script) => script.SetHandler<StoreEvents.OnOpen>("store_infinite", Open);
 
         private void Open(StoreEvents.OnOpen obj)
         {
-
+            foreach (var item in obj.Player.Inventory.Items)
+            {
+                item.Infinite = true;
+                item.Stolen = true;
+            }
         }
     }
 }
