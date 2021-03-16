@@ -34,9 +34,15 @@ namespace Services.ActivateItem
             }
             else
             {
-                //remove buffs
-                //socket item
+                NwItem item = (NwItem)target;
+                Services.Module.Extensions.RemoveAllTemporaryItemProperties(item);
+                SocketGemToItem(pc, item, activateItem.ActivatedItem);
             }
+        }
+
+        private void SocketGemToItem(NwPlayer pc, NwItem item, NwItem activatedItem)
+        {
+            throw new NotImplementedException();
         }
 
         public static bool CheckItemIsValidType(ModuleEvents.OnActivateItem item)
