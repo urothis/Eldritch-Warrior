@@ -17,19 +17,13 @@ namespace Services.ActivateItem
             pc.SendServerMessage($"test good.");
         }
 
-        private static bool IsCorrectItemtype(NwPlayer pc, NwItem item, string name)
+        private static bool IsCorrectItemtype(NwPlayer pc, NwItem item)
         {
-            name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name.Split(" ")[0].Replace(" ", ""));
-            switch (name)
-            {
-                case "ExtraRangedDamageType":
-                case "Mighty":
-                case "UnlimitedAmmunition":
-                case "AbilityBonus":
-                case "AcBonus":
-                    return IsRangedWeapon(item);
-            }
-            return false;
+            //bank.GetLocalVariable<string>("CHEST_TAG").Value = objectTag;
+            int IPType = item.GetLocalVariable<int>("IP_TYPE").Value;
+            int IPSubType = item.GetLocalVariable<int>("IP_SUBTYPE").Value;
+            int IPValue = item.GetLocalVariable<int>("IP_VALUE").Value;
+
         }
 
         private static bool IsRangedWeapon(NwItem item)
