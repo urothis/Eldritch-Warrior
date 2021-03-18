@@ -1,13 +1,12 @@
-using System;
+using System.Globalization;
 using NWN.API;
 using NWN.API.Constants;
-using NWN.API.Events;
 
 namespace Services.ActivateItem
 {
     public static class Extensions
     {
-        public static void SocketGemToItem(this NwItem activatedItem, NwPlayer pc, NwItem item)
+        public static void SocketRunesToItem(this NwItem activatedItem, NwPlayer pc, NwItem item)
         {
             //Break script if we try to apply an item property to an item that wont take it.
             if (!IsCorrectItemtype(pc, item, activatedItem.Name))
@@ -15,16 +14,40 @@ namespace Services.ActivateItem
                 pc.SendServerMessage($"Cannot apply {activatedItem.Name.ColorString(Color.WHITE)} to {item.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 return;
             }
+            pc.SendServerMessage($"test good.");
         }
 
         private static bool IsCorrectItemtype(NwPlayer pc, NwItem item, string name)
         {
-            throw new NotImplementedException();
+            name = CultureInfo.InvariantCulture.TextInfo.ToTitleCase(name.Split(" ")[0].Replace(" ", ""));
+            switch (name)
+            {
+                case "ExtraRangedDamageType":
+                case "Mighty":
+                case "UnlimitedAmmunition":
+                case "AbilityBonus":
+                case "AcBonus":
+                    return IsRangedWeapon(item);
+            }
+            return false;
         }
 
-        public static bool CheckItemIsValidType(this ModuleEvents.OnActivateItem item)
+        private static bool IsRangedWeapon(NwItem item)
         {
-            switch (item.ActivatedItem.BaseItemType)
+            switch (item.BaseItemType)
+            {
+                case BaseItemType.HeavyCrossbow:
+                case BaseItemType.LightCrossbow:
+                case BaseItemType.Longbow:
+                case BaseItemType.Shortbow:
+                    return true;
+                default: return false;
+            }
+        }
+
+        public static bool CheckItemIsValidType(this NwItem item)
+        {
+            switch (item.BaseItemType)
             {
                 case BaseItemType.Amulet:
                 case BaseItemType.Armor:

@@ -1,12 +1,10 @@
-using System;
 using NWN.API;
-using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 
 namespace Services.ActivateItem
 {
-    [ServiceBinding(typeof(Sockets))]
+    [ServiceBinding(typeof(IItemHandler))]
     public class Sockets : IItemHandler
     {
         public string Tag => "itm_socket";
@@ -14,7 +12,7 @@ namespace Services.ActivateItem
         public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
         {
             NwPlayer pc = (NwPlayer)activateItem.ItemActivator;
-            NwGameObject target = activateItem.TargetObject;
+            NwItem target = (NwItem)activateItem.TargetObject;
 
             if (pc.IsInCombat)
             {
@@ -24,11 +22,7 @@ namespace Services.ActivateItem
             {
                 pc.SendServerMessage("Target item is not in your possession.".ColorString(Color.ORANGE));
             }
-            else if (target.Tag != Tag)
-            {
-                pc.SendServerMessage("Target item is not a socket item.".ColorString(Color.ORANGE));
-            }
-            else if (!activateItem.CheckItemIsValidType())
+            else if (!target.CheckItemIsValidType())
             {
                 pc.SendServerMessage("Target item is invalid.".ColorString(Color.ORANGE));
             }
@@ -36,7 +30,7 @@ namespace Services.ActivateItem
             {
                 NwItem item = (NwItem)target;
                 Services.Module.Extensions.RemoveAllTemporaryItemProperties(item);
-                activateItem.ActivatedItem.SocketGemToItem(pc, item);
+                activateItem.ActivatedItem.SocketRunesToItem(pc, item);
             }
         }
     }
