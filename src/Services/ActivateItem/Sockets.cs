@@ -7,7 +7,7 @@ namespace Services.ActivateItem
     [ServiceBinding(typeof(IItemHandler))]
     public class Sockets : IItemHandler
     {
-        public string Tag => "itm_socket";
+        public string Tag => "sf_sockets";
 
         public void HandleActivateItem(ModuleEvents.OnActivateItem activateItem)
         {

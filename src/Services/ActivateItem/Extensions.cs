@@ -1,4 +1,3 @@
-using System.Globalization;
 using NWN.API;
 using NWN.API.Constants;
 
