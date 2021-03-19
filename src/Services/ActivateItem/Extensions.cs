@@ -1,3 +1,4 @@
+using System;
 using NWN.API;
 using NWN.API.Constants;
 
@@ -17,9 +18,54 @@ namespace Services.ActivateItem
                 pc.SendServerMessage($"Cannot apply {activatedItem.Name.ColorString(Color.WHITE)} to {item.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 return;
             }
+            //Restrictions (Keen.. etc obviously won't work for gloves or staffs and so on)
+            else if (!IsCorrectGemType(IPType))
+            {
+                pc.SendServerMessage($"{item.Name.ColorString(Color.WHITE)} cannot be socketed to {activatedItem.Name.ColorString(Color.WHITE)}.");
+            }
+            //Item Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
+            else if (DoesNotStack(IPType, item))
+            {
+
+            }
+
             pc.SendServerMessage($"test good.");
         }
 
+        private static bool DoesNotStack(int iPType, NwItem item)
+        {
+            var test = false;
+            switch (iPType)
+            {
+                case 12:
+                case 13:
+                case 15:
+                case 34:
+                case 35:
+                case 36:
+                case 38:
+                case 43:
+                case 61:
+                case 71:
+                case 75:
+                case 82: test = true; break;//test = item.HasItemProperty(ItemPropertyType.Haste); break;
+            }
+            return test;
+        }
+
+        private static bool IsCorrectGemType(int IPType)
+        {
+            switch (IPType)
+            {
+                case 6:
+                case 16:
+                case 36:
+                case 43:
+                case 67:
+                case 82: return false;
+                default: return true;
+            }
+        }
         private static bool IsCorrectItemtype(NwPlayer pc, NwItem item, int IPType)
         {
             switch (IPType)
