@@ -20,26 +20,34 @@ namespace Services.ActivateItem
             if (IsNotCorrectTargetType(target, IPType))
             {
                 pc.SendServerMessage($"Cannot apply {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
-                logger.Info($"Cannot apply {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+                logger.Info($"Cannot apply {activateItem.ActivatedItem.Name} to {target.Name}.");
                 return;
             }
             //Restrictions (Keen.. etc obviously won't work for gloves or staffs and so on)
             else if (!IsCorrectGemType(IPType))
             {
                 pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} cannot be socketed to {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)}.");
-                logger.Info($"{target.Name.ColorString(Color.WHITE)} cannot be socketed to {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)}.");
+                logger.Info($"{target.Name} cannot be socketed to {activateItem.ActivatedItem.Name}.");
                 return;
             }
             //target Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
             else if (DoesNotStack(IPType, target))
             {
                 pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} does not stack.".ColorString(Color.ORANGE));
-                logger.Info($"{target.Name.ColorString(Color.WHITE)} does not stack.".ColorString(Color.ORANGE));
+                logger.Info($"{target.Name} does not stack.");
+                return;
+            }
+            else if (CheckUnlimitedAmmoType(IPType, target))
+            {
+                pc.SendServerMessage($"You cannot change or stack Unlimited Ammo type onto {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+                logger.Info($"{target.Name} does not stack.");
                 return;
             }
 
             pc.SendServerMessage($"test good.");
         }
+
+        private static bool CheckUnlimitedAmmoType(int iPType, NwItem target) => iPType == 61 && target.HasItemProperty(ItemPropertyType.UnlimitedAmmunition);
 
         private static bool DoesNotStack(int iPType, NwItem target)
         {
