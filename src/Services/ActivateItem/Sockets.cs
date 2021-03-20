@@ -30,7 +30,7 @@ namespace Services.ActivateItem
             {
                 NwItem item = (NwItem)target;
                 Services.Module.Extensions.RemoveAllTemporaryItemProperties(item);
-                activateItem.ActivatedItem.SocketRunesToItem(pc, item);
+                activateItem.SocketRunesToItem(pc, target);
             }
         }
     }

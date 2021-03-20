@@ -1,40 +1,48 @@
 using System;
+using NLog;
 using NWN.API;
 using NWN.API.Constants;
+using NWN.API.Events;
 
 namespace Services.ActivateItem
 {
     public static class Extensions
     {
-        public static void SocketRunesToItem(this NwItem activatedItem, NwPlayer pc, NwItem item)
-        {
-            int IPType = item.GetLocalVariable<int>("IP_TYPE").Value;
-            int IPSubType = item.GetLocalVariable<int>("IP_SUBTYPE").Value;
-            int IPValue = item.GetLocalVariable<int>("IP_VALUE").Value;
+        private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-            //Break script if we try to apply an item property to an item that wont take it.
-            if (!IsCorrectItemtype(pc, item, IPType))
+        public static void SocketRunesToItem(this ModuleEvents.OnActivateItem activateItem, NwPlayer pc, NwItem target)
+        {
+            int IPType = target.GetLocalVariable<int>("IP_TYPE").Value;
+            int IPSubType = target.GetLocalVariable<int>("IP_SUBTYPE").Value;
+            int IPValue = target.GetLocalVariable<int>("IP_VALUE").Value;
+
+            //Break script if we try to apply an target property to an target that wont take it.
+            if (IsNotCorrectTargetType(target, IPType))
             {
-                pc.SendServerMessage($"Cannot apply {activatedItem.Name.ColorString(Color.WHITE)} to {item.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+                pc.SendServerMessage($"Cannot apply {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+                logger.Info($"Cannot apply {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 return;
             }
             //Restrictions (Keen.. etc obviously won't work for gloves or staffs and so on)
             else if (!IsCorrectGemType(IPType))
             {
-                pc.SendServerMessage($"{item.Name.ColorString(Color.WHITE)} cannot be socketed to {activatedItem.Name.ColorString(Color.WHITE)}.");
+                pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} cannot be socketed to {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)}.");
+                logger.Info($"{target.Name.ColorString(Color.WHITE)} cannot be socketed to {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)}.");
+                return;
             }
-            //Item Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
-            else if (DoesNotStack(IPType, item))
+            //target Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
+            else if (DoesNotStack(IPType, target))
             {
-
+                pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} does not stack.".ColorString(Color.ORANGE));
+                logger.Info($"{target.Name.ColorString(Color.WHITE)} does not stack.".ColorString(Color.ORANGE));
+                return;
             }
 
             pc.SendServerMessage($"test good.");
         }
 
-        private static bool DoesNotStack(int iPType, NwItem item)
+        private static bool DoesNotStack(int iPType, NwItem target)
         {
-            var test = false;
             switch (iPType)
             {
                 case 12:
@@ -48,9 +56,9 @@ namespace Services.ActivateItem
                 case 61:
                 case 71:
                 case 75:
-                case 82: test = true; break;//test = item.HasItemProperty(ItemPropertyType.Haste); break;
+                case 82: return target.HasItemProperty((ItemPropertyType)iPType);
+                default: return false;
             }
-            return test;
         }
 
         private static bool IsCorrectGemType(int IPType)
@@ -66,54 +74,75 @@ namespace Services.ActivateItem
                 default: return true;
             }
         }
-        private static bool IsCorrectItemtype(NwPlayer pc, NwItem item, int IPType)
+        private static bool IsNotCorrectTargetType(NwItem target, int IPType)
         {
             switch (IPType)
             {
                 case 34:
                 case 45:
-                case 61: return IsRangedWeapon(item);
-                case 36:
+                case 61:
+                    {
+                        if (IsRangedWeapon(target))
+                            return true;
+                        break;
+                    }
                 case 6:
                 case 16:
+                case 36:
                 case 43:
                 case 56:
                 case 67:
                 case 74:
-                case 82: return IsMeleeWeapon(item);
-                default:
+                case 82:
                     {
-                        if (IsRangedWeapon(item))
-                        {
+                        if (IsMeleeWeapon(target))
                             return true;
-                        }
-                        else
-                        {
-                            switch (item.BaseItemType)
-                            {
-                                case BaseItemType.Amulet:
-                                case BaseItemType.Armor:
-                                case BaseItemType.Belt:
-                                case BaseItemType.Boots:
-                                case BaseItemType.Bracer:
-                                case BaseItemType.Cloak:
-                                case BaseItemType.Gloves:
-                                case BaseItemType.Helmet:
-                                case BaseItemType.LargeShield:
-                                case BaseItemType.MagicStaff:
-                                case BaseItemType.SmallShield:
-                                case BaseItemType.Ring:
-                                case BaseItemType.TowerShield: return true;
-                                default: return false;
-                            }
-                        }
+                        break;
                     }
+                case 0:
+                case 1:
+                case 12:
+                case 13:
+                case 15:
+                case 22:
+                case 23:
+                case 35:
+                case 38:
+                case 39:
+                case 40:
+                case 51:
+                case 52:
+                case 75:
+                case 71:
+                    {
+                        if (IsRangedWeapon(target))
+                            return true;
+                        switch (target.BaseItemType)
+                        {
+                            case BaseItemType.Amulet:
+                            case BaseItemType.Armor:
+                            case BaseItemType.Belt:
+                            case BaseItemType.Boots:
+                            case BaseItemType.Bracer:
+                            case BaseItemType.Cloak:
+                            case BaseItemType.Gloves:
+                            case BaseItemType.Helmet:
+                            case BaseItemType.LargeShield:
+                            case BaseItemType.MagicStaff:
+                            case BaseItemType.SmallShield:
+                            case BaseItemType.Ring:
+                            case BaseItemType.TowerShield: return true;
+                        }
+                        break;
+                    }
+                default: return false;
             }
+            return false;
         }
 
-        private static bool IsRangedWeapon(NwItem item)
+        private static bool IsRangedWeapon(NwItem target)
         {
-            switch (item.BaseItemType)
+            switch (target.BaseItemType)
             {
                 case BaseItemType.HeavyCrossbow:
                 case BaseItemType.LightCrossbow:
@@ -125,9 +154,9 @@ namespace Services.ActivateItem
             }
         }
 
-        private static bool IsMeleeWeapon(NwItem item)
+        private static bool IsMeleeWeapon(NwItem target)
         {
-            switch (item.BaseItemType)
+            switch (target.BaseItemType)
             {
                 case BaseItemType.Bastardsword:
                 case BaseItemType.Battleaxe:
@@ -167,9 +196,9 @@ namespace Services.ActivateItem
                     return false;
             }
         }
-        public static bool CheckItemIsValidType(this NwItem item)
+        public static bool CheckItemIsValidType(this NwItem target)
         {
-            switch (item.BaseItemType)
+            switch (target.BaseItemType)
             {
                 case BaseItemType.Amulet:
                 case BaseItemType.Armor:
