@@ -1,4 +1,3 @@
-using System;
 using NLog;
 using NWN.API;
 using NWN.API.Constants;
@@ -13,8 +12,6 @@ namespace Services.ActivateItem
         public static void SocketRunesToItem(this ModuleEvents.OnActivateItem activateItem, NwPlayer pc, NwItem target)
         {
             int IPType = target.GetLocalVariable<int>("IP_TYPE").Value;
-            int IPSubType = target.GetLocalVariable<int>("IP_SUBTYPE").Value;
-            int IPValue = target.GetLocalVariable<int>("IP_VALUE").Value;
 
             //Break script if we try to apply an target property to an target that wont take it.
             if (IsNotCorrectTargetType(target, IPType))
@@ -24,7 +21,7 @@ namespace Services.ActivateItem
                 return;
             }
             //Restrictions (Keen.. etc obviously won't work for gloves or staffs and so on)
-            else if (!IsCorrectGemType(IPType))
+            else if (IsNotCorrectGemType(IPType))
             {
                 pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} cannot be socketed to {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)}.");
                 logger.Info($"{target.Name} cannot be socketed to {activateItem.ActivatedItem.Name}.");
@@ -69,7 +66,7 @@ namespace Services.ActivateItem
             }
         }
 
-        private static bool IsCorrectGemType(int IPType)
+        private static bool IsNotCorrectGemType(int IPType)
         {
             switch (IPType)
             {
@@ -78,8 +75,8 @@ namespace Services.ActivateItem
                 case 36:
                 case 43:
                 case 67:
-                case 82: return false;
-                default: return true;
+                case 82: return true;
+                default: return false;
             }
         }
         private static bool IsNotCorrectTargetType(NwItem target, int IPType)
