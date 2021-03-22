@@ -1,3 +1,4 @@
+using System;
 using NLog;
 using NWN.API;
 using NWN.API.Constants;
@@ -40,7 +41,7 @@ namespace Services.ActivateItem
                 Services.Module.Extensions.RemoveAllTemporaryItemProperties(target);
                 target.AddItemProperty(ConvertIPTypeToItemProperty(target, IPType), EffectDuration.Permanent);
                 pc.ActionUnequipItem(target);
-
+                activateItem.ActivatedItem.Destroy();
             }
         }
 
@@ -77,7 +78,7 @@ namespace Services.ActivateItem
                 case 33: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
                 case 34: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
                 case 45: return ItemProperty.MaxRangeStrengthMod(IPValue);
-                default: throw new System.Exception();
+                default: throw new NotImplementedException();
             }
         }
 
@@ -116,6 +117,7 @@ namespace Services.ActivateItem
                 default: return false;
             }
         }
+
         private static bool IsNotCorrectTargetType(NwItem target, int IPType)
         {
             switch (IPType)

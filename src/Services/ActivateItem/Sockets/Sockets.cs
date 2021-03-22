@@ -28,8 +28,7 @@ namespace Services.ActivateItem
             }
             else
             {
-                NwItem item = (NwItem)target;
-                Services.Module.Extensions.RemoveAllTemporaryItemProperties(item);
+                Services.Module.Extensions.RemoveAllTemporaryItemProperties((NwItem)target);
                 activateItem.SocketRunesToItem(pc, target);
             }
         }
