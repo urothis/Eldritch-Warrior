@@ -14,7 +14,7 @@ namespace Services.ActivateItem
             int IPType = target.GetLocalVariable<int>("IP_TYPE").Value;
 
             //Break script if we try to apply an target property to an target that wont take it.
-            if (IsNotCorrectTargetType(target, IPType))
+            if (!IsCorrectTargetType(target, IPType))
             {
                 pc.SendServerMessage($"Cannot apply {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 logger.Info($"Cannot apply {activateItem.ActivatedItem.Name} to {target.Name}.");
@@ -118,7 +118,7 @@ namespace Services.ActivateItem
             }
         }
 
-        private static bool IsNotCorrectTargetType(NwItem target, int IPType)
+        private static bool IsCorrectTargetType(NwItem target, int IPType)
         {
             switch (IPType)
             {
