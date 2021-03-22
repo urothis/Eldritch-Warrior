@@ -8,7 +8,6 @@ namespace Services.ActivateItem
     public static class Extensions
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-
         public static void SocketRunesToItem(this ModuleEvents.OnActivateItem activateItem, NwPlayer pc, NwItem target)
         {
             int IPType = target.GetLocalVariable<int>("IP_TYPE").Value;
@@ -18,30 +17,68 @@ namespace Services.ActivateItem
             {
                 pc.SendServerMessage($"Cannot apply {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 logger.Info($"Cannot apply {activateItem.ActivatedItem.Name} to {target.Name}.");
-                return;
             }
             //Restrictions (Keen.. etc obviously won't work for gloves or staffs and so on)
             else if (IsNotCorrectGemType(IPType))
             {
                 pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} cannot be socketed to {activateItem.ActivatedItem.Name.ColorString(Color.WHITE)}.");
                 logger.Info($"{target.Name} cannot be socketed to {activateItem.ActivatedItem.Name}.");
-                return;
             }
             //target Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
             else if (DoesNotStack(IPType, target))
             {
                 pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} does not stack.".ColorString(Color.ORANGE));
                 logger.Info($"{target.Name} does not stack.");
-                return;
             }
             else if (CheckUnlimitedAmmoType(IPType, target))
             {
                 pc.SendServerMessage($"You cannot change or stack Unlimited Ammo type onto {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 logger.Info($"{target.Name} does not stack.");
-                return;
             }
+            else
+            {
+                Services.Module.Extensions.RemoveAllTemporaryItemProperties(target);
+                target.AddItemProperty(ConvertIPTypeToItemProperty(target, IPType), EffectDuration.Permanent);
+                pc.ActionUnequipItem(target);
 
-            pc.SendServerMessage($"test good.");
+            }
+        }
+
+        private static ItemProperty ConvertIPTypeToItemProperty(NwItem target, int ipType)
+        {
+            int IPSubType = target.GetLocalVariable<int>("IP_SUBTYPE").Value;
+            int IPValue = target.GetLocalVariable<int>("IP_VALUE").Value;
+
+            switch (ipType)
+            {
+                case 0: return ItemProperty.AbilityBonus((IPAbility)IPSubType, IPValue);
+                case 1: return ItemProperty.ACBonus(IPValue);
+                case 56: return ItemProperty.AttackBonus(IPValue);
+                case 12: return ItemProperty.BonusFeat((IPFeat)IPSubType);
+                case 13: return ItemProperty.BonusLevelSpell((IPClass)IPSubType, (IPSpellLevel)IPValue);
+                case 40: return ItemProperty.BonusSavingThrow((IPSaveBaseType)IPSubType, IPValue);
+                case 39: return ItemProperty.BonusSpellResistance((IPSpellResistanceBonus)IPValue);
+                case 15: return ItemProperty.CastSpell((IPCastSpell)IPSubType, (IPCastSpellNumUses)IPValue);
+                case 16: return ItemProperty.DamageBonus((IPDamageType)IPSubType, (IPDamageBonus)IPValue);
+                case 23: return ItemProperty.DamageResistance((IPDamageType)IPSubType, (IPDamageResist)IPValue);
+                case 6: return ItemProperty.EnhancementBonus(IPValue);
+                case 75: return ItemProperty.FreeAction();
+                case 35: return ItemProperty.Haste();
+                case 36: return ItemProperty.HolyAvenger();
+                case 38: return ItemProperty.ImprovedEvasion();
+                case 43: return ItemProperty.Keen();
+                case 74: return ItemProperty.MassiveCritical((IPDamageBonus)IPValue);
+                case 82: return ItemProperty.OnHitCastSpell((IPCastSpell)IPSubType, (IPSpellLevel)IPValue);
+                case 51: return ItemProperty.Regeneration(IPValue);
+                case 52: return ItemProperty.SkillBonus((Skill)IPSubType, IPValue);
+                case 71: return ItemProperty.TrueSeeing();
+                case 61: return ItemProperty.UnlimitedAmmo((IPUnlimitedAmmoType)IPSubType);
+                case 67: return ItemProperty.VampiricRegeneration(IPValue);
+                case 33: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
+                case 34: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
+                case 45: return ItemProperty.MaxRangeStrengthMod(IPValue);
+                default: throw new System.Exception();
+            }
         }
 
         private static bool CheckUnlimitedAmmoType(int iPType, NwItem target) => iPType == 61 && target.HasItemProperty(ItemPropertyType.UnlimitedAmmunition);
@@ -117,8 +154,8 @@ namespace Services.ActivateItem
                 case 40:
                 case 51:
                 case 52:
-                case 75:
                 case 71:
+                case 75:
                     {
                         if (IsRangedWeapon(target))
                             return true;
