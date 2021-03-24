@@ -28,7 +28,7 @@ namespace Services.ActivateItem
             }
             else
             {
-                activateItem.SocketRunesToItem(pc);
+                pc.SocketRunesToItem(activateItem);
             }
         }
     }

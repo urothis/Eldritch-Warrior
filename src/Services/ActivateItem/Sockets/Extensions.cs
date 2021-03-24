@@ -9,7 +9,7 @@ namespace Services.ActivateItem
     public static class Extensions
     {
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
-        public static void SocketRunesToItem(this ModuleEvents.OnActivateItem activateItem, NwPlayer pc)
+        public static void SocketRunesToItem(this NwPlayer pc, ModuleEvents.OnActivateItem activateItem)
         {
             NwItem target = (NwItem)activateItem.TargetObject;
             NwItem rune = (NwItem)activateItem.ActivatedItem;
@@ -54,9 +54,9 @@ namespace Services.ActivateItem
 
             switch (ipType)
             {
-                case 34:
-                case 45:
-                case 61:
+                case 34: //ITEM_PROPERTY_EXTRA_RANGED_DAMAGE_TYPE
+                case 45: //ITEM_PROPERTY_MIGHTY
+                case 61: //ITEM_PROPERTY_UNLIMITED_AMMUNITION
                     {
                         if (IsRangedWeapon(target))
                         {
@@ -213,7 +213,6 @@ namespace Services.ActivateItem
                         if (target.BaseItemType == BaseItemType.Gloves)
                         {
                             logger.Info($"IsNotCorrectGemType | Gloves | ipType:{ipType} | target:{target.Name}.");
-
                             return true;
                         }
                     }
@@ -285,8 +284,10 @@ namespace Services.ActivateItem
                 case 61:
                 case 71:
                 case 75:
-                case 82: return target.HasItemProperty((ItemPropertyType)ipType);
-                default: return false;
+                case 82:
+                    return target.HasItemProperty((ItemPropertyType)ipType);
+                default:
+                    return false;
             }
         }
 
