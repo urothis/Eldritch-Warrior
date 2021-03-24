@@ -31,13 +31,13 @@ namespace Services.ActivateItem
             //target Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
             else if (DoesNotStack(ipType, target))
             {
-                pc.SendServerMessage($"{target.Name.ColorString(Color.WHITE)} does not stack.".ColorString(Color.ORANGE));
-                logger.Info($"{target.Name} does not stack.");
+                pc.SendServerMessage($"{rune.Name.ColorString(Color.WHITE)} does not stack with {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
+                logger.Info($"{rune} does not stack on {target.Name}");
             }
             else if (CheckUnlimitedAmmoType(ipType, target))
             {
                 pc.SendServerMessage($"You cannot change or stack Unlimited Ammo type onto {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
-                logger.Info($"{target.Name} does not stack.");
+                logger.Info($"You cannot change or stack Unlimited Ammo type onto {target.Name}");
             }
             else
             {
@@ -65,7 +65,7 @@ namespace Services.ActivateItem
                         }
                         break;
                     }
-                case 6:
+                case 6: //ITEM_PROPERTY_ENHANCEMENT_BONUS
                 case 16:
                 case 36:
                 case 43:
@@ -261,7 +261,7 @@ namespace Services.ActivateItem
                 case 61: return ItemProperty.UnlimitedAmmo((IPUnlimitedAmmoType)IPSubType);
                 case 67: return ItemProperty.VampiricRegeneration(IPValue);
                 case 33: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
-                case 34: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
+                case 34: return ItemProperty.ExtraRangeDamageType((IPDamageType)IPSubType);
                 case 45: return ItemProperty.MaxRangeStrengthMod(IPValue);
                 default: throw new NotImplementedException();
             }
