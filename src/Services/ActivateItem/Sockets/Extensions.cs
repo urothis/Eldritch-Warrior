@@ -81,8 +81,8 @@ namespace Services.ActivateItem
                         }
                         break;
                     }
-                case 0:
-                case 1:
+                case 0: //ITEM_PROPERTY_ABILITY_BONUS
+                case 1: //ITEM_PROPERTY_AC_BONUS
                 case 12:
                 case 13:
                 case 15:
@@ -97,30 +97,10 @@ namespace Services.ActivateItem
                 case 71:
                 case 75:
                     {
-                        if (IsRangedWeapon(target))
+                        if (CheckItemIsValidType(target))
                         {
-                            logger.Info($"IsCorrectTargetType | IsRangedWeapon | ipType:{ipType} | target:{target.Name}.");
+                            logger.Info($"IsCorrectTargetType | CheckItemIsValidType | ipType:{ipType} | target:{target.Name}.");
                             return true;
-                        }
-                        switch ((BaseItemType)item)
-                        {
-                            case BaseItemType.Amulet:
-                            case BaseItemType.Armor:
-                            case BaseItemType.Belt:
-                            case BaseItemType.Boots:
-                            case BaseItemType.Bracer:
-                            case BaseItemType.Cloak:
-                            case BaseItemType.Gloves:
-                            case BaseItemType.Helmet:
-                            case BaseItemType.LargeShield:
-                            case BaseItemType.MagicStaff:
-                            case BaseItemType.SmallShield:
-                            case BaseItemType.Ring:
-                            case BaseItemType.TowerShield:
-                                {
-                                    logger.Info($"IsCorrectTargetType | item | ipType:{ipType} | target:{target.Name}.");
-                                    return true;
-                                }
                         }
                         break;
                     }
