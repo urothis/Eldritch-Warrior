@@ -66,8 +66,8 @@ namespace Services.ActivateItem
                         break;
                     }
                 case 6: //ITEM_PROPERTY_ENHANCEMENT_BONUS
-                case 16:
-                case 36:
+                case 16: //ITEM_PROPERTY_DAMAGE_BONUS***
+                case 36: //ITEM_PROPERTY_HOLY_AVENGER
                 case 43:
                 case 56:
                 case 67:
@@ -128,71 +128,15 @@ namespace Services.ActivateItem
             return false;
         }
 
-        private static bool IsRangedWeapon(NwItem target)
-        {
-            switch (target.BaseItemType)
-            {
-                case BaseItemType.HeavyCrossbow:
-                case BaseItemType.LightCrossbow:
-                case BaseItemType.Longbow:
-                case BaseItemType.Shortbow:
-                case BaseItemType.Sling:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        private static bool IsMeleeWeapon(NwItem target)
-        {
-            switch (target.BaseItemType)
-            {
-                case BaseItemType.Bastardsword:
-                case BaseItemType.Battleaxe:
-                case BaseItemType.Club:
-                case BaseItemType.Dagger:
-                case BaseItemType.DireMace:
-                case BaseItemType.Doubleaxe:
-                case BaseItemType.DwarvenWaraxe:
-                case BaseItemType.Greataxe:
-                case BaseItemType.Greatsword:
-                case BaseItemType.Halberd:
-                case BaseItemType.Handaxe:
-                case BaseItemType.HeavyFlail:
-                case BaseItemType.Kama:
-                case BaseItemType.Katana:
-                case BaseItemType.Kukri:
-                case BaseItemType.LightFlail:
-                case BaseItemType.LightHammer:
-                case BaseItemType.LightMace:
-                case BaseItemType.Longsword:
-                case BaseItemType.Morningstar:
-                case BaseItemType.Quarterstaff:
-                case BaseItemType.Rapier:
-                case BaseItemType.Scimitar:
-                case BaseItemType.Scythe:
-                case BaseItemType.ShortSpear:
-                case BaseItemType.Shortsword:
-                case BaseItemType.Sickle:
-                case BaseItemType.Trident:
-                case BaseItemType.TwoBladedSword:
-                case BaseItemType.Warhammer:
-                case BaseItemType.Whip:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
         private static bool IsNotCorrectGemType(int ipType, NwItem target)
         {
             switch (ipType)
             {
-                case 6:
+                case 6: //ITEM_PROPERTY_ENHANCEMENT_BONUS
                 case 36:
                 case 43:
                     {
-                        if (IsRangedWeapon(target) || target.BaseItemType == BaseItemType.Gloves || target.BaseItemType == BaseItemType.MagicStaff)
+                        if (IsRangedWeapon(target) || target.BaseItemType == BaseItemType.Gloves)
                         {
                             logger.Info($"IsNotCorrectGemType | IsRangedWeapon, Gloves, MagicStaff | ipType:{ipType} | target:{target.Name}.");
                             return true;
@@ -340,6 +284,62 @@ namespace Services.ActivateItem
                 case BaseItemType.Sling:
                 case BaseItemType.SmallShield:
                 case BaseItemType.TowerShield:
+                case BaseItemType.Trident:
+                case BaseItemType.TwoBladedSword:
+                case BaseItemType.Warhammer:
+                case BaseItemType.Whip:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+                private static bool IsRangedWeapon(NwItem target)
+        {
+            switch (target.BaseItemType)
+            {
+                case BaseItemType.HeavyCrossbow:
+                case BaseItemType.LightCrossbow:
+                case BaseItemType.Longbow:
+                case BaseItemType.Shortbow:
+                case BaseItemType.Sling:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
+        private static bool IsMeleeWeapon(NwItem target)
+        {
+            switch (target.BaseItemType)
+            {
+                case BaseItemType.Bastardsword:
+                case BaseItemType.Battleaxe:
+                case BaseItemType.Club:
+                case BaseItemType.Dagger:
+                case BaseItemType.DireMace:
+                case BaseItemType.Doubleaxe:
+                case BaseItemType.DwarvenWaraxe:
+                case BaseItemType.Greataxe:
+                case BaseItemType.Greatsword:
+                case BaseItemType.Halberd:
+                case BaseItemType.Handaxe:
+                case BaseItemType.HeavyFlail:
+                case BaseItemType.Kama:
+                case BaseItemType.Katana:
+                case BaseItemType.Kukri:
+                case BaseItemType.LightFlail:
+                case BaseItemType.LightHammer:
+                case BaseItemType.LightMace:
+                case BaseItemType.Longsword:
+                case BaseItemType.Morningstar:
+                case BaseItemType.Quarterstaff:
+                case BaseItemType.Rapier:
+                case BaseItemType.Scimitar:
+                case BaseItemType.Scythe:
+                case BaseItemType.ShortSpear:
+                case BaseItemType.Shortsword:
+                case BaseItemType.Sickle:
                 case BaseItemType.Trident:
                 case BaseItemType.TwoBladedSword:
                 case BaseItemType.Warhammer:
