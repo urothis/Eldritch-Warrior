@@ -69,7 +69,7 @@ namespace Services.ActivateItem
                 case 16: //ITEM_PROPERTY_DAMAGE_BONUS***
                 case 36: //ITEM_PROPERTY_HOLY_AVENGER
                 case 43: //ITEM_PROPERTY_KEEN
-                case 56:
+                case 56: //ITEM_PROPERTY_ATTACK_BONUS
                 case 67:
                 case 74:
                 case 82:
