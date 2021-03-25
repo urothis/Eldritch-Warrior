@@ -70,7 +70,7 @@ namespace Services.ActivateItem
                 case 36: //ITEM_PROPERTY_HOLY_AVENGER
                 case 43: //ITEM_PROPERTY_KEEN
                 case 56: //ITEM_PROPERTY_ATTACK_BONUS
-                case 67:
+                case 67: //ITEM_PROPERTY_REGENERATION_VAMPIRIC
                 case 74:
                 case 82:
                     {
@@ -192,21 +192,21 @@ namespace Services.ActivateItem
                 case 16: return ItemProperty.DamageBonus((IPDamageType)IPSubType, (IPDamageBonus)IPValue);
                 case 23: return ItemProperty.DamageResistance((IPDamageType)IPSubType, (IPDamageResist)IPValue);
                 case 6: return ItemProperty.EnhancementBonus(IPValue);
+                case 33: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
+                case 34: return ItemProperty.ExtraRangeDamageType((IPDamageType)IPSubType);
                 case 75: return ItemProperty.FreeAction();
                 case 35: return ItemProperty.Haste();
                 case 36: return ItemProperty.HolyAvenger();
                 case 38: return ItemProperty.ImprovedEvasion();
                 case 43: return ItemProperty.Keen();
                 case 74: return ItemProperty.MassiveCritical((IPDamageBonus)IPValue);
+                case 45: return ItemProperty.MaxRangeStrengthMod(IPValue);
                 case 82: return ItemProperty.OnHitCastSpell((IPCastSpell)IPSubType, (IPSpellLevel)IPValue);
                 case 51: return ItemProperty.Regeneration(IPValue);
                 case 52: return ItemProperty.SkillBonus((Skill)IPSubType, IPValue);
                 case 71: return ItemProperty.TrueSeeing();
                 case 61: return ItemProperty.UnlimitedAmmo((IPUnlimitedAmmoType)IPSubType);
                 case 67: return ItemProperty.VampiricRegeneration(IPValue);
-                case 33: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
-                case 34: return ItemProperty.ExtraRangeDamageType((IPDamageType)IPSubType);
-                case 45: return ItemProperty.MaxRangeStrengthMod(IPValue);
                 default: throw new NotImplementedException();
             }
         }
@@ -294,7 +294,7 @@ namespace Services.ActivateItem
             }
         }
 
-                private static bool IsRangedWeapon(NwItem target)
+        private static bool IsRangedWeapon(NwItem target)
         {
             switch (target.BaseItemType)
             {
