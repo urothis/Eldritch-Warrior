@@ -71,8 +71,8 @@ namespace Services.ActivateItem
                 case 43: //ITEM_PROPERTY_KEEN
                 case 56: //ITEM_PROPERTY_ATTACK_BONUS
                 case 67: //ITEM_PROPERTY_REGENERATION_VAMPIRIC
-                case 74:
-                case 82:
+                case 74: //ITEM_PROPERTY_MASSIVE_CRITICALS***
+                case 82: //ITEM_PROPERTY_ONHITCASTSPELL
                     {
                         if (IsMeleeWeapon(target) || target.BaseItemType == BaseItemType.Gloves || target.BaseItemType == BaseItemType.MagicStaff)
                         {
