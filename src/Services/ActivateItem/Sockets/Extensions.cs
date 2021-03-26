@@ -85,7 +85,7 @@ namespace Services.ActivateItem
                 case 1: //ITEM_PROPERTY_AC_BONUS
                 case 12: //ITEM_PROPERTY_BONUS_FEAT
                 case 13: //ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N
-                case 15:
+                case 15: //ITEM_PROPERTY_CAST_SPELL
                 case 22:
                 case 23:
                 case 35:
