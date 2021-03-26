@@ -92,7 +92,7 @@ namespace Services.ActivateItem
                 case 38: //ITEM_PROPERTY_IMPROVED_EVASION
                 case 39: //ITEM_PROPERTY_SPELL_RESISTANCE
                 case 40: //ITEM_PROPERTY_SAVING_THROW_BONUS
-                case 51:
+                case 51: //ITEM_PROPERTY_REGENERATION
                 case 52:
                 case 71:
                 case 75:
