@@ -22,12 +22,6 @@ namespace Services.ActivateItem
                 pc.SendServerMessage($"Cannot apply {rune.Name.ColorString(Color.WHITE)} to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
                 logger.Info($"Cannot apply {rune.Name} to {target.Name}.");
             }
-            //Restrictions (Keen.. etc obviously won't work for gloves or staffs and so on)
-            else if (IsNotCorrectGemType(ipType, target))
-            {
-                pc.SendServerMessage($"{rune.Name.ColorString(Color.WHITE)} cannot be applied to {target.Name.ColorString(Color.WHITE)}.".ColorString(Color.ORANGE));
-                logger.Info($"{target.Name} cannot be socketed to {rune.Name}.");
-            }
             //target Properties i.e. haste, imp evasion, true seeing... etc should not work if already present
             else if (DoesNotStack(ipType, target))
             {
@@ -48,6 +42,8 @@ namespace Services.ActivateItem
             }
         }
 
+        private static bool CheckUnlimitedAmmoType(int ipType, NwItem target) => ipType == 61 && target.HasItemProperty(ItemPropertyType.UnlimitedAmmunition);
+
         private static bool IsCorrectTargetType(NwItem target, int ipType)
         {
             int item = (int)target.BaseItemType;
@@ -66,12 +62,12 @@ namespace Services.ActivateItem
                         break;
                     }
                 case 6: //ITEM_PROPERTY_ENHANCEMENT_BONUS
-                case 16: //ITEM_PROPERTY_DAMAGE_BONUS***
+                case 16: //ITEM_PROPERTY_DAMAGE_BONUS
                 case 36: //ITEM_PROPERTY_HOLY_AVENGER
                 case 43: //ITEM_PROPERTY_KEEN
                 case 56: //ITEM_PROPERTY_ATTACK_BONUS
                 case 67: //ITEM_PROPERTY_REGENERATION_VAMPIRIC
-                case 74: //ITEM_PROPERTY_MASSIVE_CRITICALS***
+                case 74: //ITEM_PROPERTY_MASSIVE_CRITICALS
                 case 82: //ITEM_PROPERTY_ONHITCASTSPELL
                     {
                         if (IsMeleeWeapon(target) || target.BaseItemType == BaseItemType.Gloves || target.BaseItemType == BaseItemType.MagicStaff)
@@ -104,52 +100,6 @@ namespace Services.ActivateItem
                         }
                         break;
                     }
-            }
-            return false;
-        }
-
-        private static bool IsNotCorrectGemType(int ipType, NwItem target)
-        {
-            switch (ipType)
-            {
-                case 6: //ITEM_PROPERTY_ENHANCEMENT_BONUS
-                case 36:
-                case 43:
-                    {
-                        if (IsRangedWeapon(target) || target.BaseItemType == BaseItemType.Gloves)
-                        {
-                            logger.Info($"IsNotCorrectGemType | IsRangedWeapon, Gloves, MagicStaff | ipType:{ipType} | target:{target.Name}.");
-                            return true;
-                        }
-                    }
-                    break;
-                case 16:
-                    {
-                        if (IsRangedWeapon(target))
-                        {
-                            logger.Info($"IsNotCorrectGemType | IsRangedWeapon | ipType:{ipType} | target:{target.Name}.");
-                            return true;
-                        }
-                    }
-                    break;
-                case 67:
-                    {
-                        if (target.BaseItemType == BaseItemType.Gloves)
-                        {
-                            logger.Info($"IsNotCorrectGemType | Gloves | ipType:{ipType} | target:{target.Name}.");
-                            return true;
-                        }
-                    }
-                    break;
-                case 82:
-                    {
-                        if (IsMeleeWeapon(target) && target.BaseItemType == BaseItemType.Armor && target.BaseItemType == BaseItemType.Gloves && target.BaseItemType == BaseItemType.MagicStaff)
-                        {
-                            logger.Info($"IsNotCorrectGemType | IsMeleeWeapon, Armor, Gloves, MagicStaff | ipType:{ipType} | target:{target.Name}.");
-                            return true;
-                        }
-                    }
-                    break;
             }
             return false;
         }
@@ -191,8 +141,6 @@ namespace Services.ActivateItem
                 default: throw new NotImplementedException();
             }
         }
-
-        private static bool CheckUnlimitedAmmoType(int ipType, NwItem target) => ipType == 61 && target.HasItemProperty(ItemPropertyType.UnlimitedAmmunition);
 
         private static bool DoesNotStack(int ipType, NwItem target)
         {
