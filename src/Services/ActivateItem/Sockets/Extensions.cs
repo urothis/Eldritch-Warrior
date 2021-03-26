@@ -86,7 +86,7 @@ namespace Services.ActivateItem
                 case 12: //ITEM_PROPERTY_BONUS_FEAT
                 case 13: //ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N
                 case 15: //ITEM_PROPERTY_CAST_SPELL
-                case 22:
+                case 22: //ITEM_PROPERTY_DAMAGE_REDUCTION
                 case 23:
                 case 35:
                 case 38:
@@ -170,6 +170,7 @@ namespace Services.ActivateItem
                 case 39: return ItemProperty.BonusSpellResistance((IPSpellResistanceBonus)IPValue);
                 case 15: return ItemProperty.CastSpell((IPCastSpell)IPSubType, (IPCastSpellNumUses)IPValue);
                 case 16: return ItemProperty.DamageBonus((IPDamageType)IPSubType, (IPDamageBonus)IPValue);
+                case 22: return ItemProperty.DamageReduction((IPDamageReduction )IPSubType, (IPDamageSoak)IPValue);
                 case 23: return ItemProperty.DamageResistance((IPDamageType)IPSubType, (IPDamageResist)IPValue);
                 case 6: return ItemProperty.EnhancementBonus(IPValue);
                 case 33: return ItemProperty.ExtraMeleeDamageType((IPDamageType)IPSubType);
