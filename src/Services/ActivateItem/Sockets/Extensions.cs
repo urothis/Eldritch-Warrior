@@ -93,9 +93,9 @@ namespace Services.ActivateItem
                 case 39: //ITEM_PROPERTY_SPELL_RESISTANCE
                 case 40: //ITEM_PROPERTY_SAVING_THROW_BONUS
                 case 51: //ITEM_PROPERTY_REGENERATION
-                case 52:
-                case 71:
-                case 75:
+                case 52: //ITEM_PROPERTY_SKILL_BONUS
+                case 71: //ITEM_PROPERTY_TRUE_SEEING
+                case 75: //ITEM_PROPERTY_FREEDOM_OF_MOVEMENT
                     {
                         if (CheckItemIsValidType(target))
                         {
