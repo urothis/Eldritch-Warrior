@@ -87,11 +87,11 @@ namespace Services.ActivateItem
                 case 13: //ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N
                 case 15: //ITEM_PROPERTY_CAST_SPELL
                 case 22: //ITEM_PROPERTY_DAMAGE_REDUCTION
-                case 23:
-                case 35:
-                case 38:
-                case 39:
-                case 40:
+                case 23: //ITEM_PROPERTY_DAMAGE_RESISTANCE***
+                case 35: //ITEM_PROPERTY_HASTE
+                case 38: //ITEM_PROPERTY_IMPROVED_EVASION
+                case 39: //ITEM_PROPERTY_SPELL_RESISTANCE
+                case 40: //ITEM_PROPERTY_SAVING_THROW_BONUS
                 case 51:
                 case 52:
                 case 71:
