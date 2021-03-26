@@ -83,8 +83,8 @@ namespace Services.ActivateItem
                     }
                 case 0: //ITEM_PROPERTY_ABILITY_BONUS
                 case 1: //ITEM_PROPERTY_AC_BONUS
-                case 12:
-                case 13:
+                case 12: //ITEM_PROPERTY_BONUS_FEAT
+                case 13: //ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N
                 case 15:
                 case 22:
                 case 23:
@@ -164,7 +164,7 @@ namespace Services.ActivateItem
                 case 0: return ItemProperty.AbilityBonus((IPAbility)IPSubType, IPValue);
                 case 1: return ItemProperty.ACBonus(IPValue);
                 case 56: return ItemProperty.AttackBonus(IPValue);
-                case 12: return ItemProperty.BonusFeat((IPFeat)IPSubType);
+                case 12: return ItemProperty.BonusFeat((IPFeat)IPValue);
                 case 13: return ItemProperty.BonusLevelSpell((IPClass)IPSubType, (IPSpellLevel)IPValue);
                 case 40: return ItemProperty.BonusSavingThrow((IPSaveBaseType)IPSubType, IPValue);
                 case 39: return ItemProperty.BonusSpellResistance((IPSpellResistanceBonus)IPValue);
