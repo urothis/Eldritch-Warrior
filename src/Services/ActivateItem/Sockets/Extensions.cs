@@ -118,6 +118,7 @@ namespace Services.ActivateItem
                 case 3: return ItemProperty.ACBonusVsDmgType((IPDamageType)IPSubType, IPValue);
                 case 4: return ItemProperty.ACBonusVsRace((IPRacialType )IPSubType, IPValue);
                 case 5: return ItemProperty.ACBonusVsSAlign((IPAlignment)IPSubType, IPValue);
+                case 87: return ItemProperty.Additional((IPAdditional)IPSubType);
                 case 56: return ItemProperty.AttackBonus(IPValue);
                 case 12: return ItemProperty.BonusFeat((IPFeat)IPValue);
                 case 13: return ItemProperty.BonusLevelSpell((IPClass)IPSubType, (IPSpellLevel)IPValue);
