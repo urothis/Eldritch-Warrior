@@ -56,7 +56,6 @@ namespace Services.ActivateItem
                     {
                         if (IsRangedWeapon(target))
                         {
-                            logger.Info($"IsCorrectTargetType | IsRangedWeapon | ipType:{ipType} | target:{target.Name}.");
                             return true;
                         }
                         break;
@@ -72,13 +71,14 @@ namespace Services.ActivateItem
                     {
                         if (IsMeleeWeapon(target) || target.BaseItemType == BaseItemType.Gloves || target.BaseItemType == BaseItemType.MagicStaff)
                         {
-                            logger.Info($"IsCorrectTargetType | IsMeleeWeapon | ipType:{ipType} | target:{target.Name}.");
                             return true;
                         }
                         break;
                     }
                 case 0: //ITEM_PROPERTY_ABILITY_BONUS
                 case 1: //ITEM_PROPERTY_AC_BONUS
+                case 2: //ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP
+                case 3: //ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE
                 case 12: //ITEM_PROPERTY_BONUS_FEAT
                 case 13: //ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N
                 case 15: //ITEM_PROPERTY_CAST_SPELL
@@ -95,7 +95,6 @@ namespace Services.ActivateItem
                     {
                         if (CheckItemIsValidType(target))
                         {
-                            logger.Info($"IsCorrectTargetType | CheckItemIsValidType | ipType:{ipType} | target:{target.Name}.");
                             return true;
                         }
                         break;
@@ -113,6 +112,8 @@ namespace Services.ActivateItem
             {
                 case 0: return ItemProperty.AbilityBonus((IPAbility)IPSubType, IPValue);
                 case 1: return ItemProperty.ACBonus(IPValue);
+                case 2: return ItemProperty.ACBonusVsAlign((IPAlignmentGroup)IPSubType, IPValue);
+                case 3: return ItemProperty.ACBonusVsDmgType((IPDamageType)IPSubType, IPValue);
                 case 56: return ItemProperty.AttackBonus(IPValue);
                 case 12: return ItemProperty.BonusFeat((IPFeat)IPValue);
                 case 13: return ItemProperty.BonusLevelSpell((IPClass)IPSubType, (IPSpellLevel)IPValue);
