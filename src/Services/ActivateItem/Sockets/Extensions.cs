@@ -79,6 +79,8 @@ namespace Services.ActivateItem
                 case 1: //ITEM_PROPERTY_AC_BONUS
                 case 2: //ITEM_PROPERTY_AC_BONUS_VS_ALIGNMENT_GROUP
                 case 3: //ITEM_PROPERTY_AC_BONUS_VS_DAMAGE_TYPE
+                case 4: //ITEM_PROPERTY_AC_BONUS_VS_RACIAL_GROUP
+                case 5: //ITEM_PROPERTY_AC_BONUS_VS_SPECIFIC_ALIGNMENT
                 case 12: //ITEM_PROPERTY_BONUS_FEAT
                 case 13: //ITEM_PROPERTY_BONUS_SPELL_SLOT_OF_LEVEL_N
                 case 15: //ITEM_PROPERTY_CAST_SPELL
@@ -114,6 +116,8 @@ namespace Services.ActivateItem
                 case 1: return ItemProperty.ACBonus(IPValue);
                 case 2: return ItemProperty.ACBonusVsAlign((IPAlignmentGroup)IPSubType, IPValue);
                 case 3: return ItemProperty.ACBonusVsDmgType((IPDamageType)IPSubType, IPValue);
+                case 4: return ItemProperty.ACBonusVsRace((IPRacialType )IPSubType, IPValue);
+                case 5: return ItemProperty.ACBonusVsSAlign((IPAlignment)IPSubType, IPValue);
                 case 56: return ItemProperty.AttackBonus(IPValue);
                 case 12: return ItemProperty.BonusFeat((IPFeat)IPValue);
                 case 13: return ItemProperty.BonusLevelSpell((IPClass)IPSubType, (IPSpellLevel)IPValue);
