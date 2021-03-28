@@ -14,15 +14,17 @@ namespace Services.Stealth
     public class CooldownHipsExit
     {
         internal Dictionary<Guid, DateTime> usage;
+        private readonly EventService eventService;
 
-        public CooldownHipsExit(NWNXEventService nWNX)
+        public CooldownHipsExit(EventService eventService)
         {
-            nWNX.Subscribe<StealthEvents.OnExitStealthAfter>(OnExitStealthAfter);
-
+            this.eventService = eventService;
             usage = new Dictionary<Guid, DateTime>();
         }
 
-        private void OnExitStealthAfter(StealthEvents.OnExitStealthAfter stealthAfter)
+        public void Sneaker(NwCreature creature) =>
+            eventService.Subscribe<StealthEvents.OnExitStealthAfter, NWNXEventFactory>(creature, ExitStealthAfter).Register<StealthEvents.OnExitStealthAfter>();
+        public void ExitStealthAfter(StealthEvents.OnExitStealthAfter stealthAfter)
         {
             NwCreature pc = (NwCreature)stealthAfter.Player;
             usage[pc.UUID] = DateTime.Now;
