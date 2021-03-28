@@ -15,33 +15,22 @@ namespace Services.Module
     {
         private static readonly int hours = 24;
 
-        /*[Obsolete]
-        public Load(NativeEventService nativeEventService, SchedulerService schedulerService)
+        public Load(SchedulerService scheduler) => NwModule.Instance.OnModuleLoad += load =>
         {
-            schedulerService.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
-            schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
-            schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnModuleLoad>(NwModule.Instance, OnLoad);
-        }*/
+            scheduler.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
+            scheduler.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
+            scheduler.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
+            /* Print to console when we boot*/
+            PrintBootTime();
 
-        public Load() => NwModule.Instance.OnModuleLoad += load =>
-        {
-            {
-                SchedulerService.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
-                schedulerService.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
-                schedulerService.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-                /* Print to console when we boot*/
-                PrintBootTime();
+            /* NWNX */
+            NwServer.Instance.ServerInfo.PlayOptions.RestoreSpellUses = true;
+            /* Set Fog Color an Amount in all outdoor areas */
+            SetAreaEnviroment();
+            SetModuleSwitches();
 
-                /* NWNX */
-                NwServer.Instance.ServerInfo.PlayOptions.RestoreSpellUses = true;
-                /* Set Fog Color an Amount in all outdoor areas */
-                SetAreaEnviroment();
-                SetModuleSwitches();
-
-                MonkWeapons();
-                //LoadDiscord();
-            }
+            MonkWeapons();
+            //LoadDiscord();
         };
 
         private static void MonkWeapons()

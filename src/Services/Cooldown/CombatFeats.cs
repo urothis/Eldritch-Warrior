@@ -1,3 +1,5 @@
+using NLog;
+using NWN.API;
 using NWN.Services;
 
 using NWNX.API.Events;
@@ -9,14 +11,15 @@ namespace Services.Cooldown
 
     public class CombatFeats
     {
-        public CombatFeats(NWNXEventService nWNX)
-        {
-            nWNX.Subscribe<FeatUseEvents.OnUseFeatBefore>(OnUseFeatBefore);
-        }
+        private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        private void OnUseFeatBefore(FeatUseEvents.OnUseFeatBefore obj)
-        {
-            //throw new NotImplementedException();
-        }
+        private readonly EventService eventService;
+
+        public CombatFeats(EventService eventService) => this.eventService = eventService;
+
+        public void ObserverPlayer(NwPlayer player) => eventService.Subscribe<FeatUseEvents.OnUseFeatBefore, NWNXEventFactory>(player, UseFeatBefore)
+                .Register<FeatUseEvents.OnUseFeatBefore>();
+
+        private void UseFeatBefore(FeatUseEvents.OnUseFeatBefore featBefore) => Log.Info($"{featBefore.FeatUser.Name} used {featBefore.Feat.ToString()}.");
     }
 }
