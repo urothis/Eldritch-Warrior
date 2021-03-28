@@ -23,7 +23,9 @@ namespace Services.Stealth
         }
 
         public void Sneaker(NwCreature creature) =>
-            eventService.Subscribe<StealthEvents.OnExitStealthAfter, NWNXEventFactory>(creature, ExitStealthAfter).Register<StealthEvents.OnExitStealthAfter>();
+            eventService.Subscribe<StealthEvents.OnExitStealthAfter, NWNXEventFactory>(creature, ExitStealthAfter)
+                .Register<StealthEvents.OnExitStealthAfter>();
+
         public void ExitStealthAfter(StealthEvents.OnExitStealthAfter stealthAfter)
         {
             NwCreature pc = (NwCreature)stealthAfter.Player;
