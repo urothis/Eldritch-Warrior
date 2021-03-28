@@ -10,16 +10,18 @@ namespace Services.Module
     public class ItemEquip
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        public ItemEquip(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerEquipItem>(NwModule.Instance, OnPlayerEquipItem);
 
-        private static void OnPlayerEquipItem(ModuleEvents.OnPlayerEquipItem equipItem)
+        public ItemEquip()
         {
-            equipItem.Item.PrintGPValueOnItem();
-
-            if (equipItem.Player is NwPlayer nwPlayer)
+            NwModule.Instance.OnPlayerEquipItem += equipItem =>
             {
-                nwPlayer.SaveCharacter();
-            }
+                equipItem.Item.PrintGPValueOnItem();
+
+                if (equipItem.Player is NwPlayer nwPlayer)
+                {
+                    nwPlayer.SaveCharacter();
+                }
+            };
         }
     }
 }
