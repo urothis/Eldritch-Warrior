@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-
+//using NLog;
 using NWN.API;
 using NWN.API.Constants;
 using NWN.Services;
@@ -10,21 +10,25 @@ using NWNX.Services;
 
 namespace Services.Stealth
 {
-    [ServiceBinding(typeof(CooldownHips))]
-    public class CooldownHips
+    [ServiceBinding(typeof(CooldownHipsEnter))]
+    public class CooldownHipsEnter
     {
         internal Dictionary<Guid, DateTime> usage;
         private readonly int cooldownSeconds = 6;
+        //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public CooldownHips(NWNXEventService nWNX)
+        private readonly EventService eventService;
+        public CooldownHipsEnter(EventService eventService)
         {
-            nWNX.Subscribe<StealthEvents.OnEnterStealthBefore>(OnEnterStealthBefore);
-            nWNX.Subscribe<StealthEvents.OnExitStealthAfter>(OnExitStealthAfter);
-
+            this.eventService = eventService;
             usage = new Dictionary<Guid, DateTime>();
         }
 
-        private void OnEnterStealthBefore(StealthEvents.OnEnterStealthBefore enterStealthBefore)
+        public void Hipster(NwCreature creature) =>
+            eventService.Subscribe<StealthEvents.OnEnterStealthBefore, NWNXEventFactory>(creature, EnterStealthBefore)
+            .Register<StealthEvents.OnEnterStealthBefore>();
+
+        private void EnterStealthBefore(StealthEvents.OnEnterStealthBefore enterStealthBefore)
         {
             NwCreature pc = (NwCreature)enterStealthBefore.Player;
             DateTime timeThen;
@@ -43,17 +47,6 @@ namespace Services.Stealth
             {
                 enterStealthBefore.Skip = true;
                 enterStealthBefore.Player.SendServerMessage($"\n{"FEAT_HIDE_IN_PLAIN_SIGHT".ColorString(Color.ORANGE)} cooldown active.\n Cooldown last one round.\n");
-            }
-        }
-
-        private void OnExitStealthAfter(StealthEvents.OnExitStealthAfter stealthAfter)
-        {
-            NwCreature pc = (NwCreature)stealthAfter.Player;
-            usage[pc.UUID] = DateTime.Now;
-
-            if (pc.HasFeatPrepared(Feat.HideInPlainSight))
-            {
-                stealthAfter.Player.SendServerMessage($"\n{"FEAT_HIDE_IN_PLAIN_SIGHT".ColorString(Color.ORANGE)} cooldown active.\nOne Round.\n");
             }
         }
     }
