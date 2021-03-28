@@ -12,12 +12,10 @@ namespace Services.Module
     public class ClientEnter
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-
-        public ClientEnter(NativeEventService nativeEventService) =>
-            nativeEventService.Subscribe<NwModule, ModuleEvents.OnClientEnter>(NwModule.Instance, OnClientEnter);
-
-        private void OnClientEnter(ModuleEvents.OnClientEnter enter)
+        public ClientEnter()
         {
+            NwModule.Instance.OnClientEnter += enter =>
+            {
             /* Check player name and boot if its inappropriate */
             if (ClientCheckName(enter, enter.Player.Name))
             {
@@ -41,6 +39,7 @@ namespace Services.Module
 
             /* Restore hitpoints */
             enter.Player.ClientRestoreHitPoints();
+            };
         }
 
         private static void WelcomeMessage(ModuleEvents.OnClientEnter enter)

@@ -8,15 +8,13 @@ namespace Services.Bank
     [ServiceBinding(typeof(Items))]
     public class Items
     {
-        public Items(ScriptEventService script)
-        {
-            script.SetHandler<PlaceableEvents.OnClose>("bank_close", Close);
-            script.SetHandler<PlaceableEvents.OnDisturbed>("bank_disturb", Disturbed);
-            script.SetHandler<PlaceableEvents.OnUsed>("bank_onused", Used);
-        }
+        [ScriptHandler("bank_close")]
         private static void Close(PlaceableEvents.OnClose obj) => obj.CheckClosedItems();
+
+        [ScriptHandler("bank_onused")]
         private static void Used(PlaceableEvents.OnUsed obj) => ((NwPlayer)obj.UsedBy).ForceOpenInventory(obj.CheckUsed());
 
+        [ScriptHandler("bank_disturb")]
         private static void Disturbed(PlaceableEvents.OnDisturbed obj)
         {
             switch (obj.DisturbType)

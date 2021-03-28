@@ -11,9 +11,8 @@ namespace Services.Area
     {
         //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public CleanMap(ScriptEventService scriptEventService) => scriptEventService.SetHandler<AreaEvents.OnExit>("area_cleanup", Exit);
-
-        private void Exit(AreaEvents.OnExit obj)
+        [ScriptHandler("area_cleanup")]
+        private static void Exit(AreaEvents.OnExit obj)
         {
             //Stop if players exist on map.
             if (!obj.Area.FindObjectsOfTypeInArea<NwPlayer>().Any())

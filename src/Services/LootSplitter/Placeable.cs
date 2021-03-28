@@ -9,8 +9,7 @@ namespace Services.LootSplitter
     [ServiceBinding(typeof(Placeable))]
     public class Placeable
     {
-        public Placeable(ScriptEventService script) => script.SetHandler<PlaceableEvents.OnDisturbed>("plc_sell_loot", Disturbed);
-
+        [ScriptHandler("plc_sell_loot")]
         private void Disturbed(PlaceableEvents.OnDisturbed obj)
         {
             //Process only objects added

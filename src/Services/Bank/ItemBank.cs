@@ -16,31 +16,11 @@ namespace Services.Bank
     {
         private static readonly string itemBankCampaign = "ITEM_BANK_";
 
-        public ItemBank(ScriptEventService scriptEventService)
-        {
-            scriptEventService.SetHandler<PlaceableEvents.OnClose>("bank_onclose", OnBankClose);
-            scriptEventService.SetHandler<PlaceableEvents.OnDisturbed>("bank_disturb", OnBankDisturbed);
-            scriptEventService.SetHandler<PlaceableEvents.OnUsed>("bank_used_player", OnBankUsed);
-        }
-
-        private static readonly List<BaseItemType> BlockedItemTypes = new()
-        {
-            BaseItemType.CreatureBludgeoningWeapon,
-            BaseItemType.CreaturePiercingWeapon,
-            BaseItemType.CreaturePiercingWeapon,
-            BaseItemType.CreatureItem,
-            BaseItemType.CreatureSlashingWeapon,
-            BaseItemType.CreatureSlashingAndPiercingWeapon,
-            BaseItemType.Gold,
-            BaseItemType.Invalid,
-            BaseItemType.LargeBox,
-        };
-
         private static readonly List<string> BlockedTag = new()
         {
         };
 
-
+        [ScriptHandler("bank_onclose")]
         private void OnBankClose(PlaceableEvents.OnClose onBankDisturbed)
         {
             if (onBankDisturbed.LastClosedBy is not NwPlayer player) return;
@@ -58,6 +38,7 @@ namespace Services.Bank
             onBankDisturbed.Placeable.Destroy();
         }
 
+        [ScriptHandler("bank_used_player")]
         private void OnBankUsed(PlaceableEvents.OnUsed onUsed)
         {
             if (onUsed.UsedBy is NwPlayer player)
@@ -66,6 +47,7 @@ namespace Services.Bank
             }
         }
 
+        [ScriptHandler("bank_disturb")]
         private void OnBankDisturbed(PlaceableEvents.OnDisturbed onBankDisturbed)
         {
             if (onBankDisturbed.Disturber is NwPlayer player)
@@ -121,6 +103,19 @@ namespace Services.Bank
             }
         }
 
+        private static readonly List<BaseItemType> BlockedItemTypes = new()
+        {
+            BaseItemType.CreatureBludgeoningWeapon,
+            BaseItemType.CreaturePiercingWeapon,
+            BaseItemType.CreaturePiercingWeapon,
+            BaseItemType.CreatureItem,
+            BaseItemType.CreatureSlashingWeapon,
+            BaseItemType.CreatureSlashingAndPiercingWeapon,
+            BaseItemType.Gold,
+            BaseItemType.Invalid,
+            BaseItemType.LargeBox,
+        };
+        
         private static void BankRefuse(NwPlayer player, NwItem item)
         {
             string serializedItem = item.Serialize();

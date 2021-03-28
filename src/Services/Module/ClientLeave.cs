@@ -10,11 +10,10 @@ namespace Services.Module
     public class ClientLeave
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-        public ClientLeave(NativeEventService native) =>
-            native.Subscribe<NwModule, ModuleEvents.OnClientLeave>(NwModule.Instance, OnClientLeave);
-
-        private static void OnClientLeave(ModuleEvents.OnClientLeave leave)
+        public ClientLeave()
         {
+            NwModule.Instance.OnClientLeave += leave =>
+            {
             ClientPrintLogout(leave);
 
             if (!leave.Player.IsDM)
