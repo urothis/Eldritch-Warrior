@@ -9,13 +9,13 @@ namespace Services.Bank
     public class Items
     {
         [ScriptHandler("bank_close")]
-        private static void Close(PlaceableEvents.OnClose obj) => obj.CheckClosedItems();
+        public static void Close(PlaceableEvents.OnClose obj) => obj.CheckClosedItems();
 
         [ScriptHandler("bank_onused")]
-        private static void Used(PlaceableEvents.OnUsed obj) => ((NwPlayer)obj.UsedBy).ForceOpenInventory(obj.CheckUsed());
+        public static void Used(PlaceableEvents.OnUsed obj) => ((NwPlayer)obj.UsedBy).ForceOpenInventory(obj.CheckUsed());
 
         [ScriptHandler("bank_disturb")]
-        private static void Disturbed(PlaceableEvents.OnDisturbed obj)
+        public static void Disturbed(PlaceableEvents.OnDisturbed obj)
         {
             switch (obj.DisturbType)
             {

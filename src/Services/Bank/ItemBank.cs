@@ -21,7 +21,7 @@ namespace Services.Bank
         };
 
         [ScriptHandler("bank_onclose")]
-        private void OnBankClose(PlaceableEvents.OnClose onBankDisturbed)
+        public static void OnBankClose(PlaceableEvents.OnClose onBankDisturbed)
         {
             if (onBankDisturbed.LastClosedBy is not NwPlayer player) return;
             // save chest
@@ -39,7 +39,7 @@ namespace Services.Bank
         }
 
         [ScriptHandler("bank_used_player")]
-        private void OnBankUsed(PlaceableEvents.OnUsed onUsed)
+        public static void OnBankUsed(PlaceableEvents.OnUsed onUsed)
         {
             if (onUsed.UsedBy is NwPlayer player)
             {
@@ -48,7 +48,7 @@ namespace Services.Bank
         }
 
         [ScriptHandler("bank_disturb")]
-        private void OnBankDisturbed(PlaceableEvents.OnDisturbed onBankDisturbed)
+        public static void OnBankDisturbed(PlaceableEvents.OnDisturbed onBankDisturbed)
         {
             if (onBankDisturbed.Disturber is NwPlayer player)
             {
@@ -115,7 +115,7 @@ namespace Services.Bank
             BaseItemType.Invalid,
             BaseItemType.LargeBox,
         };
-        
+
         private static void BankRefuse(NwPlayer player, NwItem item)
         {
             string serializedItem = item.Serialize();

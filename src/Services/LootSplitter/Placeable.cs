@@ -10,7 +10,7 @@ namespace Services.LootSplitter
     public class Placeable
     {
         [ScriptHandler("plc_sell_loot")]
-        private void Disturbed(PlaceableEvents.OnDisturbed obj)
+        public static void Disturbed(PlaceableEvents.OnDisturbed obj)
         {
             //Process only objects added
             switch (obj.DisturbType)

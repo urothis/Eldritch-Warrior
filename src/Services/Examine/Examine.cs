@@ -10,11 +10,15 @@ namespace Services.Examine
     [ServiceBinding(typeof(ExamineObject))]
     public class ExamineObject
     {
-        public ExamineObject(NWNXEventService nWNX) => nWNX.Subscribe<ExamineEvents.OnExamineObjectBefore>(OnExamineObjectBefore);
+        private readonly EventService eventService;
+        public ExamineObject(EventService eventService) => this.eventService = eventService;
 
-        public static void OnExamineObjectBefore(ExamineEvents.OnExamineObjectBefore onExamineObject)
+        public void Examiner(NwPlayer player) => eventService.Subscribe<ExamineEvents.OnExamineObjectBefore, NWNXEventFactory>(player, onExamine)
+                .Register<ExamineEvents.OnExamineObjectBefore>();
+
+        public static void onExamine(ExamineEvents.OnExamineObjectBefore onExamineObject)
         {
-            if (onExamineObject.Examinee is NwCreature creature && onExamineObject.Examiner.IsReactionTypeHostile(creature) && onExamineObject.Examiner.GetSkillRank(Skill.Lore) > creature.Level + 3 + (creature.Level / 8))
+            if (onExamineObject.Examinee is NwCreature creature && onExamineObject.Examiner.IsReactionTypeHostile(creature) && onExamineObject.Examiner.GetSkillRank(Skill.Lore) > creature.Level)
             {
                 creature.Description = PrintCRValue(creature);
             }
