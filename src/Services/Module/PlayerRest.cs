@@ -8,8 +8,6 @@ namespace Services.Module
     public class PlayerRest
     {
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
-
-        // constructor
         public PlayerRest() => NwModule.Instance.OnPlayerRest += rest =>
         {
             switch (rest.RestEventType)
@@ -26,7 +24,6 @@ namespace Services.Module
                     break;
                 default: break;
             }
-
         };
     }
 }

@@ -9,8 +9,7 @@ namespace Services.Module
     [ServiceBinding(typeof(SpellHook))]
     public class SpellHook
     {
-        public SpellHook(ScriptEventService scriptEventService) => scriptEventService.SetHandler<SpellEvents.OnSpellCast>("spellhook", OnSpellHooked);
-
+        [ScriptHandler("spellhook")]
         public static void OnSpellHooked(SpellEvents.OnSpellCast spellCast)
         {
             if (spellCast.Caster is NwPlayer player)
@@ -59,7 +58,7 @@ namespace Services.Module
                 }
             }
         }
-        
+
         private static void ReplenishCantrips(SpellEvents.OnSpellCast spellCast)
         {
             switch (spellCast.Spell)
