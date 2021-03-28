@@ -16,11 +16,12 @@ namespace Services.Module
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         // constructor
-        public PlayerDying(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerDying>(NwModule.Instance, OnPlayerDying);
+        public PlayerDying() => NwModule.Instance.OnPlayerDying += async dying =>
+        {
+            await BleedAsync(dying);
+        };
 
-        private static void OnPlayerDying(ModuleEvents.OnPlayerDying dying) => Bleed(dying);
-
-        private async static void Bleed(ModuleEvents.OnPlayerDying dying)
+        private async System.Threading.Tasks.Task BleedAsync(ModuleEvents.OnPlayerDying dying)
         {
             await NwTask.WhenAny(NwTask.Run(async () =>
             {
@@ -45,7 +46,7 @@ namespace Services.Module
             }
             else
             {
-                Bleed(dying);
+                await BleedAsync(dying);
             }
         }
 

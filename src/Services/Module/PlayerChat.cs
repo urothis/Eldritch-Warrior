@@ -20,13 +20,7 @@ namespace Services.Module
         private static readonly string notReady = "Feature not implemented.";
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public PlayerChat(NativeEventService native) =>
-            native.Subscribe<NwModule, ModuleEvents.OnPlayerChat>(NwModule.Instance, OnPlayerChat);
-
-        // handle chat commands
-        private void OnPlayerChat(ModuleEvents.OnPlayerChat playerChat) => ChatTools(playerChat);
-
-        private static void ChatTools(ModuleEvents.OnPlayerChat chat)
+        public PlayerChat() => NwModule.Instance.OnPlayerChat += chat =>
         {
             if (TriggerChatTools(chat))
             {
@@ -35,7 +29,7 @@ namespace Services.Module
                 string[] chatArray = chat.Message.Split(' ');
                 ChatToolsRouter(chat, chatArray);
             }
-        }
+        };
 
         private static int SetPortrait(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (chat.Sender.PortraitId = n) : 0;
         private static string SetVoice(ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (chat.Message = notReady) : chat.Message;
