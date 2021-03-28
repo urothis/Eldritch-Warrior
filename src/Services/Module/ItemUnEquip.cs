@@ -7,9 +7,7 @@ namespace Services.Module
     [ServiceBinding(typeof(ItemUnEquip))]
     public class ItemUnEquip
     {
-        public ItemUnEquip(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerUnequipItem>(NwModule.Instance, OnPlayerUnequipItem);
-
-        private static void OnPlayerUnequipItem(ModuleEvents.OnPlayerUnequipItem unequipItem)
+        public ItemUnEquip() => NwModule.Instance.OnPlayerUnequipItem += unequipItem =>
         {
             unequipItem.Item.PrintGPValueOnItem();
 
@@ -17,6 +15,6 @@ namespace Services.Module
             {
                 nwPlayer.SaveCharacter();
             }
-        }
+        };
     }
 }
