@@ -94,6 +94,7 @@ namespace Services.ActivateItem
                 case 52: //ITEM_PROPERTY_SKILL_BONUS
                 case 71: //ITEM_PROPERTY_TRUE_SEEING
                 case 75: //ITEM_PROPERTY_FREEDOM_OF_MOVEMENT
+                case 84: //ITEM_PROPERTY_ARCANE_SPELL_FAILURE
                     {
                         if (CheckItemIsValidType(target))
                         {
@@ -118,7 +119,8 @@ namespace Services.ActivateItem
                 case 3: return ItemProperty.ACBonusVsDmgType((IPDamageType)IPSubType, IPValue);
                 case 4: return ItemProperty.ACBonusVsRace((IPRacialType )IPSubType, IPValue);
                 case 5: return ItemProperty.ACBonusVsSAlign((IPAlignment)IPSubType, IPValue);
-                case 87: return ItemProperty.Additional((IPAdditional)IPSubType);
+                case 87: return ItemProperty.Additional((IPAdditional)IPValue);
+                case 84: return ItemProperty.ArcaneSpellFailure((IPArcaneSpellFailure)IPValue);
                 case 56: return ItemProperty.AttackBonus(IPValue);
                 case 12: return ItemProperty.BonusFeat((IPFeat)IPValue);
                 case 13: return ItemProperty.BonusLevelSpell((IPClass)IPSubType, (IPSpellLevel)IPValue);
