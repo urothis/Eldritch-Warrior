@@ -10,24 +10,23 @@ namespace Services.Module
         //private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
         // constructor
-        public PlayerRest(NativeEventService nativeEventService) => nativeEventService.Subscribe<NwModule, ModuleEvents.OnPlayerRest>(NwModule.Instance, OnPlayerRest);
-
-        private static void OnPlayerRest(ModuleEvents.OnPlayerRest playerRest)
+        public PlayerRest() => NwModule.Instance.OnPlayerRest += rest =>
         {
-            switch (playerRest.RestEventType)
+            switch (rest.RestEventType)
             {
                 case NWN.API.Constants.RestEventType.Started:
-                    playerRest.Player.FadeToBlack((float)0.003);
+                    rest.Player.FadeToBlack((float)0.003);
                     break;
                 case NWN.API.Constants.RestEventType.Invalid:
                     break;
                 case NWN.API.Constants.RestEventType.Finished:
                 case NWN.API.Constants.RestEventType.Cancelled:
-                    playerRest.Player.FadeFromBlack((float)0.003);
-                    playerRest.Player.SaveCharacter();
-                break;
+                    rest.Player.FadeFromBlack((float)0.003);
+                    rest.Player.SaveCharacter();
+                    break;
                 default: break;
             }
-        }
+
+        };
     }
 }
