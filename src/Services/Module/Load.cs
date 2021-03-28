@@ -3,7 +3,6 @@ using System.Globalization;
 using System.Linq;
 using NWN.API;
 using NWN.API.Constants;
-using NWN.API.Events;
 using NWN.Services;
 
 using NWNX.API;
@@ -15,7 +14,7 @@ namespace Services.Module
     {
         private static readonly int hours = 24;
 
-        public Load(SchedulerService scheduler) => NwModule.Instance.OnModuleLoad += load =>
+        public Load(SchedulerService scheduler)
         {
             scheduler.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
             scheduler.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
@@ -31,7 +30,7 @@ namespace Services.Module
 
             MonkWeapons();
             //LoadDiscord();
-        };
+        }
 
         private static void MonkWeapons()
         {
