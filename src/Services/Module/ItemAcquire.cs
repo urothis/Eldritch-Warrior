@@ -11,32 +11,32 @@ namespace Services.Module
     {
         //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-        public ItemAcquire(NativeEventService native) =>
-            native.Subscribe<NwModule, ModuleEvents.OnAcquireItem>(NwModule.Instance, OnAcquireItem);
-
-        private static void OnAcquireItem(ModuleEvents.OnAcquireItem acquireItem)
+        public ItemAcquire()
         {
-            /*
-                if statement is here to stop
-                System.NullReferenceException: Object reference not set to an instance of an object.
-            */
-            if (acquireItem.Item is NwItem)
+            NwModule.Instance.OnAcquireItem += acquireItem =>
             {
-                acquireItem.Item.PrintGPValueOnItem();
-                acquireItem.Item.RemoveAllTemporaryItemProperties();
-                NotifyLoot(acquireItem);
-            }
+                /*
+                    if statement is here to stop
+                    System.NullReferenceException: Object reference not set to an instance of an object.
+                */
+                if (acquireItem.Item is NwItem)
+                {
+                    acquireItem.Item.PrintGPValueOnItem();
+                    acquireItem.Item.RemoveAllTemporaryItemProperties();
+                    NotifyLoot(acquireItem);
+                }
 
-            /* This is to short circuit the rest of this code if we are DM */
-            if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
-            {
-                return;
-            }
+                /* This is to short circuit the rest of this code if we are DM */
+                if (acquireItem.AcquiredBy is NwPlayer { IsDM: true })
+                {
+                    return;
+                }
 
-            if (acquireItem.AcquiredBy is NwPlayer && acquireItem.AcquiredFrom is NwPlayer)
-            {
-                FixBarterExploit(acquireItem);
-            }
+                if (acquireItem.AcquiredBy is NwPlayer && acquireItem.AcquiredFrom is NwPlayer)
+                {
+                    FixBarterExploit(acquireItem);
+                }
+            };
         }
 
         private static void NotifyLoot(ModuleEvents.OnAcquireItem acquireItem) => SendLootMessageToParty(acquireItem, $"{acquireItem.AcquiredBy.Name.ColorString(Color.PINK)} obtained {acquireItem.Item.BaseItemType.ToString().ColorString(Color.WHITE)}.", 40);

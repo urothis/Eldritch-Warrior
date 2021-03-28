@@ -14,14 +14,15 @@ namespace Services.Module
         {
             NwModule.Instance.OnClientLeave += leave =>
             {
-            ClientPrintLogout(leave);
+                ClientPrintLogout(leave);
 
-            if (!leave.Player.IsDM)
-            {
-                ClientLeaveDeathLog(leave);
-            }
+                if (!leave.Player.IsDM)
+                {
+                    ClientLeaveDeathLog(leave);
+                }
 
-            leave.Player.ClientStoreHitPoints();
+                leave.Player.ClientStoreHitPoints();
+            };
         }
 
         /* Auto-Kill if we logout while in combat state */
