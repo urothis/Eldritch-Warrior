@@ -16,7 +16,7 @@ ADD ./src/Services /Build
 WORKDIR /Build
 RUN dotnet publish -c Release -o out
 
-FROM index.docker.io/nwndotnet/nwn.managed:8193.21.4-dev.0
+FROM index.docker.io/nwndotnet/nwn.managed:8193.21.26-dev.0
 LABEL maintainer="urothis"
 
 # copy module
