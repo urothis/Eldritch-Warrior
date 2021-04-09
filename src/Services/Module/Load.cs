@@ -25,7 +25,7 @@ namespace Services.Module
 
             /* Set Fog Color an Amount in all outdoor areas */
             InitAreaEnviroment();
-            SetModuleSwitches();
+            InitModuleSwitches();
 
             MonkWeapons();
             //LoadDiscord();
@@ -52,7 +52,7 @@ namespace Services.Module
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
 
-        private static void SetModuleSwitches()
+        private static void InitModuleSwitches()
         {
             /* Module Switches */
             _ = NwModule.Instance.GetLocalVariable<string>("X2_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value;
