@@ -16,6 +16,8 @@ namespace Services.Module
 
         public Load(SchedulerService scheduler)
         {
+            scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromSeconds(6));
+
             scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromHours(1));
             scheduler.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             scheduler.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
@@ -66,8 +68,7 @@ namespace Services.Module
         private static FogColor AreaSetFogColor(Random random)
         {
             var values = Enum.GetValues(typeof(FogColor));
-            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
-            return fogColor;
+            return (FogColor)values.GetValue(random.Next(values.Length))!;
         }
 
         private static void InitAreaEnviroment()
