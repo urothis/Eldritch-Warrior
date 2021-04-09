@@ -16,20 +16,21 @@ namespace Services.Module
 
         public Load(SchedulerService scheduler)
         {
-            scheduler.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
+            scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromHours(1));
             scheduler.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             scheduler.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-            /* Print to console when we boot*/
-            PrintBootTime();
 
             /* NWNX */
             NwServer.Instance.ServerInfo.PlayOptions.RestoreSpellUses = true;
+
             /* Set Fog Color an Amount in all outdoor areas */
-            SetAreaEnviroment();
+            InitAreaEnviroment();
             SetModuleSwitches();
 
             MonkWeapons();
             //LoadDiscord();
+            /* Print to console when we boot*/
+            PrintBootTime();
         }
 
         private static void MonkWeapons()
@@ -69,7 +70,7 @@ namespace Services.Module
             return fogColor;
         }
 
-        private static void SetAreaEnviroment()
+        private static void InitAreaEnviroment()
         {
             // Instantiate random number generator using system-supplied value as seed.
             Random random = new();
