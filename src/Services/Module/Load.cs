@@ -16,8 +16,6 @@ namespace Services.Module
 
         public Load(SchedulerService scheduler)
         {
-            scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromSeconds(6));
-
             scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromHours(1));
             scheduler.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             scheduler.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
