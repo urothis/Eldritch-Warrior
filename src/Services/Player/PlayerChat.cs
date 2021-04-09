@@ -11,16 +11,16 @@ using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 
-namespace Services.Module
+namespace Services.Player
 {
-    [ServiceBinding(typeof(PlayerChat))]
-    public class PlayerChat
+    [ServiceBinding(typeof(Chat))]
+    public class Chat
     {
         private static readonly char playerWildcard = '!';
         private static readonly string notReady = "Feature not implemented.";
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public PlayerChat() => NwModule.Instance.OnPlayerChat += chat =>
+        public Chat() => NwModule.Instance.OnPlayerChat += chat =>
         {
             if (TriggerChatTools(chat))
             {
