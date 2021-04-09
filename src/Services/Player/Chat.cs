@@ -26,8 +26,7 @@ namespace Services.Player
             {
                 chat.Message = chat.Message[1..];
                 chat.Message = chat.Message.ToLower();
-                string[] chatArray = chat.Message.Split(' ');
-                ChatToolsRouter(chat, chatArray);
+                ChatToolsRouter(chat, chat.Message.Split(' '));
             }
         };
 
