@@ -16,20 +16,23 @@ namespace Services.Module
 
         public Load(SchedulerService scheduler)
         {
-            scheduler.ScheduleRepeating(SetAreaEnviroment, TimeSpan.FromHours(1));
+            scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromSeconds(6));
+
+            scheduler.ScheduleRepeating(InitAreaEnviroment, TimeSpan.FromHours(1));
             scheduler.ScheduleRepeating(ServerMessageEveryHour, TimeSpan.FromHours(1));
             scheduler.Schedule(ServerMessage1439, TimeSpan.FromMinutes(1439));
-            /* Print to console when we boot*/
-            PrintBootTime();
 
             /* NWNX */
             NwServer.Instance.ServerInfo.PlayOptions.RestoreSpellUses = true;
+
             /* Set Fog Color an Amount in all outdoor areas */
-            SetAreaEnviroment();
-            SetModuleSwitches();
+            InitAreaEnviroment();
+            InitModuleSwitches();
 
             MonkWeapons();
             //LoadDiscord();
+            /* Print to console when we boot*/
+            PrintBootTime();
         }
 
         private static void MonkWeapons()
@@ -51,7 +54,7 @@ namespace Services.Module
         private static void PrintBootTime() => Console.WriteLine($"SERVER LOADED:{DateTime.Now.ToString(@"yyyy/MM/dd hh:mm:ss tt", new CultureInfo("en-US"))}");
         private static async void ServerMessage1439() => await NwModule.Instance.SpeakString($"Server reset in {"1".ColorString(Color.WHITE)} minute.".ColorString(Color.ROSE), TalkVolume.Shout);
 
-        private static void SetModuleSwitches()
+        private static void InitModuleSwitches()
         {
             /* Module Switches */
             _ = NwModule.Instance.GetLocalVariable<string>("X2_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value;
@@ -65,11 +68,10 @@ namespace Services.Module
         private static FogColor AreaSetFogColor(Random random)
         {
             var values = Enum.GetValues(typeof(FogColor));
-            FogColor fogColor = (FogColor)values.GetValue(random.Next(values.Length))!;
-            return fogColor;
+            return (FogColor)values.GetValue(random.Next(values.Length))!;
         }
 
-        private static void SetAreaEnviroment()
+        private static void InitAreaEnviroment()
         {
             // Instantiate random number generator using system-supplied value as seed.
             Random random = new();
