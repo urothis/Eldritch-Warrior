@@ -57,11 +57,11 @@ namespace Services.Module
         private static void InitModuleSwitches()
         {
             /* Module Switches */
-            _ = NwModule.Instance.GetLocalVariable<string>("X2_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value;
-            _ = NwModule.Instance.GetLocalVariable<string>("X2_L_STOP_EXPERTISE_ABUSE").Value;
-            _ = NwModule.Instance.GetLocalVariable<string>("X2_L_NOTREASURE").Value;
-            _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_EXTERNAL_ONLY").Value;
-            _ = NwModule.Instance.GetLocalVariable<string>("X3_MOUNTS_NO_UNDERGROUND").Value;
+            NwModule.Instance.GetLocalVariable<bool>("X2_SWITCH_ENABLE_TAGBASED_SCRIPTS").Value = true;
+            NwModule.Instance.GetLocalVariable<bool>("X2_L_STOP_EXPERTISE_ABUSE").Value = true;
+            NwModule.Instance.GetLocalVariable<bool>("X2_L_NOTREASURE").Value = true;
+            NwModule.Instance.GetLocalVariable<bool>("X3_MOUNTS_EXTERNAL_ONLY").Value = true;
+            NwModule.Instance.GetLocalVariable<bool>("X3_MOUNTS_NO_UNDERGROUND").Value = true;
             NwModule.Instance.GetLocalVariable<string>("X2_S_UD_SPELLSCRIPT").Value = "spellhook";
         }
 
