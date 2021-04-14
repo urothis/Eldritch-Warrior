@@ -11,7 +11,10 @@ namespace Services.Item
         //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
         public Acquire()
         {
-            
+            NwModule.Instance.OnAcquireItem += acquireItem => 
+            {
+
+            };
         }
     }
 }
