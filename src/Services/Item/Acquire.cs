@@ -64,8 +64,8 @@ namespace Services.Module
         {
             if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
             {
-                playerA.SaveCharacter();
-                playerB.SaveCharacter();
+                playerA.ExportCharacter();
+                playerB.ExportCharacter();
             }
         }
     }
