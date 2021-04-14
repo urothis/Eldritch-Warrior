@@ -5,6 +5,7 @@ using NWN.Services;
 
 namespace Services.Item
 {
+    [ServiceBinding(typeof(Acquire))]
     public class Acquire
     {
         
