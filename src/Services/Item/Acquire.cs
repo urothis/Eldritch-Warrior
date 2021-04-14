@@ -8,6 +8,10 @@ namespace Services.Item
     [ServiceBinding(typeof(Acquire))]
     public class Acquire
     {
-        
+        //private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+        public Acquire()
+        {
+            
+        }
     }
 }
