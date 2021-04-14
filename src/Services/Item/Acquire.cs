@@ -2,8 +2,9 @@
 using NWN.API;
 using NWN.API.Events;
 using NWN.Services;
+using Services.Module;
 
-namespace Services.Module
+namespace Services.Item
 {
     [ServiceBinding(typeof(Acquire))]
 
@@ -64,8 +65,8 @@ namespace Services.Module
         {
             if (acquireItem.AcquiredBy is NwPlayer playerA && acquireItem.AcquiredFrom is NwPlayer playerB)
             {
-                playerA.ExportCharacter();
-                playerB.ExportCharacter();
+                playerA.SaveCharacter();
+                playerB.SaveCharacter();
             }
         }
     }
