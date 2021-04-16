@@ -32,7 +32,7 @@ namespace Services.Client
                 Log.Info($"DM VERIFIED:{clientDM}.");
 
             }
-            else if (enter.IsDM)
+            else
             {
                 NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:{colorString}");
                 Log.Info($"DM DENIED:{clientDM}.");
