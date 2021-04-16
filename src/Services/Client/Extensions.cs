@@ -1,24 +1,21 @@
 using System.Collections.Generic;
+using System.Linq;
 using NLog.Fluent;
-using NWN.API.Events;
+using NWN.API;
 
 namespace Services.Client
 {
     public static class Extensions
     {
-        private static bool ClientCheckName(this ModuleEvents.OnClientEnter enter, string text)
+        public static bool ClientCheckName(this NwPlayer enter, string text)
         {
-            string[] censoredText = text.Split(' ');
-
-            foreach (string censoredWord in censoredText)
+            foreach (var censoredWord in text.Split(' ').Where(censoredWord => Extensions.WordFilter.Contains(censoredWord.ToLower())))
             {
-                if (Extensions.WordFilter.Contains(censoredWord.ToLower()))
-                {
-                    enter.Player.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
-                    Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Player.Name}");
-                    return true;
-                }
+                enter.BootPlayer($"BOOTED - Inappropriate character name {censoredWord} in {enter.Name}");
+                Log.Info($"BOOTED - Inappropriate character name {censoredWord} in {enter.Name}");
+                return true;
             }
+
             return false;
         }
 
