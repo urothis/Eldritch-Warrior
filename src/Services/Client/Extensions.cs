@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using NLog.Fluent;
 using NWN.API;
+using NWN.API.Constants;
 
 namespace Services.Client
 {
@@ -19,6 +21,57 @@ namespace Services.Client
             return false;
         }
 
+        private static void WelcomeMessage(this NwPlayer enter)
+        {
+            enter.SendServerMessage("Welcome to the server!".ColorString(SelectRandomColor(new(0, 0, 0), (Random)(new()))));
+
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
+            string clientDM = $"NAME:{enter.Name} ID:{enter.CDKey}";
+
+            if (enter.IsDM && Module.Extensions.DMList.ContainsKey(enter.CDKey))
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
+                Log.Info($"DM VERIFIED:{clientDM}.");
+
+            }
+            else if (enter.IsDM)
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:{colorString}");
+                Log.Info($"DM DENIED:{clientDM}.");
+                enter.BootPlayer("DENIED DM Access.");
+            }
+            else
+            {
+                NwModule.Instance.SpeakString($"\n{"LOGIN".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
+                Log.Info($"LOGIN:{$"NAME:{enter.Name} ID:{enter.CDKey} BIC:{enter.BicFileName}"}.");
+            }
+        }
+
+        private static Color SelectRandomColor(Color color, Random random)
+        {
+            switch (random.Next(0, 16))
+            {
+                case 0: color = Color.BLUE; break;
+                case 1: color = Color.BROWN; break;
+                case 2: color = Color.CYAN; break;
+                case 3: color = Color.GRAY; break;
+                case 4: color = Color.GREEN; break;
+                case 5: color = Color.LIME; break;
+                case 6: color = Color.MAGENTA; break;
+                case 7: color = Color.MAROON; break;
+                case 8: color = Color.NAVY; break;
+                case 9: color = Color.OLIVE; break;
+                case 10: color = Color.ORANGE; break;
+                case 11: color = Color.PINK; break;
+                case 12: color = Color.PURPLE; break;
+                case 13: color = Color.RED; break;
+                case 14: color = Color.ROSE; break;
+                case 15: color = Color.SILVER; break;
+                case 16: color = Color.TEAL; break;
+            }
+            return color;
+        }
+        
         /* Google list of explicit words */
         public static IList<string> WordFilter => new List<string>
         {
