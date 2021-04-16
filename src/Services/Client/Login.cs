@@ -1,6 +1,7 @@
 using NLog;
 
 using NWN.API;
+using NWN.API.Events;
 using NWN.Services;
 
 namespace Services.Client
@@ -13,6 +14,12 @@ namespace Services.Client
         public Login() => NwModule.Instance.OnClientEnter += enter =>
         {
             if (enter.Player.ClientCheckName(enter.Player.Name)) return;
+
+            if (enter.Player.IsDM)
+            {
+                enter.Player.ValidateDM();
+                return;
+            }
         };
     }
 }

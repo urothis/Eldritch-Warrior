@@ -21,12 +21,29 @@ namespace Services.Client
             return false;
         }
 
+        public static void ValidateDM(this NwPlayer enter)
+        {
+            string clientDM = $"NAME:{enter.Name} ID:{enter.CDKey}";
+
+            if (enter.IsDM && Module.Extensions.DMList.ContainsKey(enter.CDKey))
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID VERIFIED".ColorString(Color.GREEN)}:{colorString}");
+                Log.Info($"DM VERIFIED:{clientDM}.");
+
+            }
+            else if (enter.IsDM)
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Entering DM ID DENIED".ColorString(Color.RED)}:{colorString}");
+                Log.Info($"DM DENIED:{clientDM}.");
+                enter.BootPlayer("DENIED DM Access.");
+            }
+        }
+
         private static void WelcomeMessage(this NwPlayer enter)
         {
             enter.SendServerMessage("Welcome to the server!".ColorString(SelectRandomColor(new(0, 0, 0), (Random)(new()))));
 
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
-            string clientDM = $"NAME:{enter.Name} ID:{enter.CDKey}";
 
             if (enter.IsDM && Module.Extensions.DMList.ContainsKey(enter.CDKey))
             {
@@ -71,7 +88,7 @@ namespace Services.Client
             }
             return color;
         }
-        
+
         /* Google list of explicit words */
         public static IList<string> WordFilter => new List<string>
         {
