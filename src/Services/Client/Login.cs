@@ -19,6 +19,8 @@ namespace Services.Client
                 enter.Player.ValidateDM();
                 return;
             }
+
+            enter.Player.WelcomeMessage();
         };
     }
 }

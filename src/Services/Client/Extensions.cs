@@ -40,7 +40,7 @@ namespace Services.Client
             }
         }
 
-        private static void WelcomeMessage(this NwPlayer enter)
+        public static void WelcomeMessage(this NwPlayer enter)
         {
             enter.SendServerMessage("Welcome to the server!".ColorString(SelectRandomColor(new(0, 0, 0), (Random)(new()))));
             string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{enter.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{enter.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{enter.BicFileName.ColorString(Color.WHITE)}";
