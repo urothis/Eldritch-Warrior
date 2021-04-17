@@ -14,6 +14,7 @@ namespace Services.Client
         public Leave() => NwModule.Instance.OnClientLeave += leave =>
         {
             leave.Player.DeathLog();
+            leave.Player.PrintLogout();
         };
     }
 }
