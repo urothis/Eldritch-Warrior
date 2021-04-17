@@ -1,5 +1,4 @@
 using NLog;
-
 using NWN.API;
 using NWN.Services;
 
@@ -21,6 +20,7 @@ namespace Services.Client
             }
 
             enter.Player.WelcomeMessage();
+            enter.Player.RestoreHitPoints();
         };
     }
 }

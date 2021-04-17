@@ -30,6 +30,7 @@ namespace Services.Client
                 Log.Info($"LOGOUT:{$"NAME:{leave.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
             }
         }
+        
         public static bool ClientCheckName(this NwPlayer enter, string text)
         {
             foreach (var censoredWord in text.Split(' ').Where(censoredWord => Extensions.WordFilter.Contains(censoredWord.ToLower())))
