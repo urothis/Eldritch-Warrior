@@ -14,6 +14,10 @@ namespace Services.Client
         {
             leave.Player.DeathLog();
             leave.Player.PrintLogout();
+
+            if (leave.Player.IsDM) return;
+            
+            leave.Player.StoreHitPoints();
         };
     }
 }
