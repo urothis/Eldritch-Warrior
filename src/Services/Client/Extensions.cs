@@ -9,6 +9,28 @@ namespace Services.Client
 {
     public static class Extensions
     {
+        /* Auto-Kill if we logout while in combat state */
+        public static int DeathLog(this NwPlayer leave) => leave.IsInCombat ? leave.HP = -1 : leave.HP;
+        public static string StripDashes(string uuid) => uuid = uuid.Replace("-", "");
+        public static void StoreHitPoints(this NwPlayer player) => player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.UUID.ToUUIDString())).Value = player.HP;
+        public static void RestoreHitPoints(this NwPlayer player) => player.HP = player.GetCampaignVariable<int>("Hit_Points", StripDashes(player.UUID.ToUUIDString())).Value;
+
+        public static async void PrintLogout(this NwPlayer leave)
+        {
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.BicFileName.ColorString(Color.WHITE)}";
+
+            if (leave.IsDM)
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(Color.GREEN)}:{colorString}");
+                Log.Info($"DM Exiting:{$"NAME:{leave.Name} ID:{leave.CDKey}"}.");
+            }
+            else
+            {
+                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
+                Log.Info($"LOGOUT:{$"NAME:{leave.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}"}.");
+            }
+        }
+        
         public static bool ClientCheckName(this NwPlayer enter, string text)
         {
             foreach (var censoredWord in text.Split(' ').Where(censoredWord => Extensions.WordFilter.Contains(censoredWord.ToLower())))

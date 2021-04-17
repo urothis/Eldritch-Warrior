@@ -1,16 +1,15 @@
 using NLog;
-
 using NWN.API;
 using NWN.Services;
 
 namespace Services.Client
 {
-    [ServiceBinding(typeof(Login))]
-    public class Login
+    [ServiceBinding(typeof(Enter))]
+    public class Enter
     {
         private static readonly Logger Log = LogManager.GetCurrentClassLogger();
 
-        public Login() => NwModule.Instance.OnClientEnter += enter =>
+        public Enter() => NwModule.Instance.OnClientEnter += enter =>
         {
             if (enter.Player.ClientCheckName(enter.Player.Name)) return;
 
@@ -21,6 +20,7 @@ namespace Services.Client
             }
 
             enter.Player.WelcomeMessage();
+            enter.Player.RestoreHitPoints();
         };
     }
 }
