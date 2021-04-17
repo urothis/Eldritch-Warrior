@@ -9,6 +9,26 @@ namespace Services.Client
 {
     public static class Extensions
     {
+        /* Auto-Kill if we logout while in combat state */
+        public static int DeathLog(this NwPlayer leave) => leave.IsInCombat ? leave.HP = -1 : leave.HP;
+
+        private static async void PrintLogout(this NwPlayer leave)
+        {
+            string colorString = $"\n{"NAME".ColorString(Color.GREEN)}:{leave.Name.ColorString(Color.WHITE)}\n{"ID".ColorString(Color.GREEN)}:{leave.CDKey.ColorString(Color.WHITE)}\n{"BIC".ColorString(Color.GREEN)}:{leave.BicFileName.ColorString(Color.WHITE)}";
+            string client = $"NAME:{leave.Name} ID:{leave.CDKey} BIC:{leave.BicFileName}";
+            string clientDM = $"NAME:{leave.Name} ID:{leave.CDKey}";
+
+            if (leave.IsDM)
+            {
+                NwModule.Instance.SendMessageToAllDMs($"\n{"Exiting DM".ColorString(Color.GREEN)}:{colorString}");
+                Log.Info($"DM Exiting:{clientDM}.");
+            }
+            else
+            {
+                await NwModule.Instance.SpeakString($"\n{"LOGOUT".ColorString(Color.LIME)}:{colorString}", TalkVolume.Shout);
+                Log.Info($"LOGOUT:{client}.");
+            }
+        }
         public static bool ClientCheckName(this NwPlayer enter, string text)
         {
             foreach (var censoredWord in text.Split(' ').Where(censoredWord => Extensions.WordFilter.Contains(censoredWord.ToLower())))
