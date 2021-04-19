@@ -12,6 +12,7 @@ namespace Services.Item
             => nwItem.PlotFlag
             ? nwItem.OriginalDescription
             : (nwItem.Description = $"{"Gold Piece Value:".ColorString(Color.YELLOW)}{nwItem.GoldValue.ToString().ColorString(Color.ORANGE)}\n\n{nwItem.OriginalDescription}");
+
         public static void RemoveAllTemporaryItemProperties(this NwItem nwItem)
         {
             foreach (NWN.API.ItemProperty property in nwItem.ItemProperties.Where(x => x.DurationType == EffectDuration.Temporary))
