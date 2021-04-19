@@ -45,8 +45,8 @@ namespace Services.Item
         */
         public static void FixBarterExploit(this NwPlayer playerA, NwPlayer playerB)
         {
-            Player.Extensions.SaveCharacter(playerA);
-            Player.Extensions.SaveCharacter(playerB);
+            Module.Extensions.SaveCharacter(playerA);
+            Module.Extensions.SaveCharacter(playerB);
         }
     }
 }

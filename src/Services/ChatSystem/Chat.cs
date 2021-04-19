@@ -5,7 +5,7 @@ using NWN.API.Constants;
 using NWN.API.Events;
 using NWN.Services;
 
-namespace Services.Player
+namespace Services.ChatSystem
 {
     [ServiceBinding(typeof(Chat))]
     public class Chat
