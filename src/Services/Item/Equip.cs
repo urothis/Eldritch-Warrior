@@ -13,11 +13,7 @@ namespace Services.Item
             NwModule.Instance.OnPlayerEquipItem += equip =>
             {
                 equip.Item.PrintGPValueOnItem();
-                
-                if (equip.Item is NwItem item)
-                {
-
-                }
+                Module.Extensions.SaveCharacter((NwPlayer)equip.Player);
             };
         }
     }
