@@ -8,7 +8,7 @@ using NWN.API;
 using NWN.API.Constants;
 using NWN.API.Events;
 
-namespace Services.Player
+namespace Services.ChatSystem
 {
     public static class Extensions
     {
@@ -18,12 +18,6 @@ namespace Services.Player
         public static int SetPortrait(this NwPlayer player, string[] chatArray) => int.TryParse(chatArray[1], out int n) ? (player.PortraitId = n) : 0;
         public static string SetVoice(this ModuleEvents.OnPlayerChat chat, string[] chatArray) => int.TryParse(chatArray[1], out _) ? (notReady) : chat.Message;
         public static bool TriggerChatTools(this ModuleEvents.OnPlayerChat chat) => chat.Message.StartsWith(playerWildcard);
-
-        public static void SaveCharacter(this NwPlayer player)
-        {
-            player.ExportCharacter();
-            player.SendServerMessage($"{player.BicFileName.ColorString(Color.GREEN)}.bic file has been saved.".ColorString(Color.WHITE));
-        }
 
         public static StringBuilder Roster(this NwPlayer player)
         {
