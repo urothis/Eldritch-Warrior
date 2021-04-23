@@ -10,7 +10,7 @@ namespace Services.Store
         [ScriptHandler("nw_d1_startstore")]
         public static void SetupStore(StoreEvents.OnOpen obj)
         {
-            foreach (var item in obj.Player.Inventory.Items)
+            foreach (var item in obj.Store.Items)
             {
                 item.Infinite = true;
                 item.Stolen = false;
