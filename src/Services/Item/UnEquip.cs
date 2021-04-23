@@ -11,7 +11,10 @@ namespace Services.Item
         {
             NwModule.Instance.OnPlayerUnequipItem += unEquip =>
             {
-                unEquip.Item.PrintGPValueOnItem();
+                if (unEquip.UnequippedBy is NwPlayer)
+                {
+                    unEquip.Item.PrintGPValueOnItem();
+                }
             };
         }
     }
