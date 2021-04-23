@@ -14,7 +14,14 @@ namespace Services.PlayerCharacter
 
         public Dying() => NwModule.Instance.OnPlayerDying += async dying =>
         {
-            await BleedAsync(dying);
+            if (dying.Player is NwPlayer)
+            {
+                await BleedAsync(dying);
+            }
+            else
+            {
+                dying.Player.ApplyEffect(EffectDuration.Instant, Effect.Death(true));
+            }
         };
 
         private async Task BleedAsync(ModuleEvents.OnPlayerDying dying)
