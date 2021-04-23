@@ -9,8 +9,11 @@ namespace Services.Item
         {
             NwModule.Instance.OnUnacquireItem += unAcquire =>
             {
-                unAcquire.Item.PrintGPValueOnItem();
-                unAcquire.Item.RemoveAllTemporaryItemProperties();
+                if (unAcquire.LostBy is NwPlayer)
+                {
+                    unAcquire.Item.PrintGPValueOnItem();
+                    unAcquire.Item.RemoveAllTemporaryItemProperties();
+                }
             };
         }
     }

@@ -7,13 +7,13 @@ namespace Services.Store
 
     public class Infinite
     {
-        [ScriptHandler("store_infinite")]
+        [ScriptHandler("nw_d1_startstore")]
         public static void SetupStore(StoreEvents.OnOpen obj)
         {
             foreach (var item in obj.Player.Inventory.Items)
             {
                 item.Infinite = true;
-                item.Stolen = true;
+                item.Stolen = false;
             }
         }
     }
