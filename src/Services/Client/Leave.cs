@@ -12,12 +12,15 @@ namespace Services.Client
 
         public Leave() => NwModule.Instance.OnClientLeave += leave =>
         {
-            leave.Player.DeathLog();
-            leave.Player.PrintLogout();
+            if (leave.Player is NwPlayer player)
+            {
+                player.PrintLogout();
 
-            if (leave.Player.IsDM) return;
-            
-            leave.Player.StoreHitPoints();
+                if (player.IsDM) return;
+                
+                player.DeathLog();
+                player.StoreHitPoints();
+            }
         };
     }
 }

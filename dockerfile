@@ -1,8 +1,3 @@
-#FROM squattingmonk/nasher:latest
-#ADD . /Build
-#WORKDIR /Build
-#RUN nasher config --nssFlags:'-n /nwn/data -o' && nasher pack
-
 # build the module file
 FROM index.docker.io/nwntools/nasher:latest AS moduleBuild
 ADD . /src/moduleBuild/
@@ -10,19 +5,11 @@ WORKDIR /src/moduleBuild
 RUN nasher pack
 
 # Pull Dotnet image to build the project
-FROM mcr.microsoft.com/dotnet/sdk:5.0.102-ca-patch-buster-slim-amd64 AS build
-RUN apt-get update && apt-get clean && rm -rf /var/lib/apt/lists/*
-ADD ./src/Services /Build
+FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
+ADD . /Build
 WORKDIR /Build
-RUN dotnet publish -c Release -o out
+RUN dotnet publish src/Services/Services.csproj -c Release
 
-FROM index.docker.io/nwndotnet/nwn.managed:8193.21.31-dev.0
-LABEL maintainer="urothis"
-
-# copy module
-COPY --from=moduleBuild /src/moduleBuild/Eldritch_Warrior.mod /nwn/data/data/mod
-# install our services
-COPY --from=build /Build/out /nwn/nwnm/Plugins/Services/
 ENV NWN_SERVERNAME=DotnetTest \
   NWN_MODULE=Eldritch_Warrior \
   NWN_PUBLICSERVER=0 \

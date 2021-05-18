@@ -1,0 +1,1538 @@
+{
+  "__data_type": "ITP ",
+  "MAIN": {
+    "type": "list",
+    "value": [
+      {
+        "__struct_id": 0,
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 5
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 186
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 8
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 4818
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 9
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6739
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 6
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 4815
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 7
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6669
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 58
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6813
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 11
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6822
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 10
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6741
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 12
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6742
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6740
+              }
+            }
+          ]
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 335
+        }
+      },
+      {
+        "__struct_id": 0,
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 55
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6810
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 13
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6744
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 63
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6831
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 59
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6814
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 14
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6809
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 56
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6811
+              }
+            }
+          ]
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 6743
+        }
+      },
+      {
+        "__struct_id": 0,
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 60
+              },
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Spellbook"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "itm_spellbook"
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6815
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 16
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6745
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 15
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 1520
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 17
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6746
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 18
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6747
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 19
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 1530
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 186
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 64
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 83602
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 57
+              },
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>AC Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1acgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Acid Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "acidamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Acid Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "aciresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Animal Empathy +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1aniempgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Attack Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1attackgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Bludgeoning Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bludamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Bludgeoning Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bludamgem001"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Bludgeoning Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bluresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Bonus Feat: </c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "bfeatgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Bonus Spell Slot Wizard Level 5</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "5wizspellgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Cast Spell: Aid</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "cstspllaidgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Cha Ability Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1chagem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Cold Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "coldamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Cold Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "colresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Con Ability Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1congem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Damage Reduction 1/1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "dmgrd11gem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Dex Ability Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1dexgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Electrical Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "eledamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Electrical Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "eleresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Enhancement Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1enhgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Extra Range Damage Type: Bludgenoning</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "xtrrangedmgblug"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Extra Range Damage Type: Piercing </c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "xtrrangedmgpierc"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Extra Range Damage Type: Slashing </c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "xtrrangedmgslash"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Fire Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "firedamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Fire Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "fireresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Fireball Level 5 On-Hit</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "lvl5fireballgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Fortitude Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1fortgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Freedom of Movement</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "freeactiongem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Haste</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "hastegem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Holy Avenger</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "holyavengergem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Improved Evasion</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "impevasiongem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Int Ability Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1intgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Keen</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "keengem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Massive Critical Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "masscritgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Mighty +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1mightygem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Piercing Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "pierdamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Piercing Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "pieresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Reflex Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1reflexgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Regeneration +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1regengem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Slashing Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "sladamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Slashing Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "slaresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Sonic Damage Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "sondamgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Sonic Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "sonresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Spell Resistance Bonus</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "spellresistgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Str Ability Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1strgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>True Seeing</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "trueseegem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Unlimited Ammo 1d6 Basic +5</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "unlimbasicgem001"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Unlimited Ammo 1d6 Basic</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "unlimbasicgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Unlimited Ammo 1d6 Cold"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "unlimcoldgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Unlimited Ammo 1d6 Fire</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "unlimfiregem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Unlimited Ammo 1d6 Lightning</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "unlimlightgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>VampiricRegeneration</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "vregengem1"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Will Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1willgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Wis Ability Bonus +1</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "1wisgem"
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "<c\u0001þ\u0001>Wizard Bonus Spell Level 0</c>"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "0wizbnspellgem"
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6812
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 21
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6750
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 22
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6751
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6749
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 20
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6748
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 23
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6699
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 24
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6753
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 26
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6754
+              }
+            }
+          ]
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 1592
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ID": {
+          "type": "byte",
+          "value": 54
+        },
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "NAME": {
+                "type": "cexostring",
+                "value": "Recall Stone"
+              },
+              "RESREF": {
+                "type": "resref",
+                "value": "itm_recall"
+              }
+            }
+          ]
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 6808
+        }
+      },
+      {
+        "__struct_id": 0,
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 0
+              },
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "NAME": {
+                      "type": "cexostring",
+                      "value": "Asterius Quiver"
+                    },
+                    "RESREF": {
+                      "type": "resref",
+                      "value": "itm_ammo_creator"
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6688
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 1
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6689
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 2
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6690
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 3
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6691
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 4
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6692
+              }
+            }
+          ]
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 6687
+        }
+      },
+      {
+        "__struct_id": 0,
+        "ID": {
+          "type": "byte",
+          "value": 53
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 6732
+        }
+      },
+      {
+        "__struct_id": 0,
+        "LIST": {
+          "type": "list",
+          "value": [
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 27
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6757
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 28
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6758
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 29
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6759
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6756
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 32
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6762
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 30
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6760
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 31
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6761
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 490
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 33
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6764
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 34
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6765
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 35
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6766
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 36
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6767
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 37
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6699
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 38
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6768
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6763
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 39
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6769
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 40
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6770
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 41
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6771
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 42
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6772
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 61
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6817
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 491
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 46
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6775
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 47
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6776
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 48
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6778
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 49
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6779
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 50
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6780
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6777
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 51
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 489
+              }
+            },
+            {
+              "__struct_id": 0,
+              "LIST": {
+                "type": "list",
+                "value": [
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 43
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6774
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 44
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6819
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 45
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6820
+                    }
+                  },
+                  {
+                    "__struct_id": 0,
+                    "ID": {
+                      "type": "byte",
+                      "value": 62
+                    },
+                    "STRREF": {
+                      "type": "dword",
+                      "value": 6821
+                    }
+                  }
+                ]
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 6818
+              }
+            },
+            {
+              "__struct_id": 0,
+              "ID": {
+                "type": "byte",
+                "value": 52
+              },
+              "STRREF": {
+                "type": "dword",
+                "value": 494
+              }
+            }
+          ]
+        },
+        "STRREF": {
+          "type": "dword",
+          "value": 500
+        }
+      }
+    ]
+  }
+}
